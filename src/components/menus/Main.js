@@ -7,7 +7,7 @@ class Main extends Component {
     return (
       <Menu size='huge'>
         <Link to='/' className='item'>
-          <img alt='Fountain Hope Logo' src='./assets/images/logo.png' />
+          <img alt='Fountain Hope Logo' src='/assets/images/logo.png' />
         </Link>
         <Link to='/kids' className='item' >Kids</Link>
         <Link to='/admin' className='item'>Admin</Link>
