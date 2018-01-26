@@ -12,6 +12,7 @@ class Main extends Component {
         <Link to='/kids' className='item' >Kids</Link>
         <Link to='/admin' className='item'>Admin</Link>
         <Link to='/donate' className='item'>Donate</Link>
+        <Link to='/login' className='item right floated'>Login</Link>
       </Menu>
     );
   }
