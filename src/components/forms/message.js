@@ -20,7 +20,7 @@ class Message extends Component {
             <Form.Field width={16} control={TextArea} placeholder='Enter your well wishes message here...' />
           </Form.Group>
           <br/>
-          <Button positive fluid className='ui right floated' success>SEND  <i style={{'marginLeft':'8px'}} className='icon send'/></Button>
+          <Button positive={true} fluid className='ui right floated' success>SEND  <i style={{'marginLeft':'8px'}} className='icon send'/></Button>
         </Form>
         <hr/>
       </div>

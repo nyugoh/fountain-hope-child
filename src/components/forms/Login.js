@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Grid, Form, Button, Input} from 'semantic-ui-react';
+import {Grid, Form, Button, Input, Message} from 'semantic-ui-react';
 import validator from 'validator';
 import InlineError from "../panels/InlineError";
 
@@ -21,7 +21,11 @@ class Login extends Component {
     const errors = this.validate(this.state.data);
     this.setState({errors});
     if(Object.keys(errors).length === 0) {
-      this.props.submit(this.state.data);
+      this.setState({loading: true});
+      this.props.submit(this.state.data).catch( (error) => {
+        this.setState({loading: false});
+        this.setState({errors: error.response.data.errors})
+      });
     }
   };
 
@@ -34,7 +38,7 @@ class Login extends Component {
 
 
   render() {
-    const {email, password, errors} = this.state;
+    const {email, password, errors, loading} = this.state;
     return (
       <Grid columns={1}>
         <Grid.Row>
@@ -42,7 +46,11 @@ class Login extends Component {
           <Grid.Column width={8} padded='true'>
             <h3>Login Form</h3>
             <hr/>
-            <Form onSubmit={this.submit}>
+            <Form onSubmit={this.submit} loading={loading}>
+              {errors.global && <Message negative>
+                <Message.Header>Login failed</Message.Header>
+                <p>{errors.global}</p>
+              </Message>}
               <Form.Field error={!!errors.email}>
                 <Input
                   type="text"
