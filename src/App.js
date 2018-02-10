@@ -11,14 +11,16 @@ import './styles/app.css';
 class App extends Component {
   render() {
     return (
-      <div className="ui container app-container">
+      <div>
         <MainMenu/>
-        <Switch>
-          <Route path='/' exact component={HomePage}/>
-          <Route path='/login' component={Login}/>
-          <Route path='/admin' component={Admin}/>
-          <Route path='/kids' component={Kids}/>
-        </Switch>
+        <div className="ui container app-container">
+          <Switch>
+            <Route path='/' exact component={HomePage}/>
+            <Route path='/login' component={Login}/>
+            <Route path='/admin' component={Admin}/>
+            <Route path='/kids' component={Kids}/>
+          </Switch>
+        </div>
         <Footer/>
       </div>
     );

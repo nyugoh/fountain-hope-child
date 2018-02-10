@@ -10,14 +10,16 @@ class Main extends Component {
 
   render() {
     return (
-      <Menu size='huge'>
-        <Link to='/' className='item'>
-          <img alt='Fountain Hope Logo' src='/assets/images/logo.png' />
-        </Link>
-        <Link to='/kids' className='item' >Kids</Link>
-        <Link to='/admin' className='item'>Admin</Link>
-        <Link to='/donate' className='item'>Donate</Link>
-        {this.props.isAuthenticate? <Link to='#' className='item right floated' onClick={this.logout}>Logout</Link>: <Link to='/login' className='item right floated'>Login</Link>}
+      <Menu size='massive' borderless={true} color='blue'>
+        <div className="ui container">
+          <Link to='/' className='item'>
+            <img alt='Fountain Hope Logo' src='/assets/images/logo.png' />
+          </Link>
+          <Link to='/kids' className='item' >Kids</Link>
+          <Link to='/admin' className='item'>Admin</Link>
+          <Link to='/donate' className='item'>Donate</Link>
+          {this.props.isAuthenticate? <Link to='#' className='item right floated' onClick={this.logout}>Logout</Link>: <Link to='/login' className='item right floated'>Login</Link>}
+        </div>
       </Menu>
     );
   }

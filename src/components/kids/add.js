@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Form, TextArea, Checkbox, Button} from 'semantic-ui-react';
 import {addKid} from "../../actions/kids";
+import MessageDialog from "../panels/Message";
 
 const options = [
   { key: 'm', text: 'Male', value: 'male' },
@@ -14,15 +15,33 @@ class AddKid extends Component {
     loading: false,
     errors: []
   };
+
+  isAccepted = false;
+
   handleChange = (e) => {
     this.setState({data: {...this.state.data, [e.target.name]:e.target.value} });
   };
 
+  handleSelectChange = (e, data) => {
+    this.setState({data: {...this.state.data, gender:data.value} });
+  };
+
+  checkValidity = (e, data) =>{
+    this.isAccepted = data.checked;
+  };
+
   submit = () =>{
-    this.props.addKid(this.state.data);
+    if (this.isAccepted) {
+      let kid = this.state.data;
+      kid.fullName = `${kid.sirName} ${kid.firstName} ${kid.middleName}`;
+      this.props.addKid(kid).then( () => this.props.history.push('/kids'));
+    } else {
+      this.setState({ errors: { confirmationError: 'You need to confirm the validity of this information.'}})
+    }
   };
 
   render() {
+    const {errors} = this.state;
     return (
       <div>
         <h2>Add a child</h2>
@@ -33,7 +52,7 @@ class AddKid extends Component {
             <Form.Input fluid required label='Sir name' name='sirName' placeholder='Sir name' onChange={this.handleChange} />
             <Form.Input fluid required label='First name' name='firstName' placeholder='First name' onChange={this.handleChange} />
             <Form.Input fluid required label='Middle name' name='middleName' placeholder='Middle name' onChange={this.handleChange} />
-            <Form.Select fluid required label='Gender' name='gender' options={options} placeholder='Gender' onChange={this.handleChange} />
+            <Form.Select fluid required label='Gender' name='gender' options={options} placeholder='Gender' onChange={this.handleSelectChange} />
           </Form.Group>
           <Form.Group widths='2'>
             <Form.Input fluid required label='Date of Birth' name='dob' placeholder='DoB' onChange={this.handleChange} />
@@ -58,8 +77,9 @@ class AddKid extends Component {
           </Form.Field>
           <hr/>
           <br/>
-          <Checkbox  name='accept' label='The information I have provided here is correct and verifiable.' />
-          <Button className='ui right floated' positive size='large'>ADD</Button>
+          <Checkbox  name='accept' label='The information I have provided here is correct and verifiable.' onChange={this.checkValidity} />
+          <Button className='ui right floated' positive size='large'>ADD</Button><br/><br/>
+          {!!errors.confirmationError && <MessageDialog message={errors.confirmationError}/>}
         </Form>
       </div>
     );
