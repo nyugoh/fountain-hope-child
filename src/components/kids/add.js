@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Form, TextArea, Checkbox, Button} from 'semantic-ui-react';
-import {addKid} from "../../actions/kids";
+import {addKid, fetchKids} from "../../actions/kids";
 import MessageDialog from "../panels/Message";
 
 const options = [
@@ -34,7 +34,11 @@ class AddKid extends Component {
     if (this.isAccepted) {
       let kid = this.state.data;
       kid.fullName = `${kid.sirName} ${kid.firstName} ${kid.middleName}`;
-      this.props.addKid(kid).then( () => this.props.history.push('/kids'));
+      this.props.addKid(kid).then( () => {
+        this.props.fetchKids().then( ()=>{
+          this.props.history.push('/kids')
+        })
+      });
     } else {
       this.setState({ errors: { confirmationError: 'You need to confirm the validity of this information.'}})
     }
@@ -55,7 +59,7 @@ class AddKid extends Component {
             <Form.Select fluid required label='Gender' name='gender' options={options} placeholder='Gender' onChange={this.handleSelectChange} />
           </Form.Group>
           <Form.Group widths='2'>
-            <Form.Input fluid required label='Date of Birth' name='dob' placeholder='DoB' onChange={this.handleChange} />
+            <Form.Input fluid required type='date' label='Date of Birth' name='dob' placeholder='DoB' onChange={this.handleChange} />
             <Form.Input fluid required label='Place of Birth' name='pob' placeholder='Place of Birth' onChange={this.handleChange} />
             <Form.Input fluid required label='Religion' name='religion' placeholder='Religion' onChange={this.handleChange} />
           </Form.Group>
@@ -86,4 +90,4 @@ class AddKid extends Component {
   }
 }
 
-export default connect(null, {addKid})(AddKid);
+export default connect(null, {addKid, fetchKids})(AddKid);

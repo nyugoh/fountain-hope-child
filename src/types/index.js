@@ -1,3 +1,11 @@
 export const USER_LOGGED_IN = 'USER_LOGGED_IN';
 
 export const KID_ADDED = 'KID_ADD';
+
+export const START_FETCHING_KIDS = 'START_FETCHING_KIDS';
+
+export const END_FETCHING_KIDS = 'END_FETCHING_KIDS';
+
+export default  {
+  KID_ADDED, START_FETCHING_KIDS, END_FETCHING_KIDS
+}
