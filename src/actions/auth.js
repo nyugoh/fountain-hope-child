@@ -1,5 +1,8 @@
-import { USER_LOGGED_IN } from '../types';
+import types from '../types';
 import api from '../store/api';
+
+
+const { USER_LOGGED_IN } = types;
 
 const userLoggedIn = (user) => ({
   type: USER_LOGGED_IN,

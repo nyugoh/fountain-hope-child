@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 .ui .menu {
     width:100%;
     padding:20px;
@@ -58,4 +59,21 @@ footer iframe {
 .sm li a img {
     width:32px;
 }
+.storyHeader img{
+    width: 100%;
+}
 
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Nunito', sans-serif !important;
+}
+p, span, a {
+    font-family: 'Nunito', sans-serif !important;
+}
+.updateAction a, .updateAction a:hover, .updateAction a:active {
+    color: white;
+}
+.updateAction {
+    padding: 5px;
+    margin: 5px;
+    border-bottom: 1px solid cornflowerblue;
+}

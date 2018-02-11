@@ -5,8 +5,14 @@ import axios from 'axios';
 const {
   KID_ADDED,
   START_FETCHING_KIDS,
-  END_FETCHING_KIDS
+  END_FETCHING_KIDS,
+  API_ERROR
 } = types;
+
+const apiErrorOccured = (errors) => ({
+  type: API_ERROR,
+  payload: errors
+});
 
 const kidAdded = (kid) => ({
   type: KID_ADDED,
@@ -25,7 +31,12 @@ export const startFetchingKids = () => ({
 
 export const endFetchingKids = (kidsArray) => ({
   type: END_FETCHING_KIDS,
-  kidsArray
+  payload: kidsArray
+});
+
+export const endFetchingKid = (kid) => ({
+  type: END_FETCHING_KIDS,
+  payload: kid
 });
 
 export const fetchKids = () => (dispatch) => {
@@ -34,6 +45,24 @@ export const fetchKids = () => (dispatch) => {
   return axios.get(apiEnd).then( (res)=> {
     dispatch(endFetchingKids(res.data.kids))
   }).catch( err => {
-    console.log(err);
+    dispatch(apiErrorOccured(err));
+  });
+};
+
+export const getKid = (id) => (dispatch) => {
+  dispatch(startFetchingKids());
+  return axios.get('/api/kid/'+id).then( res => {
+    dispatch(endFetchingKid(res.data.kid));
+  }).catch( err => {
+    dispatch(apiErrorOccured(err));
+  });
+};
+
+export const updateKid = (kid, id) => (dispatch) => {
+  dispatch(startFetchingKids());
+  return axios.put('/api/kid/'+id, {kid}).then( res => {
+    dispatch(endFetchingKid(res.data.kid));
+  }).catch( err => {
+    dispatch(apiErrorOccured(err));
   });
 };

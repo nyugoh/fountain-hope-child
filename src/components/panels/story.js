@@ -1,5 +1,7 @@
 import React from 'react';
-import { Button, Icon, Item, Label } from 'semantic-ui-react'
+import {Link} from 'react-router-dom';
+import { Button, Icon, Item } from 'semantic-ui-react'
+import moment from 'moment';
 
 
 const paragraph = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias aperiam architecto aspernatur assumenda esse est ipsum itaque iure laboriosam magnam modi natus, necessitatibus numquam ratione reprehenderit sint suscipit. Ex!';
@@ -8,22 +10,22 @@ function Story({kids}) {
   return (
     <Item.Group divided>
       {kids.map( (kid, index) => {
-        return <Item>
+        return <Item key={index}>
           <Item.Image src='/assets/images/logo.png' alt={index} />
           <Item.Content>
-            <Item.Header as='a'>{kid.fullName}</Item.Header>
+            <Item.Header as='a'><Link to={'/kids/'+kid._id}>{kid.fullName}</Link></Item.Header>
             <Item.Meta>
-              <span className='cinema'>Union Square 14</span>
+              <span className='cinema'>Age:{moment().diff(moment(kid.dob), 'years')}yrs Gender:{kid.gender}</span>
             </Item.Meta>
             <Item.Description>{kid.story}</Item.Description>
             <Item.Extra>
               <Button  size='tiny' color='green'>
                 Send message
-                <Icon name='right comment outline'/>
+                <Icon name='comment outline right'/>
               </Button>
               <Button primary size='tiny' floated='right'>
                Sponsor
-               <Icon name='right payment' />
+               <Icon name='payment right' />
               </Button>
             </Item.Extra>
           </Item.Content>

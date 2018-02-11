@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Form, TextArea, Checkbox, Button} from 'semantic-ui-react';
 import {addKid, fetchKids} from "../../actions/kids";
 import MessageDialog from "../panels/Message";
+import moment from 'moment';
 
 const options = [
   { key: 'm', text: 'Male', value: 'male' },
@@ -28,6 +29,11 @@ class AddKid extends Component {
 
   checkValidity = (e, data) =>{
     this.isAccepted = data.checked;
+  };
+
+  setDOB = (e) =>{
+    let dob = moment(e.target.value).toISOString();
+    this.setState({data: {...this.state.data, dob:dob} });
   };
 
   submit = () =>{
@@ -59,7 +65,7 @@ class AddKid extends Component {
             <Form.Select fluid required label='Gender' name='gender' options={options} placeholder='Gender' onChange={this.handleSelectChange} />
           </Form.Group>
           <Form.Group widths='2'>
-            <Form.Input fluid required type='date' label='Date of Birth' name='dob' placeholder='DoB' onChange={this.handleChange} />
+            <Form.Input fluid required type='date' label='Date of Birth' name='dob' placeholder='DoB' onChange={this.setDOB} />
             <Form.Input fluid required label='Place of Birth' name='pob' placeholder='Place of Birth' onChange={this.handleChange} />
             <Form.Input fluid required label='Religion' name='religion' placeholder='Religion' onChange={this.handleChange} />
           </Form.Group>

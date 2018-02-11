@@ -4,13 +4,15 @@ import {Grid, Button} from 'semantic-ui-react';
 import SearchForm from '../components/forms/Search';
 import ListKids from '../components/kids/index';
 import AddKid from '../components/kids/add';
+import Profile from '../components/kids/profile';
+import Edit from '../components/kids/edit';
 
 class kids extends Component {
   render() {
     return (
       <div>
         <Grid columns='2'>
-          <Grid.Row>
+          <Grid.Row className='searchBar'>
             <Grid.Column>
               <h2 className='ui left floated'>Fountain of Hope Centre Kids</h2>
             </Grid.Column>
@@ -30,6 +32,9 @@ class kids extends Component {
             <Grid.Column>
               <Route path='/kids' exact component={ListKids} />
               <Route path='/kids/add' exact component={AddKid} />
+              <Route path='/kids/:kidId' exact component={Profile} />
+              <Route path='/kids/:kidId/edit' exact component={Edit} />
+              <Route path='/kids/:kidId/update' exact component={Profile} />
             </Grid.Column>
           </Grid.Row>
         </Grid>

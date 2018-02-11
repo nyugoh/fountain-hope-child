@@ -1,4 +1,6 @@
-import {USER_LOGGED_IN} from "../types";
+import types from "../types";
+
+const {USER_LOGGED_IN} = types;
 
 const user = (state={}, action) =>{
   switch (action.type) {
