@@ -6,6 +6,7 @@ import ListKids from '../components/kids/index';
 import AddKid from '../components/kids/add';
 import Profile from '../components/kids/profile';
 import Edit from '../components/kids/edit';
+import KidUpdate from "../components/kids/update";
 
 class kids extends Component {
   render() {
@@ -34,7 +35,7 @@ class kids extends Component {
               <Route path='/kids/add' exact component={AddKid} />
               <Route path='/kids/:kidId' exact component={Profile} />
               <Route path='/kids/:kidId/edit' exact component={Edit} />
-              <Route path='/kids/:kidId/update' exact component={Profile} />
+              <Route path='/kids/:kidId/update' exact component={KidUpdate} />
             </Grid.Column>
           </Grid.Row>
         </Grid>

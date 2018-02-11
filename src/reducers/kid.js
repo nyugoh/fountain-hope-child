@@ -5,7 +5,8 @@ const {
   START_FETCHING_KIDS,
   END_FETCHING_KIDS,
   END_FETCHING_KID,
-  KID_UPDATED
+  KID_UPDATED,
+  ADDED_UPDATE
 } = types;
 
 const initialState = {
@@ -31,10 +32,14 @@ export const kid = (state=initialState, action) => {
         kid: action.payload
       };
     case KID_UPDATED:
-    return {
-      isFetching: false,
-      kid: action.payload
-    };
+      return {
+        isFetching: false,
+        kid: action.payload
+      };
+    case ADDED_UPDATE:
+      return {
+        status: action.payload
+      };
     default:
       return state;
   }

@@ -6,7 +6,8 @@ const {
   KID_ADDED,
   START_FETCHING_KIDS,
   END_FETCHING_KIDS,
-  API_ERROR
+  API_ERROR,
+  ADDED_UPDATE
 } = types;
 
 const apiErrorOccured = (errors) => ({
@@ -65,4 +66,13 @@ export const updateKid = (kid, id) => (dispatch) => {
   }).catch( err => {
     dispatch(apiErrorOccured(err));
   });
+};
+
+export const addUpdate = (update, id) => (dispatch) => {
+  return axios.put('/api/kids/'+id+'/update', {update}).then( res => {
+    dispatch({
+      type: ADDED_UPDATE,
+      payload: res.data.status
+    })
+  })
 };
