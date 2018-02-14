@@ -70,7 +70,7 @@ class AddKid extends Component {
             <Form.Input fluid required label='Religion' name='religion' placeholder='Religion' onChange={this.handleChange} />
           </Form.Group>
           <Form.Group widths='2'>
-            <Form.Input fluid required label='Phone' name='phone' placeholder='Phone #' onChange={this.handleChange} />
+            <Form.Input fluid required label='Phone' name='phoneNumber' placeholder='Phone #' onChange={this.handleChange} />
             <Form.Input fluid required label='Address' name='address' placeholder='Address' onChange={this.handleChange} />
             <Form.Input fluid required label='Email' name='email' placeholder='Email' onChange={this.handleChange} />
           </Form.Group>

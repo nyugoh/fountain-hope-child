@@ -81,3 +81,10 @@ p, span, a {
     resize: none;
     height: 300px;
 }
+.ui .form input, .ui .form textarea, .ui .form select, .ui .form input:focus, .ui .form textarea:focus, .ui .form select:focus {
+    background: #d6fffe54;
+}
+.update {
+    /*border-bottom: 1px solid cornflowerblue;*/
+    margin-bottom: 10px;
+}

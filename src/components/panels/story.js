@@ -3,9 +3,6 @@ import {Link} from 'react-router-dom';
 import { Button, Icon, Item } from 'semantic-ui-react'
 import moment from 'moment';
 
-
-const paragraph = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias aperiam architecto aspernatur assumenda esse est ipsum itaque iure laboriosam magnam modi natus, necessitatibus numquam ratione reprehenderit sint suscipit. Ex!';
-
 function Story({kids}) {
   return (
     <Item.Group divided>

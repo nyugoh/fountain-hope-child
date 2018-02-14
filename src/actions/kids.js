@@ -69,7 +69,7 @@ export const updateKid = (kid, id) => (dispatch) => {
 };
 
 export const addUpdate = (update, id) => (dispatch) => {
-  return axios.put('/api/kids/'+id+'/update', {update}).then( res => {
+  return axios.put('/api/kid/'+id+'/update', {update}).then( res => {
     dispatch({
       type: ADDED_UPDATE,
       payload: res.data.status

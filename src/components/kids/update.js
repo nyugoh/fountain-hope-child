@@ -8,39 +8,36 @@ class KidUpdate extends Component {
   state = {
     data: {},
     loading: false,
-    errors: [],
-    isChecked: false
+    errors: []
   };
 
-  isChecked = false;
 
   handleChange = (e) => {
     this.setState({ data: { ...this.state.data, [e.target.name]: e.target.value}});
   };
 
-  handleCheckBox = (e, data) => {
-    this.isChecked = data.checked;
-  };
-
   submit = () => {
-    this.validate();
-    console.log(this.state)
-    if (this.state.errors.length <= 0){
-      // this.props.addUpdate(this.state.data, this.props.match.kidId);
-    } else {
-      this.setState({ errors: 'Error: Provide a message and at least one document'});
-    }
-  };
-
-  validate = () => {
-    if (!this.isChecked) {
-      this.setState({ errors: {...this.state.errors, confirmationError:'Check the checkbox'}});
-      this.setState({ errors: {...this.state.errors, lengthError:'Check the checkbox'}});
-    }
-    // if (this.state.data.update.length <= 200) {
-    //   this.setState({ errors: 'Provide a longer update at least 200 characters.'});
+    // this.validate();
+    const kidId = this.props.match.params.kidId;
+    this.props.addUpdate(this.state.data, kidId).then( () => {
+      this.props.history.push('/kids/'+kidId);
+    });
+    // if (this.state.errors.length <= 0){
+    //   this.props.addUpdate(this.state.data, this.props.match.kidId);
+    // } else {
+    //   this.setState({ errors: 'Error: Provide a message and at least one document'});
     // }
   };
+
+  // validate = () => {
+  //   if (!this.isChecked) {
+  //     this.setState({ errors: {...this.state.errors, confirmationError:'Check the checkbox'}});
+  //     this.setState({ errors: {...this.state.errors, lengthError:'Check the checkbox'}});
+  //   }
+  //   // if (this.state.data.update.length <= 200) {
+  //   //   this.setState({ errors: 'Provide a longer update at least 200 characters.'});
+  //   // }
+  // };
 
   render() {
     let errors = this.state;
@@ -73,9 +70,7 @@ class KidUpdate extends Component {
               </Form.Field>
               <hr/>
               <br/>
-              <Checkbox name='accept' label='The information I have provided here is correct and verifiable.' onChange={this.handleCheckBox} />
               <Button className='ui right floated' positive size='large'>ADD</Button><br/><br/>
-              {!!errors.lengthError && <MessageDialog message={errors.lengthError}/>}
               {!!errors.confirmationError && <MessageDialog message={errors.confirmationError}/>}
             </Form>
           </Grid.Column>

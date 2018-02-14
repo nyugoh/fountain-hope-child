@@ -75,10 +75,8 @@ class AddKid extends Component {
             <hr/>
             <h3>Personal Details</h3>
             <Form.Group widths='2'>
-              <Form.Input fluid required label='Sir name' name='sirName' placeholder='Sir name' onChange={this.handleChange} />
-              <Form.Input fluid required label='First name' name='firstName' value={kid.firstName} placeholder='First name' onChange={this.handleChange} />
-              <Form.Input fluid required label='Middle name' name='middleName' placeholder='Middle name' onChange={this.handleChange} />
-              <Form.Select fluid required label='Gender' name='gender' options={options} placeholder='Gender' onChange={this.handleSelectChange} />
+              <Form.Input fluid required label='Full name' name='fullName' value={kid.fullName} placeholder='Full name' onChange={this.handleChange} />
+              <Form.Select fluid required label='Gender' name='gender' selected={kid.gender} options={options} placeholder='Gender' onChange={this.handleSelectChange} />
             </Form.Group>
             <Form.Group widths='2'>
               <Form.Input fluid required type='date' label='Date of Birth' value={kid.dob} name='dob' placeholder='DoB' onChange={this.setDOB} />
@@ -86,7 +84,7 @@ class AddKid extends Component {
               <Form.Input fluid required label='Religion' name='religion' value={kid.religion} placeholder='Religion' onChange={this.handleChange} />
             </Form.Group>
             <Form.Group widths='2'>
-              <Form.Input fluid required label='Phone' name='phone' value={kid.phone} placeholder='Phone #' onChange={this.handleChange} />
+              <Form.Input fluid required label='Phone' name='phone' value={kid.phoneNumber} placeholder='Phone #' onChange={this.handleChange} />
               <Form.Input fluid required label='Address' name='address' value={kid.address} placeholder='Address' onChange={this.handleChange} />
               <Form.Input fluid required label='Email' name='email' value={kid.email} placeholder='Email' onChange={this.handleChange} />
             </Form.Group>

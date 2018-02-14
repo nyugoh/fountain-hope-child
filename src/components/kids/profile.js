@@ -6,6 +6,7 @@ import {getKid} from '../../actions/kids';
 import ErrorMessage from '../panels/Errors';
 import Message from '../forms/message';
 import SponsorMessage from '../panels/sponsors';
+import KidUpdates from "../panels/KidUpdates";
 
 class Profile extends Component {
   componentWillMount() {
@@ -28,7 +29,7 @@ class Profile extends Component {
           <img src="/assets/images/loading.gif" alt="Loading content"/>
         </div>
       )
-    } else if (!isFetching && !hasErrors) {
+    } else if (!!kid) {
       return (
         <Grid columns='1'>
           <Grid.Row columns='2'>
@@ -48,6 +49,11 @@ class Profile extends Component {
                 <div>
                   <h2>{kid.fullName}'s Story</h2>
                   <p>{kid.story}</p>
+                </div>
+                <hr/>
+                <div>
+                  <h2>Latest updates for {kid.fullName}</h2>
+                  <KidUpdates updates={kid.updates}/>
                 </div>
               </div>
             </Grid.Column>
