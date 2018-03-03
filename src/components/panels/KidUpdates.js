@@ -4,7 +4,7 @@ import moment from 'moment';
 function KidUpdates({updates}) {
   return (
     <div>
-      {updates.map( (update, index) => {
+      {!!updates && updates.map( (update, index) => {
         let days = moment().diff(moment(update.date), 'days');
         let lastUpdate = '';
         if (days> 1) {

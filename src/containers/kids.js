@@ -33,7 +33,7 @@ class kids extends Component {
             <Grid.Column>
               <Route path='/kids' exact component={ListKids} />
               <Route path='/kids/add' exact component={AddKid} />
-              <Route path='/kids/:kidId' exact component={Profile} />
+              <Route path='/kids/profile/:kidId' exact component={Profile} />
               <Route path='/kids/:kidId/edit' exact component={Edit} />
               <Route path='/kids/:kidId/update' exact component={KidUpdate} />
             </Grid.Column>

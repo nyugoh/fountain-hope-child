@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Form, TextArea, Checkbox, Button} from 'semantic-ui-react';
 import MessageDialog from "../panels/Message";
 import moment from 'moment';
-import {getKid, updateKid} from '../../actions/kids';
+import {getKid, updateKid, fetchKids} from '../../actions/kids';
 import ErrorMessage from '../panels/Errors';
 
 const options = [
@@ -59,7 +59,8 @@ class AddKid extends Component {
   render() {
     const {errors} = this.state;
     let isFetching = this.props.state.kid.isFetching;
-    let kid = this.props.state.kid.kids;
+    this.state.data = this.props.state.kid.kids;
+    let kid = this.state.data;
     if (isFetching) {
       return (
         <div className='text centered'>
@@ -75,16 +76,16 @@ class AddKid extends Component {
             <hr/>
             <h3>Personal Details</h3>
             <Form.Group widths='2'>
-              <Form.Input fluid required label='Full name' name='fullName' value={kid.fullName} placeholder='Full name' onChange={this.handleChange} />
-              <Form.Select fluid required label='Gender' name='gender' selected={kid.gender} options={options} placeholder='Gender' onChange={this.handleSelectChange} />
+              <Form.Input fluid required label='Full name' ref='fullName' defaultValue={kid.fullName} placeholder='Full name' onChange={this.handleChange} />
+              <Form.Select fluid required label='Gender' name='gender' value={kid.gender} options={options} placeholder='Gender' onChange={this.handleSelectChange} />
             </Form.Group>
             <Form.Group widths='2'>
-              <Form.Input fluid required type='date' label='Date of Birth' value={kid.dob} name='dob' placeholder='DoB' onChange={this.setDOB} />
+              <Form.Input fluid required type='date' label='Date of Birth' value={moment(kid.dob).format('YYYY-MM-DD')}  name='dob' placeholder='DoB' onChange={this.setDOB} />
               <Form.Input fluid required label='Place of Birth' name='pob'  value={kid.pob} placeholder='Place of Birth' onChange={this.handleChange} />
               <Form.Input fluid required label='Religion' name='religion' value={kid.religion} placeholder='Religion' onChange={this.handleChange} />
             </Form.Group>
             <Form.Group widths='2'>
-              <Form.Input fluid required label='Phone' name='phone' value={kid.phoneNumber} placeholder='Phone #' onChange={this.handleChange} />
+              <Form.Input fluid required label='Phone' name='phoneNumber' value={kid.phoneNumber} placeholder='Phone #' onChange={this.handleChange} />
               <Form.Input fluid required label='Address' name='address' value={kid.address} placeholder='Address' onChange={this.handleChange} />
               <Form.Input fluid required label='Email' name='email' value={kid.email} placeholder='Email' onChange={this.handleChange} />
             </Form.Group>
@@ -115,4 +116,4 @@ class AddKid extends Component {
   }
 }
 
-export default connect( (state) => ({state}), {getKid, updateKid})(AddKid);
+export default connect( (state) => ({state}), {getKid, updateKid, fetchKids})(AddKid);
