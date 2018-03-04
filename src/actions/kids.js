@@ -61,10 +61,11 @@ export const getKid = (id) => (dispatch) => {
   });
 };
 
-export const updateKid = (kid, id) => (dispatch) => {
+export const updateKid = (kid, id, files) => (dispatch) => {
   dispatch(startFetchingKids());
   return axios.put('/api/kid/'+id, {kid}).then( res => {
     dispatch(endFetchingKid(res.data.kid));
+    uploadFiles(files);
   }).catch( err => {
     dispatch(apiErrorOccured(err));
   });

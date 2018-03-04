@@ -43,14 +43,14 @@ class Profile extends Component {
               <div>
                 <div className="updateAction">
                   <Button positive>
-                    <Link to={'/kids/'+kid._id+'/edit'}>Edit {kid.firstName}'s profile <Icon name='compose right'/></Link>
+                    <Link to={'/kids/'+kid._id+'/edit'}>Edit {kid.firstName} {kid.middleName}'s profile <Icon name='compose right'/></Link>
                   </Button>
                   <Button positive>
                     <Link to={'/kids/'+kid._id+'/update'}>Add update <Icon name='road right'/></Link>
                   </Button>
                 </div>
                 <div className='storyHeader'>
-                  <img src="/assets/images/logo.png" alt={kid.fullName}/>
+                  <img src={kid.profileImages && "/api/v1/images/"+kid.profileImages[0]} alt={kid.fullName}/>
                 </div>
                 <div>
                   <h2>{kid.firstName} {kid.middleName}'s Story</h2>

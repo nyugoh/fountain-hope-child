@@ -12,6 +12,7 @@ class Editprofile extends Component {
     super();
     this.state = {
       data: props.kid,
+      files: {},
       loading: false,
       errors: []
     };
@@ -24,6 +25,15 @@ class Editprofile extends Component {
     this.setState({data: {...this.state.data, gender:data.value} });
   };
 
+  upload = (e) =>{
+    const files = e.target.files;
+    let imageNames = [];
+    let images = [];
+    for(let f in files) if (files[f].size > 0) {images.push(files[f]);imageNames.push(files[f].name);};
+    this.setState({data:{...this.state.data, profileImages:imageNames}});
+    this.setState({files:images});
+  };
+
   setDOB = (e) =>{
     let dob = moment(e.target.value).toISOString();
     this.setState({data: {...this.state.data, dob:dob} });
@@ -31,9 +41,9 @@ class Editprofile extends Component {
 
   submit = () =>{
     let data = this.state.data;
-    let fullName = `${data.sirName} ${data.firstName} ${data.middleName}`;
-    this.setState({data: {...this.state.data, fullName:fullName}});
-    this.props.submit(this.state.data);
+    let fullN = `${data.sirName} ${data.firstName} ${data.middleName}`;
+    this.setState({data: {...this.state.data, fullName:fullN}});
+    this.props.submit(this.state.data, this.state.files);
   };
 
   render() {
@@ -69,12 +79,12 @@ class Editprofile extends Component {
           <hr/>
           <h3>Documents</h3>
           <Form.Field>
-            <input type="file" multiple='true' name='documents' placeholder='Child documents ...'/>
+            <input type="file" multiple='true' name='documents' onChange={this.upload} placeholder='Child documents ...'/>
           </Form.Field>
           <hr/>
           <br/>
           <Checkbox  name='accept' label='The information I have provided here is correct and verifiable.' onChange={this.checkValidity} />
-          <Button className='ui right floated' positive size='large'>ADD</Button><br/><br/>
+          <Button className='ui right floated' positive size='large'>UPDATE</Button><br/><br/>
         </Form>
       </div>
     );

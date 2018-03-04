@@ -12,8 +12,8 @@ class EditKid extends Component {
     this.props.getKid(this.props.match.params.kidId);
   };
 
-  submit = (data) =>{
-    this.props.updateKid(data, this.props.match.params.kidId).then( () => {
+  submit = (data, files) =>{
+    this.props.updateKid(data, this.props.match.params.kidId, files).then( () => {
       this.props.fetchKids().then( ()=>{
         let url = '/kids/profile/'+this.props.match.params.kidId;
         this.props.history.push(url)
