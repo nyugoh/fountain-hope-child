@@ -39,7 +39,7 @@ export const kid = (state=initialState, action) => {
       };
     case ADDED_UPDATE:
       return {
-        status: action.payload
+        status: action.response
       };
     case MESSAGE_SENT:
       return {

@@ -5,11 +5,16 @@ import {addUpdate} from '../../actions/kids';
 import MessageDialog from '../panels/Message';
 
 class KidUpdate extends Component {
-  state = {
-    data: {},
-    loading: false,
-    errors: []
-  };
+  constructor(props) {
+    super();
+    this.state = {
+      data: {
+        to: props.match.params.kidId
+      },
+      loading: false,
+      errors: []
+    };
+  }
 
 
   handleChange = (e) => {
@@ -17,27 +22,10 @@ class KidUpdate extends Component {
   };
 
   submit = () => {
-    // this.validate();
-    const kidId = this.props.match.params.kidId;
-    this.props.addUpdate(this.state.data, kidId).then( () => {
-      this.props.history.push('/kids/'+kidId);
+    this.props.addUpdate(this.state.data).then( () => {
+      this.props.history.push('/kids/profile/'+this.props.match.params.kidId);
     });
-    // if (this.state.errors.length <= 0){
-    //   this.props.addUpdate(this.state.data, this.props.match.kidId);
-    // } else {
-    //   this.setState({ errors: 'Error: Provide a message and at least one document'});
-    // }
   };
-
-  // validate = () => {
-  //   if (!this.isChecked) {
-  //     this.setState({ errors: {...this.state.errors, confirmationError:'Check the checkbox'}});
-  //     this.setState({ errors: {...this.state.errors, lengthError:'Check the checkbox'}});
-  //   }
-  //   // if (this.state.data.update.length <= 200) {
-  //   //   this.setState({ errors: 'Provide a longer update at least 200 characters.'});
-  //   // }
-  // };
 
   render() {
     let errors = this.state;
@@ -61,7 +49,7 @@ class KidUpdate extends Component {
             <Form onSubmit={this.submit}>
               <h3>Add an update</h3>
               <Form.Field>
-                <Form.Field control={TextArea} required label='Update' className='kidUpdateStory' name='update' onChange={this.handleChange} placeholder='Describe the incidents/events that have happened to the child...' />
+                <Form.Field control={TextArea} required label='Update' className='kidUpdateStory' name='body' onChange={this.handleChange} placeholder='Describe the incidents/events that have happened to the child...' />
               </Form.Field>
               <hr/>
               <h3>Documents/Images <small>(You can upload more than one)</small></h3>
