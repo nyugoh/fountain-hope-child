@@ -69,7 +69,14 @@ export const updateKid = (kid, id) => (dispatch) => {
   });
 };
 
-export const addUpdate = (update) => (dispatch) => {
+export const addUpdate = (update, files) => (dispatch) => {
+  let form = new FormData();
+  for(let i in files) form.append(files[i].name, files[i]);
+  axios.post('/api/v1/images/upload', form).then((response) => {
+    console.log(response);
+  }).catch((error) => {
+    console.log(error.message);
+  });
   return axios.post('/api/updates', {update}).then( response => {
     dispatch({
       type: ADDED_UPDATE,

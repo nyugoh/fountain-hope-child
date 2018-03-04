@@ -27,7 +27,7 @@ class ListKids extends Component {
           <Grid.Row columns='2'>
             <Grid.Column width='10'>
               <h3>Kids Stories at FHCK</h3>
-              <Story kids={kids}/>
+              {!!kids && <Story kids={kids}/>}
             </Grid.Column>
             <Grid.Column width='6'>
               <Message/>

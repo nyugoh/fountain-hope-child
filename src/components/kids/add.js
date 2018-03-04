@@ -27,6 +27,13 @@ class AddKid extends Component {
     this.setState({data: {...this.state.data, gender:data.value} });
   };
 
+  onDrop(picture) {
+    // this.setState({
+    //   pictures: this.state.pictures.concat(picture),
+    // });
+    console.log(picture);
+  };
+
   checkValidity = (e, data) =>{
     this.isAccepted = data.checked;
   };
@@ -83,7 +90,7 @@ class AddKid extends Component {
           <hr/>
           <h3>Documents</h3>
           <Form.Field>
-            <input type="file" multiple='true' name='documents' placeholder='Child documents ...'/>
+            <input type="file" multiple='true' name='documents' onDrag={this.onDrop} placeholder='Child documents ...'/>
           </Form.Field>
           <hr/>
           <br/>

@@ -11,18 +11,27 @@ class KidUpdate extends Component {
       data: {
         to: props.match.params.kidId
       },
+      files: {},
       loading: false,
       errors: []
     };
-  }
-
+  };
 
   handleChange = (e) => {
     this.setState({ data: { ...this.state.data, [e.target.name]: e.target.value}});
   };
 
+  upload = (e) =>{
+    const files = e.target.files;
+    let imageNames = [];
+    let images = [];
+    for(let f in files) if (files[f].size > 0) {images.push(files[f]);imageNames.push(files[f].name);};
+    this.setState({data:{...this.state.data, files:images}});
+    this.setState({files:images});
+  };
+
   submit = () => {
-    this.props.addUpdate(this.state.data).then( () => {
+    this.props.addUpdate(this.state.data, this.state.files).then( () => {
       this.props.history.push('/kids/profile/'+this.props.match.params.kidId);
     });
   };
@@ -54,7 +63,7 @@ class KidUpdate extends Component {
               <hr/>
               <h3>Documents/Images <small>(You can upload more than one)</small></h3>
               <Form.Field>
-                <input type="file" multiple='true' name='documents' placeholder='Child documents ...'/>
+                <input type="file" multiple='true' name='documents' onChange={this.upload} placeholder='Child documents ...'/>
               </Form.Field>
               <hr/>
               <br/>
