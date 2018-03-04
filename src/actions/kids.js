@@ -21,10 +21,11 @@ const kidAdded = (kid) => ({
   payload: kid
 });
 
-export const addKid = (kid) => (dispatch) =>
+export const addKid = (kid, files) => (dispatch) =>
   api.kids.add(kid).then( (kid) => {
     (kid === undefined) ? kid={}: '';
-    dispatch(kidAdded(kid))
+    uploadFiles(files);
+    dispatch(kidAdded(kid));
   });
 
 export const startFetchingKids = () => ({
@@ -70,13 +71,7 @@ export const updateKid = (kid, id) => (dispatch) => {
 };
 
 export const addUpdate = (update, files) => (dispatch) => {
-  let form = new FormData();
-  for(let i in files) form.append(files[i].name, files[i]);
-  axios.post('/api/v1/images/upload', form).then((response) => {
-    console.log(response);
-  }).catch((error) => {
-    console.log(error.message);
-  });
+  uploadFiles(files);
   return axios.post('/api/updates', {update}).then( response => {
     dispatch({
       type: ADDED_UPDATE,
@@ -91,5 +86,16 @@ export const sendMessage = (message) => (dispatch) =>{
       type: MESSAGE_SENT,
       payload: response
     })
+  });
+};
+
+const uploadFiles = (files) =>{
+  if(!files) return;
+  let form = new FormData();
+  for(let i in files) form.append(files[i].name, files[i]);
+  return axios.post('/api/v1/images/upload', form).then((response) => {
+    // console.log(response);
+  }).catch((error) => {
+    console.log(error.message);
   });
 };

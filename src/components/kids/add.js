@@ -13,6 +13,7 @@ const options = [
 class AddKid extends Component {
   state = {
     data: {},
+    files: {},
     loading: false,
     errors: []
   };
@@ -27,11 +28,13 @@ class AddKid extends Component {
     this.setState({data: {...this.state.data, gender:data.value} });
   };
 
-  onDrop(picture) {
-    // this.setState({
-    //   pictures: this.state.pictures.concat(picture),
-    // });
-    console.log(picture);
+  upload = (e) =>{
+    const files = e.target.files;
+    let imageNames = [];
+    let images = [];
+    for(let f in files) if (files[f].size > 0) {images.push(files[f]);imageNames.push(files[f].name);};
+    this.setState({data:{...this.state.data, profileImages:imageNames}});
+    this.setState({files:images});
   };
 
   checkValidity = (e, data) =>{
@@ -47,7 +50,7 @@ class AddKid extends Component {
     if (this.isAccepted) {
       let kid = this.state.data;
       kid.fullName = `${kid.sirName} ${kid.firstName} ${kid.middleName}`;
-      this.props.addKid(kid).then( () => {
+      this.props.addKid(kid, this.state.files).then( () => {
         this.props.fetchKids().then( ()=>{
           this.props.history.push('/kids')
         })
@@ -90,7 +93,7 @@ class AddKid extends Component {
           <hr/>
           <h3>Documents</h3>
           <Form.Field>
-            <input type="file" multiple='true' name='documents' onDrag={this.onDrop} placeholder='Child documents ...'/>
+            <input type="file" multiple='false' name='documents' onChange={this.upload} placeholder='Child documents ...'/>
           </Form.Field>
           <hr/>
           <br/>
