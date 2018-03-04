@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Form, Grid, TextArea, Button, Checkbox} from 'semantic-ui-react';
+import {Form, Grid, TextArea, Button} from 'semantic-ui-react';
 import {addUpdate} from '../../actions/kids';
 import MessageDialog from '../panels/Message';
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Grid, Item, Label} from 'semantic-ui-react';
+import {Grid} from 'semantic-ui-react';
 import Message from '../forms/message';
 import Story from '../panels/story';
 import SponsorMessage from '../panels/sponsors';

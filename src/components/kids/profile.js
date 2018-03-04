@@ -47,13 +47,14 @@ class Profile extends Component {
                   <img src="/assets/images/logo.png" alt={kid.fullName}/>
                 </div>
                 <div>
-                  <h2>{kid.fullName}'s Story</h2>
+                  <h2>{kid.firstName} {kid.middleName}'s Story</h2>
                   <p>{kid.story}</p>
                 </div>
                 <hr/>
                 <div>
-                  <h2>Latest updates for {kid.fullName}</h2>
-                  <KidUpdates updates={kid.updates}/>
+                  <h2>Latest updates for {kid.firstName} {kid.middleName}</h2>
+                  {(kid.updates.length >0) ? <KidUpdates updates={kid.updates}/>:
+                  <p>{kid.firstName} has no updates.</p>}
                 </div>
               </div>
             </Grid.Column>
