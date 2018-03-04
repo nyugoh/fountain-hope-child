@@ -6,7 +6,8 @@ const {
   END_FETCHING_KIDS,
   END_FETCHING_KID,
   KID_UPDATED,
-  ADDED_UPDATE
+  ADDED_UPDATE,
+  MESSAGE_SENT
 } = types;
 
 const initialState = {
@@ -37,6 +38,10 @@ export const kid = (state=initialState, action) => {
         kid: action.payload
       };
     case ADDED_UPDATE:
+      return {
+        status: action.payload
+      };
+    case MESSAGE_SENT:
       return {
         status: action.payload
       };

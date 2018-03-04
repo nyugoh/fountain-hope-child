@@ -7,7 +7,8 @@ const {
   START_FETCHING_KIDS,
   END_FETCHING_KIDS,
   API_ERROR,
-  ADDED_UPDATE
+  ADDED_UPDATE,
+  MESSAGE_SENT
 } = types;
 
 const apiErrorOccured = (errors) => ({
@@ -75,4 +76,13 @@ export const addUpdate = (update, id) => (dispatch) => {
       payload: res.data.status
     })
   })
+};
+
+export const sendMessage = (message) => (dispatch) =>{
+  return axios.post('/api/messages', {message}).then( (response) =>{
+    dispatch({
+      type: MESSAGE_SENT,
+      payload: response
+    })
+  });
 };

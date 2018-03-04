@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Grid, Icon, Button} from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
-import {getKid} from '../../actions/kids';
+import {getKid, sendMessage} from '../../actions/kids';
 import ErrorMessage from '../panels/Errors';
 import Message from '../forms/message';
 import SponsorMessage from '../panels/sponsors';
@@ -11,6 +11,12 @@ import KidUpdates from "../panels/KidUpdates";
 class Profile extends Component {
   componentWillMount() {
     this.props.getKid(this.props.match.params.kidId);
+  };
+
+  sendMessage = (message) => {
+    this.props.sendMessage(message).then( () =>{
+      this.props.getKid(this.props.match.params.kidId);
+    });
   };
 
   render() {
@@ -53,13 +59,13 @@ class Profile extends Component {
                 <hr/>
                 <div>
                   <h2>Latest updates for {kid.firstName} {kid.middleName}</h2>
-                  {(kid.updates.length >0) ? <KidUpdates updates={kid.updates}/>:
+                  {(kid.updates) ? <KidUpdates updates={kid.updates}/>:
                   <p>{kid.firstName} has no updates.</p>}
                 </div>
               </div>
             </Grid.Column>
             <Grid.Column width='6'>
-              <Message name={kid.firstName}/>
+              <Message name={kid.firstName}  kidId={kid._id} sendMessage={this.sendMessage}/>
               <br/><br/>
               <hr/>
               <SponsorMessage/>
@@ -81,4 +87,4 @@ class Profile extends Component {
   }
 }
 
-export default connect(state => ({state}), { getKid })(Profile);
+export default connect(state => ({state}), { getKid, sendMessage })(Profile);
