@@ -1,15 +1,19 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Grid} from 'semantic-ui-react';
-import Message from '../forms/message';
+import Message from '../forms/Contact-message';
 import Story from '../panels/story';
 import SponsorMessage from '../panels/sponsors';
-import {fetchKids} from "../../actions/kids";
+import {fetchKids, sendMessage} from "../../actions/kids";
 
 class ListKids extends Component {
   componentWillMount() {
     this.props.fetchKids();
   }
+
+  sendMessage = (message) =>{
+    this.props.sendMessage(message);
+  };
 
   render() {
     let isFetching = this.props.state.kid.isFetching;
@@ -30,7 +34,7 @@ class ListKids extends Component {
               {!!kids && <Story kids={kids}/>}
             </Grid.Column>
             <Grid.Column width='6'>
-              <Message/>
+              <Message sendMessage={this.sendMessage}/>
               <br/><br/>
               <hr/>
               <SponsorMessage/>
@@ -46,4 +50,4 @@ class ListKids extends Component {
   }
 }
 
-export default connect((state) => ({state}), {fetchKids})(ListKids);
+export default connect((state) => ({state}), {fetchKids, sendMessage})(ListKids);

@@ -20,8 +20,8 @@ class kids extends Component {
             <Grid.Column className='ui right aligned'>
               <SearchForm placeholder='Search for a kid...'/>
               <Button primary
-                      style={{'marginLeft':'10px'}}
-                      onClick={()=> this.props.history.push('/kids/add')}>
+                style={{'marginLeft':'10px'}}
+                onClick={()=> this.props.history.push('/kids/add')}>
                 <i className='icon plus'/>
                 Child
               </Button>

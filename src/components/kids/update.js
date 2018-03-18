@@ -10,7 +10,7 @@ class KidUpdate extends Component {
     super();
     this.state = {
       data: {
-        to: props.match.params.kidId
+        kidId: props.match.params.kidId
       },
       files: {},
       loading: false,
@@ -30,7 +30,7 @@ class KidUpdate extends Component {
     let imageNames = [];
     let images = [];
     for(let f in files) if (files[f].size > 0) {images.push(files[f]);imageNames.push(files[f].name);};
-    this.setState({data:{...this.state.data, files:images}});
+    this.setState({data:{...this.state.data, files:imageNames}});
     this.setState({files:images});
   };
 
