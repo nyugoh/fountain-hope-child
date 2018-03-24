@@ -2,11 +2,12 @@ import types from '../types';
 import axios from 'axios';
 import {uploadFiles} from "./kids";
 
-export const fetchMessages = () => dispatch =>{
-  axios.get('/api/messages').then( response =>{
+export const fetchMessages = (search) => dispatch =>{
+  console.log(search);
+  axios.get(`/api/messages${search?search:''}`).then( response =>{
     dispatch({
       type: types.FETCHED_MESSAGE,
-      messages: response.data.messages
+      messages: response.data
     });
   }).catch(error =>{
 

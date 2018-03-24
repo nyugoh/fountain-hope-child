@@ -10,12 +10,24 @@ class Messages extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchMessages();
+    this.props.fetchMessages(this.props.history.location.search);
   }
 
+  getPages = (total) =>{
+    var pages;
+    var perPage = 2;
+    pages = total/perPage;
+    total%perPage > 0 ? pages++: '';
+    var url = [];
+    for(let i=1;i<=pages;i++)
+      url[i-1] = `/admin/messages?page=${i}`;
+    return url;
+  };
+
   render() {
-    const messages = this.props.messages;
+    const {messages, total} = this.props;
     if (messages){
+      let pages = this.getPages(total);
       // let unread; {messages.map(message=>{ !message.isRead? unread += 1:'';})}
       return (
         <div>
@@ -39,10 +51,9 @@ class Messages extends Component {
                 <a className="icon item">
                   <i className="left chevron icon"></i>
                 </a>
-                <a className="item">1</a>
-                <a className="item">2</a>
-                <a className="item">3</a>
-                <a className="item">4</a>
+                {pages.map((url, index)=>{
+                  return (<a className="item" href={url}>{index+1}</a>)
+                })}
                 <a className="icon item">
                   <i className="right chevron icon"></i>
                 </a>
@@ -61,15 +72,15 @@ class Messages extends Component {
 }
 
 const mapStateToProps = (state) =>{
-  console.log(state.admin.messages);
   return {
-    messages: state.admin.messages
+    messages: state.admin.messages.body,
+    total: state.admin.messages.total
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchMessages: () => dispatch(fetchMessages())
+    fetchMessages: (search) => dispatch(fetchMessages(search))
   }
 };
 

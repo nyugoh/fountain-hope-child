@@ -3,6 +3,7 @@ import React from 'react';
 function ListSponsors(props) {
   const sponsors = props.sponsors;
   const none = sponsors.length === 0;
+  // TODO:: Add edit and delete sponsors, toggle them on screen
   return (
     <div>
       {none? <div class="ui info message">

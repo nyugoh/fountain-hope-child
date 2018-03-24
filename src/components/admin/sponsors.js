@@ -24,7 +24,7 @@ class Sponsors extends Component {
     if (sponsors){
       return (
         <div>
-          <h2>FHCK Sponsors and doners</h2>
+          <h2>FHCK Sponsors and donors</h2>
           <Grid>
             <Grid.Row columns='2' vertical>
               <Grid.Column width='10'>

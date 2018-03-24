@@ -2,12 +2,10 @@ import types from '../types';
 
 const initialState = {
   message: "No messages",
-  data: []
+  messages:{}
 };
 
 const admin = (state=initialState, action) =>{
-  console.log(state);
-  console.log(action);
   switch (action.type){
     case types.FETCHED_MESSAGE:
       return {

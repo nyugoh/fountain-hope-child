@@ -54,7 +54,7 @@ class AddSponsor extends Component {
           <Form.Group>
             <Form.Field width={16} control={TextArea} name='message' onChange={this.handleChange} placeholder='Enter a message to be displayed along with their profile...' />
           </Form.Group>
-          <label>Documents</label>
+          <label>Profile Image</label>
           <Form.Field>
             <input type="file" name='profile' onChange={this.upload} placeholder='Profile image ...'/>
           </Form.Field>
