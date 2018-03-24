@@ -12,7 +12,10 @@ class ListKids extends Component {
   }
 
   sendMessage = (message) =>{
-    this.props.sendMessage(message);
+    this.props.sendMessage(message).then( () =>{
+      console.log('sent message')
+      this.props.fetchKids();
+    });
   };
 
   render() {
