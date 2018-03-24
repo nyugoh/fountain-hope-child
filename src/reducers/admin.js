@@ -11,6 +11,10 @@ const admin = (state=initialState, action) =>{
       return {
         messages: action.messages
       };
+    case types.FETCHED_SPONSORS:
+      return {
+        sponsors: action.sponsors
+      };
     default:
       return state;
   }

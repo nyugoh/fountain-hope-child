@@ -1,13 +1,13 @@
 import React from 'react';
 import moment from 'moment';
-import {Link} from 'react-router-dom';
 import {Icon } from 'semantic-ui-react';
 
-function MessagesTable(props) {
+function MessagesTable(props) {//TODO:: Show message in a modal
   return (
     <tbody>
       {props.messages.map((message, index)=>{
         return(
+
           <tr id={index} onClick={() => showMessage(message)}>
             <td>
               {message.isRead?
@@ -20,6 +20,7 @@ function MessagesTable(props) {
             <td>{moment(message.createdAt).format('DD/MMMM/YYYY')}</td>
             <td>{message.body.length >30?message.body.substring(0, 30)+ ' ...': message.body}</td>
             <td>
+              {/* TODO:: Show warning message*/}
               <Icon name='star green'/>
               <Icon name='archive blue'/>
               <Icon name='trash red'/>

@@ -11,3 +11,14 @@ export const fetchMessages = () => dispatch =>{
 
   });
 };
+
+export const fetchSponsors = () => dispatch =>{
+  axios.get('/api/sponsors').then( response=>{
+    dispatch({
+      type: types.FETCHED_SPONSORS,
+      sponsors: response.data.sponsors
+    });
+  }).catch( error =>{
+
+  });
+};

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {fetchMessages} from "../../actions/admin";
 import MessagesTable from './components/MessagesTable';
+import Loading from '../../components/panels/Loading';
 
 class Messages extends Component {
   constructor(props) {
@@ -53,10 +54,7 @@ class Messages extends Component {
       );
     } else{
       return (
-        <div className='text centered'>
-          <h2>Loading ...</h2>
-          <img src="/assets/images/loading.gif" alt="Loading content"/>
-        </div>
+        <Loading/>
       );
     }
   }
