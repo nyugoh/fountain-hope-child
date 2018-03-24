@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchSponsors} from '../../actions/admin';
+import {Grid} from 'semantic-ui-react';
+import {fetchSponsors, addSponsor} from '../../actions/admin';
 import Loading from '../../components/panels/Loading';
-
+import ListSponsors from "./components/ListSponsors";
+import AddSponsor from "./components/AddSponsor";
 
 class Sponsors extends Component {
   constructor(props) {
@@ -10,36 +12,53 @@ class Sponsors extends Component {
   }
 
   componentWillMount() {
-
+    this.props.fetchSponsors();
   }
 
-  componentDidMount() {
-    this.props.fetchSponsors()
-  }
+  submit = (data, files) =>{
+    this.props.addSponsor(data, files);
+  };
 
   render() {
-    const sponsors = this.props.sponsors;
+    const {sponsors, sponsorAdded} = this.props;
     if (sponsors){
       return (
         <div>
           <h2>FHCK Sponsors and doners</h2>
+          <Grid>
+            <Grid.Row columns='2' vertical>
+              <Grid.Column width='10'>
+                {sponsorAdded==='ok'?<div className="ui primary message">
+                  <p>Sponsor added successfully ...</p>
+                </div>: ''}
+                <ListSponsors sponsors={sponsors}/>
+              </Grid.Column>
+              <Grid.Column width='6'>
+                <AddSponsor submit={this.submit}/>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </div>
       );
     } else {
-      <Loading/>
+      return (
+        <Loading/>
+      );
     }
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    sponsors: state.admin.sponsors
+    sponsors: state.admin.sponsors,
+    sponsorAdded: state.admin.status
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchSponsors: () => dispatch(fetchSponsors())
+    fetchSponsors: () => dispatch(fetchSponsors()),
+    addSponsor: (sponsor) => dispatch(addSponsor(sponsor))
   }
 };
 

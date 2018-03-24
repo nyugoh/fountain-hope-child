@@ -90,7 +90,7 @@ export const sendMessage = (message) => (dispatch) =>{
   });
 };
 
-const uploadFiles = (files) =>{
+export const uploadFiles = (files) =>{
   if(!files) return;
   let form = new FormData();
   for(let i in files) form.append(files[i].name, files[i]);
