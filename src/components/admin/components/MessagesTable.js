@@ -14,8 +14,8 @@ function MessagesTable(props) {
               }
             </td>
             <td>{message.to}</td>
-            <td>{message.fromName}</td>
-            <td>{message.body}</td>
+            <td>{message.fromEmail}</td>
+            <td>{message.body.length >30?message.body.substring(0, 30)+ ' ...': message.body}</td>
             <td>
               <Icon name='star green'/>
               <Icon name='archive blue'/>
