@@ -26,13 +26,14 @@ class Messages extends Component {
               <th className="ui sortable">Status</th>
               <th className="ui sortable">To</th>
               <th className="ui sortable">From</th>
-              <th>Body</th>
+              <th className="ui sortable">Date</th>
+              <th>Message</th>
               <th>Actions</th>
             </tr>
             </thead>
             <MessagesTable messages={messages}/>
             <tfoot>
-            <tr><th colspan="5">
+            <tr><th colspan="6">
               <div className="ui right floated pagination menu tiny">
                 <a className="icon item">
                   <i className="left chevron icon"></i>

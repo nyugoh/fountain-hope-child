@@ -1,4 +1,6 @@
 import React from 'react';
+import moment from 'moment';
+import {Link} from 'react-router-dom';
 import {Icon } from 'semantic-ui-react';
 
 function MessagesTable(props) {
@@ -6,7 +8,7 @@ function MessagesTable(props) {
     <tbody>
       {props.messages.map((message, index)=>{
         return(
-          <tr id={index}>
+          <tr id={index} onClick={() => showMessage(message)}>
             <td>
               {message.isRead?
                 <div class="ui ribbon label">Read</div>:
@@ -15,6 +17,7 @@ function MessagesTable(props) {
             </td>
             <td>{message.to}</td>
             <td>{message.fromEmail}</td>
+            <td>{moment(message.createdAt).format('DD/MMMM/YYYY')}</td>
             <td>{message.body.length >30?message.body.substring(0, 30)+ ' ...': message.body}</td>
             <td>
               <Icon name='star green'/>
@@ -28,4 +31,9 @@ function MessagesTable(props) {
   );
 }
 
+function showMessage(message) {
+  {/*<div class="ui standard demo button">Standard Modal</div>*/}
+  {/*$('.standard.demo.modal')*/}
+    {/*.modal('attach events', '.standard.demo.button')*/}
+}
 export default MessagesTable;
