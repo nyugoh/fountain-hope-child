@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {fetchMessages} from "../../actions/admin";
 import MessagesTable from './components/MessagesTable';
 import Loading from '../../components/panels/Loading';
+import {getPages} from "../../global/Pagination";
 
 class Messages extends Component {
   constructor(props) {
@@ -13,21 +14,10 @@ class Messages extends Component {
     this.props.fetchMessages(this.props.history.location.search);
   }
 
-  getPages = (total) =>{
-    var pages;
-    var perPage = 2;
-    pages = total/perPage;
-    total%perPage > 0 ? pages++: '';
-    var url = [];
-    for(let i=1;i<=pages;i++)
-      url[i-1] = `/admin/messages?page=${i}`;
-    return url;
-  };
-
   render() {
     const {messages, total} = this.props;
     if (messages){
-      let pages = this.getPages(total);
+      let pages = getPages(total, '/admin/messages');
       // let unread; {messages.map(message=>{ !message.isRead? unread += 1:'';})}
       return (
         <div>
