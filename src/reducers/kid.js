@@ -14,7 +14,7 @@ const initialState = {
   isFetching: true
 };
 
-export const kid = (state=initialState, action) => {
+const kids = (state=initialState, action) => {
   switch (action.type) {
     case KID_ADDED:
       return action.payload;
@@ -49,3 +49,5 @@ export const kid = (state=initialState, action) => {
       return state;
   }
 };
+
+export default kids;

@@ -42,11 +42,11 @@ export const endFetchingKid = (kid) => ({
   payload: kid
 });
 
-export const fetchKids = () => (dispatch) => {
-  let apiEnd = '/api/kids';
+export const fetchKids = (search) => (dispatch) => {
+  let apiEnd = '/api/kids'+search;
   dispatch(startFetchingKids());
   return axios.get(apiEnd).then( (res)=> {
-    dispatch(endFetchingKids(res.data.kids))
+    dispatch(endFetchingKids(res.data))
   }).catch( err => {
     dispatch(apiErrorOccured(err));
   });

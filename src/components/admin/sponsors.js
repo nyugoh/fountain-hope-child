@@ -48,18 +48,14 @@ class Sponsors extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    sponsors: state.admin.sponsors,
-    sponsorAdded: state.admin.status
-  }
-};
+const mapStateToProps = (state) => ({
+  sponsors: state.admin.sponsors,
+  sponsorAdded: state.admin.status
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchSponsors: (search) => dispatch(fetchSponsors(search)),
-    addSponsor: (sponsor) => dispatch(addSponsor(sponsor))
-  }
-};
+const mapDispatchToProps = (dispatch) => ({
+  fetchSponsors: (search) => dispatch(fetchSponsors(search)),
+  addSponsor: (sponsor) => dispatch(addSponsor(sponsor))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sponsors);

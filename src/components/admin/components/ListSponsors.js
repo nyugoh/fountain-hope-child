@@ -1,5 +1,6 @@
 import React from 'react';
 import {getPages} from "../../../global/Pagination";
+import moment from "moment/moment";
 
 function ListSponsors(props) {
   const {sponsors, total} = props.sponsors;
@@ -20,6 +21,8 @@ function ListSponsors(props) {
           <th className='ui sortable'>Name</th>
           <th>Email</th>
           <th>Message</th>
+          <th>Status</th>
+          <th>Date</th>
         </tr>
         </thead>
         <tbody>
@@ -29,6 +32,8 @@ function ListSponsors(props) {
               <td>{sponsor.fullName}</td>
               <td>{sponsor.email}</td>
               <td>{sponsor.message.length>50? sponsor.message.substring(0, 50)+' ...': sponsor.message}</td>
+              <td><div class="ui ribbon label green">Showing</div></td>
+              <td>{moment(sponsor.createdAt).format('DD/MMMM/YYYY')}</td>
             </tr>
           );
         })}
