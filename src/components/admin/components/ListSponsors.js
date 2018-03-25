@@ -1,8 +1,10 @@
 import React from 'react';
+import {getPages} from "../../../global/Pagination";
 
 function ListSponsors(props) {
-  const sponsors = props.sponsors;
+  const {sponsors, total} = props.sponsors;
   const none = sponsors.length === 0;
+  let pages = getPages(total, '/admin/sponsors');
   // TODO:: Add edit and delete sponsors, toggle them on screen
   return (
     <div>
@@ -31,6 +33,21 @@ function ListSponsors(props) {
           );
         })}
         </tbody>
+        <tfoot>
+        <tr><th colspan="6">
+          <div className="ui right floated pagination menu tiny">
+            <a className="icon item">
+              <i className="left chevron icon"></i>
+            </a>
+            {pages.map((url, index)=>{
+              return (<a className="item" href={url}>{index+1}</a>)
+            })}
+            <a className="icon item">
+              <i className="right chevron icon"></i>
+            </a>
+          </div>
+        </th>
+        </tr></tfoot>
       </table>
     </div>
   );

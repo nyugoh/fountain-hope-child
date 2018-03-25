@@ -12,7 +12,7 @@ class Sponsors extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchSponsors();
+    this.props.fetchSponsors(this.props.history.location.search);
   }
 
   submit = (data, files) =>{
@@ -57,7 +57,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchSponsors: () => dispatch(fetchSponsors()),
+    fetchSponsors: (search) => dispatch(fetchSponsors(search)),
     addSponsor: (sponsor) => dispatch(addSponsor(sponsor))
   }
 };

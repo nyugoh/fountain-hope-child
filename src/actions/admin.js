@@ -3,7 +3,6 @@ import axios from 'axios';
 import {uploadFiles} from "./kids";
 
 export const fetchMessages = (search) => dispatch =>{
-  console.log(search);
   axios.get(`/api/messages${search?search:''}`).then( response =>{
     dispatch({
       type: types.FETCHED_MESSAGE,
@@ -14,11 +13,11 @@ export const fetchMessages = (search) => dispatch =>{
   });
 };
 
-export const fetchSponsors = () => dispatch =>{
-  axios.get('/api/sponsors').then( response=>{
+export const fetchSponsors = (search) => dispatch =>{
+  axios.get(`/api/sponsors${search?search:''}`).then( response=>{
     dispatch({
       type: types.FETCHED_SPONSORS,
-      sponsors: response.data.sponsors
+      sponsors: response.data
     });
   }).catch( error =>{
 
