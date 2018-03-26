@@ -34,7 +34,7 @@ class ListKids extends Component {
             <Grid.Column width='10'>
               <h3>Kids Stories at FHCK</h3>
               {!!kids && <Story kids={kids}/>}
-              <div className="ui right floated pagination menu medium">
+              <div className="ui right floated pagination menu tiny">
                 <a className="icon item">
                   <i className="left chevron icon"></i>
                 </a>

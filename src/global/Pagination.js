@@ -4,7 +4,7 @@
 */
 export const getPages = (total, uri) =>{
   var pages;
-  var perPage = 2;
+  var perPage = 5;
   pages = total/perPage;
   total%perPage > 0 ? pages++: '';
   var url = [];

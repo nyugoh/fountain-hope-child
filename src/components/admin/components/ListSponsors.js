@@ -4,7 +4,7 @@ import moment from "moment/moment";
 
 function ListSponsors(props) {
   const {sponsors, total} = props.sponsors;
-  const none = sponsors.length === 0;
+  const none = total === 0;
   let pages = getPages(total, '/admin/sponsors');
   // TODO:: Add edit and delete sponsors, toggle them on screen
   return (
