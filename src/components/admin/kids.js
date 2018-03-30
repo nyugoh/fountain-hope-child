@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {Icon} from 'semantic-ui-react';
+import {Icon, Modal, Button} from 'semantic-ui-react';
 import {fetchKids} from "../../actions/kids";
 import Loading from '../../components/panels/Loading';
 import moment from "moment/moment";
@@ -26,8 +26,8 @@ class Kids extends Component {
       let pages = getPages(total, '/admin/kids');
       return (
         <div>
-          {none? <div class="ui info message">
-            <div class="header">Ooopps... !!</div>
+          {none? <div className="ui info message">
+            <div className="header">Ooopps... !!</div>
             <p>There are no kids yet.</p>
             <p>Use the add kids to add them.</p>
           </div>:<h4>List of kids</h4>
@@ -58,10 +58,31 @@ class Kids extends Component {
                     <Link to='/admin'><Icon name='large pencil blue'/></Link>
                   </td>
                   <td>
-                    <Link to='/admin'><Icon name='large lock green'/></Link>
+                    <Modal size='tiny' trigger={<Icon name='large lock green'/>}>
+                      <Modal.Header>
+                        Delete {`${kid.firstName} ${kid.middleName} ${kid.sirName}`}
+                      </Modal.Header>
+                      <Modal.Content>
+                        <p>Are you sure you want to delete this kid ?</p>
+                      </Modal.Content>
+                      <Modal.Actions>
+                        <Button negative>
+                          No
+                        </Button>
+                        <Button positive icon='checkmark' labelPosition='right' content='Yes' />
+                      </Modal.Actions>
+                    </Modal>
                   </td>
                   <td>
-                    <Link to='/admin'><Icon name='large trash red'/></Link>
+                    <Modal
+                      trigger={<Icon name='large trash red'/>}
+                      header={`Delete${kid.firstName} !`}
+                      content='You will lose all the information about the kid.'
+                      actions={[
+                        { key: 'cancel', content: 'Cancel'},
+                        { key: 'done', content: 'Delete', danger: true },
+                      ]}
+                    />
                   </td>
                 </tr>
               );
