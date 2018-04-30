@@ -11,7 +11,8 @@ const {
 } = types;
 
 const initialState = {
-  isFetching: true
+  isFetching: true,
+  kids: []
 };
 
 const kids = (state=initialState, action) => {
