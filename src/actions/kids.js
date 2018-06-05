@@ -1,23 +1,14 @@
-import types from "../types";
+import * as types from "../types";
 import api from '../store/api';
 import axios from 'axios';
 
-const {
-  KID_ADDED,
-  START_FETCHING_KIDS,
-  END_FETCHING_KIDS,
-  API_ERROR,
-  ADDED_UPDATE,
-  MESSAGE_SENT
-} = types;
-
 const apiErrorOccured = (errors) => ({
-  type: API_ERROR,
+  type: types.API_ERROR,
   payload: errors
 });
 
 const kidAdded = (kid) => ({
-  type: KID_ADDED,
+  type: types.KID_ADDED,
   payload: kid
 });
 
@@ -28,32 +19,19 @@ export const addKid = (kid, files) => (dispatch) =>
     dispatch(kidAdded(kid));
   });
 
-export const startFetchingKids = () => ({
-  type: START_FETCHING_KIDS
-});
-
-export const endFetchingKids = (kidsArray) => ({
-  type: END_FETCHING_KIDS,
-  payload: kidsArray
-});
-
 export const endFetchingKid = (kid) => ({
-  type: END_FETCHING_KIDS,
+  type: types.KIDS_FETCHED,
   payload: kid
 });
 
-export const fetchKids = (search) => (dispatch) => {
-  let apiEnd = '/api/kids'+search;
-  dispatch(startFetchingKids());
-  return axios.get(apiEnd).then( (res)=> {
-    dispatch(endFetchingKids(res.data))
-  }).catch( err => {
-    dispatch(apiErrorOccured(err));
+export const fetchKids = (search) => (dispatch) => axios.get(`/api/kids${search?search:"?page=1"}`).then( (res)=> {
+    dispatch({
+        type: types.KIDS_FETCHED,
+        payload: res.data
+    })
   });
-};
 
 export const getKid = (id) => (dispatch) => {
-  dispatch(startFetchingKids());
   return axios.get('/api/kid/'+id).then( res => {
     dispatch(endFetchingKid(res.data.kid));
   }).catch( err => {
@@ -62,7 +40,6 @@ export const getKid = (id) => (dispatch) => {
 };
 
 export const updateKid = (kid, id, files) => (dispatch) => {
-  dispatch(startFetchingKids());
   return axios.put('/api/kid/'+id, {kid}).then( res => {
     dispatch(endFetchingKid(res.data.kid));
     uploadFiles(files);
@@ -75,7 +52,7 @@ export const addUpdate = (update, files) => (dispatch) => {
   uploadFiles(files);
   return axios.post('/api/updates', {update}).then( response => {
     dispatch({
-      type: ADDED_UPDATE,
+      type: types.ADDED_UPDATE,
       response
     })
   })
@@ -84,7 +61,7 @@ export const addUpdate = (update, files) => (dispatch) => {
 export const sendMessage = (message) => (dispatch) =>{
   return axios.post('/api/messages', {message}).then( (response) =>{
     dispatch({
-      type: MESSAGE_SENT,
+      type: types.MESSAGE_SENT,
       payload: response
     })
   });

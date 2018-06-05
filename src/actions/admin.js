@@ -1,4 +1,4 @@
-import types from '../types';
+import * as types from '../types';
 import axios from 'axios';
 import {uploadFiles} from "./kids";
 

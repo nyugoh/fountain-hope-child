@@ -1,54 +1,34 @@
-import types from "../types";
-
-const {
-  KID_ADDED,
-  START_FETCHING_KIDS,
-  END_FETCHING_KIDS,
-  END_FETCHING_KID,
-  KID_UPDATED,
-  ADDED_UPDATE,
-  MESSAGE_SENT
-} = types;
+import * as types from "../types";
 
 const initialState = {
-  isFetching: true,
-  kids: []
+    kids: []
 };
 
-const kids = (state=initialState, action) => {
-  switch (action.type) {
-    case KID_ADDED:
-      return action.payload;
-    case START_FETCHING_KIDS:
-      return {
-        isFetching: true
-      };
-    case END_FETCHING_KIDS:
-      return {
-        isFetching: false,
-        kids: action.payload
-      };
-    case END_FETCHING_KID:
-      return {
-        isFetching: false,
-        kid: action.payload
-      };
-    case KID_UPDATED:
-      return {
-        isFetching: false,
-        kid: action.payload
-      };
-    case ADDED_UPDATE:
-      return {
-        status: action.response
-      };
-    case MESSAGE_SENT:
-      return {
-        status: action.payload
-      };
-    default:
-      return state;
-  }
+const Kids = (state=initialState, action={}) => {
+    const { type, payload } = action;
+    switch (type) {
+        case types.KIDS_FETCHED:
+            return {
+                kids: [...state.kids, ...payload.kids],
+                page: payload.page
+            };
+        case types.KID_ADDED:
+          return [...state, payload];
+        case types.KID_UPDATED:
+          return {
+            kid: action.payload
+          };
+        case types.ADDED_UPDATE:
+          return {
+            status: action.response
+          };
+        case types.MESSAGE_SENT:
+          return {
+            status: action.payload
+          };
+        default:
+          return state;
+    }
 };
 
-export default kids;
+export default Kids;
