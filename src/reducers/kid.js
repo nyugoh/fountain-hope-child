@@ -22,9 +22,10 @@ const Kids = (state=initialState, action={}) => {
           return {
             status: action.response
           };
-        case types.MESSAGE_SENT:
+      case types.MESSAGE_SENT:
           return {
-            status: action.payload
+            ...state,
+            sent: payload
           };
         default:
           return state;

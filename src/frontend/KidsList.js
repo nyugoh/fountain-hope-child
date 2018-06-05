@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Grid, Button} from 'semantic-ui-react';
+import {Grid, Button, Icon } from 'semantic-ui-react';
 import Message from '../components/forms/Contact-message';
 import Story from '../components/panels/story';
 import SponsorMessage from '../components/panels/sponsors';
@@ -11,9 +11,13 @@ class ListKids extends Component {
         super(props);
         this.state = {
             page: 1,
-            isFetching: false
+            isFetching: false,
+          loading: false,
+          error: []
         }
     };
+
+    sendMessage = message => (this.props.sendMessage(message));
 
     loadMore = () => {
         this.setState({ isFetching: true});
@@ -36,9 +40,11 @@ class ListKids extends Component {
               positive>More ...</Button>
         </Grid.Column>
         <Grid.Column width='6'>
-          <Message sendMessage={this.sendMessage}/>
-          <br/><br/>
-          <hr/>
+          <Message
+            loading={this.state.loading}
+            error={this.state.error}
+            sendMessage={this.sendMessage}/>
+          <div className="ui horizontal divider"><Icon name={'crosshairs'}/></div>
           <SponsorMessage/>
         </Grid.Column>
       </Grid.Row>
@@ -52,4 +58,4 @@ const mapStateToProps = (state) => ({
   page: state.kids.page
 });
 
-export default connect(mapStateToProps, { fetchKids })(ListKids);
+export default connect(mapStateToProps, { fetchKids, sendMessage })(ListKids);

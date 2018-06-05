@@ -58,14 +58,12 @@ export const addUpdate = (update, files) => (dispatch) => {
   })
 };
 
-export const sendMessage = (message) => (dispatch) =>{
-  return axios.post('/api/messages', {message}).then( (response) =>{
-    dispatch({
-      type: types.MESSAGE_SENT,
-      payload: response
-    })
-  });
-};
+export const sendMessage = (message) => (dispatch) => axios.post('/api/messages', {message}).then( (response) =>{
+  dispatch({
+    type: types.MESSAGE_SENT,
+    payload: response
+  })
+});
 
 export const uploadFiles = (files) =>{
   if(!files) return;
