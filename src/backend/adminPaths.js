@@ -20,16 +20,18 @@ class Admin extends Component {
         <AdminMenu/>
         <Grid.Row>
           <Grid.Column>
-            <Route path="/admin" exact component={AdminIndex}/>
-            <Route path="/admin/kids" exact component={AdminKids}/>
-            <Route path="/admin/messages" exact component={Messages}/>
-            <Route path="/admin/sponsors" exact component={Sponsors}/>
-            <Route path="/admin/login" exact component={Login}/>
-            <Route path="/admin/signup" exact component={Signup}/>
-            <Route path='/admin/kids/add' exact component={AddKid} />
-            <Route path='/admin/kids/profile/:kidId' exact component={Profile} />
-            <Route path='/admin/kids/:kidId/edit' exact component={Edit} />
-            <Route path='/admin/kids/:kidId/update' exact component={KidUpdate} />
+            <div className={'ui container'}>
+              <Route path="/admin" exact component={AdminIndex}/>
+              <Route path="/admin/kids" exact component={AdminKids}/>
+              <Route path="/admin/messages" exact component={Messages}/>
+              <Route path="/admin/sponsors" exact component={Sponsors}/>
+              <Route path="/admin/login" exact component={Login}/>
+              <Route path="/admin/signup" exact component={Signup}/>
+              <Route path='/admin/kids/add' exact component={AddKid} />
+              <Route path='/admin/kids/profile/:kidId' exact component={Profile} />
+              <Route path='/admin/kids/:kidId/edit' exact component={Edit} />
+              <Route path='/admin/kids/:kidId/update' exact component={KidUpdate} />
+            </div>
           </Grid.Column>
         </Grid.Row>
       </Grid>
