@@ -61,7 +61,7 @@ export const addUpdate = (update, files) => (dispatch) => {
 export const sendMessage = (message) => (dispatch) => axios.post('/api/messages', {message}).then( (response) =>{
   dispatch({
     type: types.MESSAGE_SENT,
-    payload: response
+    payload: response.data
   })
 });
 

@@ -5,6 +5,7 @@ import { Grid } from 'semantic-ui-react';
 import Message from '../forms/message';
 import SponsorMessage from '../panels/sponsors';
 import KidUpdates from "../panels/KidUpdates";
+import { sendMessage } from "../../actions/kids";
 
 class Profile extends Component {
   constructor(props) {
@@ -14,11 +15,7 @@ class Profile extends Component {
     };
   };
 
-  sendMessage = (message) => {
-    this.props.sendMessage(message).then( () =>{
-      this.props.getKid(this.props.match.params.kidId);
-    });
-  };
+  sendMessage = (message) => (this.props.sendMessage(message));
 
   render() {
     let { kids } = this.props;
@@ -59,12 +56,8 @@ class Profile extends Component {
   }
 }
 
-/*Profile.PropTypes = {
-
-};*/
-
 const mapStateToProps = state => ({
   kids: state.kids.kids
 });
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps, { sendMessage })(Profile);

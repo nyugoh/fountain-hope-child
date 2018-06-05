@@ -11,9 +11,7 @@ class ListKids extends Component {
         super(props);
         this.state = {
             page: 1,
-            isFetching: false,
-          loading: false,
-          error: []
+            isFetching: false
         }
     };
 
@@ -40,10 +38,7 @@ class ListKids extends Component {
               positive>More ...</Button>
         </Grid.Column>
         <Grid.Column width='6'>
-          <Message
-            loading={this.state.loading}
-            error={this.state.error}
-            sendMessage={this.sendMessage}/>
+          <Message sendMessage={this.sendMessage}/>
           <div className="ui horizontal divider"><Icon name={'crosshairs'}/></div>
           <SponsorMessage/>
         </Grid.Column>

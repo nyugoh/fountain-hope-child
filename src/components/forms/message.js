@@ -1,31 +1,42 @@
 import React, {Component} from 'react';
 import {Form, TextArea, Button} from 'semantic-ui-react';
+import Notification from "../panels/Notifcation";
 
 class Message extends Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {
       data: {
         to: props.kidId
       },
-      errors: []
+      errors: "",
+      loading: false,
+      sent: false
     };
   };
 
   handleChange = (e) =>{
-    this.setState({data:{...this.state.data, [e.target.name]: e.target.value}});
+    this.setState({data:{...this.state.data, to: this.props.kidId, [e.target.name]: e.target.value}});
   };
 
   submit = () =>{
-    this.props.sendMessage(this.state.data);
+    this.setState({ loading: true });
+    this.props.sendMessage(this.state.data).then( () => {
+      this.setState({loading: false});
+      this.setState({ sent: true });
+    }).catch(error =>{
+      this.setState({loading: false});
+      this.setState({ errors: error.message });
+    })
   };
 
   render() {
+    const { errors, sent, loading, data } = this.state;
     return (
       <div>
         <hr/>
         <h3>Leave a message for {this.props.name}</h3>
-        <Form size='large' onSubmit={this.submit}>
+        <Form size='large' onSubmit={this.submit} loading={loading}>
           <Form.Group>
             <Form.Input placeholder='Name' width={8} required name='fromName' onChange={this.handleChange} />
             <Form.Input placeholder='email' width={8} required name='fromEmail' onChange={this.handleChange} />
@@ -34,7 +45,9 @@ class Message extends Component {
             <Form.Field width={16} control={TextArea} name='body' onChange={this.handleChange} placeholder='Enter your well wishes message here...' />
           </Form.Group>
           <br/>
-          <Button positive fluid className='ui right floated' success>SEND  <i style={{'marginLeft':'8px'}} className='icon send'/></Button>
+          <Button positive fluid success>SEND  <i style={{'marginLeft':'8px'}} className='icon send'/></Button>
+          {errors !=="" && <Notification color={"red"} message={errors}/>}
+          {sent === true && <Notification color={'teal'} message={'Message sent successfully...'}/>}
         </Form>
         <hr/>
       </div>
