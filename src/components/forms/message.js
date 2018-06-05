@@ -31,7 +31,7 @@ class Message extends Component {
   };
 
   render() {
-    const { errors, sent, loading, data } = this.state;
+    const { errors, sent, loading } = this.state;
     return (
       <div>
         <hr/>
@@ -49,7 +49,6 @@ class Message extends Component {
           {errors !=="" && <Notification color={"red"} message={errors}/>}
           {sent === true && <Notification color={'teal'} message={'Message sent successfully...'}/>}
         </Form>
-        <hr/>
       </div>
     );
   }

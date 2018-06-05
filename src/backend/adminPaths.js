@@ -26,10 +26,10 @@ class Admin extends Component {
             <Route path="/admin/sponsors" exact component={Sponsors}/>
             <Route path="/admin/login" exact component={Login}/>
             <Route path="/admin/signup" exact component={Signup}/>
-            <Route path='/kids/add' exact component={AddKid} />
-            <Route path='/kids/profile/:kidId' exact component={Profile} />
-            <Route path='/kids/:kidId/edit' exact component={Edit} />
-            <Route path='/kids/:kidId/update' exact component={KidUpdate} />
+            <Route path='/admin/kids/add' exact component={AddKid} />
+            <Route path='/admin/kids/profile/:kidId' exact component={Profile} />
+            <Route path='/admin/kids/:kidId/edit' exact component={Edit} />
+            <Route path='/admin/kids/:kidId/update' exact component={KidUpdate} />
           </Grid.Column>
         </Grid.Row>
       </Grid>

@@ -11,19 +11,27 @@ class App extends Component {
   render() {
     return (
       <div>
-        <MainMenu/>
-        <div className="ui container app-container">
-          <Switch>
-            <Route path='/' exact component={HomePage}/>
-            <Route path='/admin' component={Admin}/>
-            <Route path='/kids' component={Kids}/>
-            <Route path='/donate' component={Kids}/>
-          </Switch>
-        </div>
-        <Footer/>
+        <Switch>
+          <Route path='/admin' component={Admin}/>
+          <Route path='/' component={Home}/>
+        </Switch>
       </div>
     );
   }
 }
+
+const Home = () => {
+  return <div>
+    <MainMenu/>
+    <div className="ui container app-container">
+      <Switch>
+        <Route path='/' exact component={HomePage}/>
+        <Route path='/kids' component={Kids}/>
+        <Route path='/donate' component={Kids}/>
+      </Switch>
+    </div>
+    <Footer/>
+  </div>
+};
 
 export default App;

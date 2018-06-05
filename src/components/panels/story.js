@@ -15,16 +15,6 @@ function Story({kids}) {
               <span className='cinema'>Age:{moment().diff(moment(kid.dob), 'years')}yrs Gender:{kid.gender}</span>
             </Item.Meta>
             <Item.Description>{kid.story}</Item.Description>
-            <Item.Extra>
-              <Button  size='tiny' color='green'>
-                Send message
-                <Icon name='comment outline right'/>
-              </Button>
-              <Button primary size='tiny' floated='right'>
-               Sponsor
-               <Icon name='payment right' />
-              </Button>
-            </Item.Extra>
           </Item.Content>
         </Item>
       })}
