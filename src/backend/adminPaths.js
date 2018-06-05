@@ -2,12 +2,16 @@ import React, {Component} from 'react';
 import { Route } from "react-router-dom";
 import { Grid } from 'semantic-ui-react';
 import AdminMenu from '../components/menus/Admin';
-import AdminIndex from '../components/admin';
+import AdminIndex from '../components/admin/index';
 import Messages from '../components/admin/messages';
 import Sponsors from '../components/admin/sponsors'
 import AdminKids from '../components/admin/kids'
 import Login from '../containers/Login'
 import Signup from '../containers/Signup'
+import Profile from "../components/kids/profile";
+import Edit from "../components/kids/edit";
+import AddKid from "../components/kids/add";
+import KidUpdate from "../components/kids/update";
 
 class Admin extends Component {
   render() {
@@ -22,6 +26,10 @@ class Admin extends Component {
             <Route path="/admin/sponsors" exact component={Sponsors}/>
             <Route path="/admin/login" exact component={Login}/>
             <Route path="/admin/signup" exact component={Signup}/>
+            <Route path='/kids/add' exact component={AddKid} />
+            <Route path='/kids/profile/:kidId' exact component={Profile} />
+            <Route path='/kids/:kidId/edit' exact component={Edit} />
+            <Route path='/kids/:kidId/update' exact component={KidUpdate} />
           </Grid.Column>
         </Grid.Row>
       </Grid>

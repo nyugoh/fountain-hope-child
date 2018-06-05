@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Grid} from 'semantic-ui-react';
-import Message from '../forms/Contact-message';
-import Story from '../panels/story';
-import SponsorMessage from '../panels/sponsors';
-import {fetchKids, sendMessage} from "../../actions/kids";
-import Loading from '../panels/Loading';
-import {getPages} from "../../global/Pagination";
+import Message from '../components/forms/Contact-message';
+import Story from '../components/panels/story';
+import SponsorMessage from '../components/panels/sponsors';
+import {fetchKids, sendMessage} from "../actions/kids";
+import Loading from '../components/panels/Loading';
+import {getPages} from "../global/Pagination";
 
 class ListKids extends Component {
   componentWillMount() {
@@ -36,13 +36,13 @@ class ListKids extends Component {
               {!!kids && <Story kids={kids}/>}
               <div className="ui right floated pagination menu tiny">
                 <a className="icon item">
-                  <i className="left chevron icon"></i>
+                  <i className="left chevron icon"/>
                 </a>
                 {pages.map((url, index)=>{
                   return (<a className="item" href={url}>{index+1}</a>)
                 })}
                 <a className="icon item">
-                  <i className="right chevron icon"></i>
+                  <i className="right chevron icon"/>
                 </a>
               </div>
             </Grid.Column>
