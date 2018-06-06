@@ -59,7 +59,9 @@ class Kids extends Component {
                 <td>{`${kid.firstName} ${kid.middleName} ${kid.sirName}`}</td>
                 <td>{kid.email}</td>
                 <td>{kid.story.length>50? kid.story.substring(0, 50)+' ...': kid.story}</td>
-                <td><div class="ui ribbon label green">Showing</div></td>
+                <td>{kid.isShowing?<div className="ui ribbon label green">Showing</div>:
+                  <div className="ui ribbon label teal">Archive</div>
+              }</td>
                 <td>{moment(kid.dob).format('DD/MMMM/YYYY')}</td>
                 <td>
                   <Link to={`/admin/kids/${kid._id}/edit`}><Icon name='large pencil blue'/></Link>

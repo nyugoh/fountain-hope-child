@@ -30,7 +30,7 @@ const Kids = (state=initialState, action={}) => {
         };
       case types.KID_ARCHIVED:
         kids = state.kids.map( kid => {
-          if (kid._id !== payload._id)
+          if (kid._id === payload._id)
             return payload;
           else
             return kid;

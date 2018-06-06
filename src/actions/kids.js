@@ -20,7 +20,7 @@ export const deleteKid = (kid) => (dispatch) => axios.delete(`/api/kids/${kid}`)
   });
 });
 
-export const archiveKid = (kid) => (dispatch) => axios.get(`/api/kids/${kid}/archive`).then(res => {
+export const archiveKid = (kid) => (dispatch) => axios.post(`/api/kids/${kid}/archive`).then(res => {
   dispatch({
     type: types.KID_ARCHIVED,
     payload: res.data.kid
