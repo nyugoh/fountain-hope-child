@@ -56,15 +56,12 @@ export const updateKid = (kid) => (dispatch) => axios.put(`/api/kid/${kid._id}`,
   dispatch(apiErrorOccured(err));
 });
 
-export const addUpdate = (update, files) => (dispatch) => {
-  uploadFiles(files);
-  return axios.post('/api/updates', {update}).then( response => {
-    dispatch({
-      type: types.ADDED_UPDATE,
-      response
-    })
+export const addUpdate = (update) => (dispatch) => axios.post('/api/updates', {update}).then( response => {
+  dispatch({
+    type: types.ADDED_UPDATE,
+    payload: response.data.update
   })
-};
+});
 
 export const sendMessage = (message) => (dispatch) => axios.post('/api/messages', {message}).then( (response) =>{
   dispatch({

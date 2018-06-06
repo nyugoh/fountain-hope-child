@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import moment from 'moment';
 import {Form, Grid, TextArea, Button} from 'semantic-ui-react';
-import {addUpdate, getKid} from '../../actions/kids';
+import { addUpdate, uploadFiles } from '../../actions/kids';
 import MessageDialog from '../panels/Message';
 
 class KidUpdate extends Component {
@@ -32,8 +32,13 @@ class KidUpdate extends Component {
   };
 
   submit = () => {
-    this.props.addUpdate(this.state.data, this.state.files).then( () => {
-      this.props.history.push('/kids/profile/'+this.props.match.params.kidId);
+    let form = new FormData();
+    let files = this.state.files;
+    for(let i in files) form.append(files[i].name, files[i]);
+    this.props.addUpdate(this.state.data).then( () => {
+      this.props.uploadFiles(form).then( ()=> {
+
+      });
     });
   };
 
@@ -81,4 +86,4 @@ const mapStateToProps = state => ({
   kids: state.kids.kids
 });
 
-export default connect(mapStateToProps, { addUpdate })(KidUpdate);
+export default connect(mapStateToProps, { addUpdate, uploadFiles })(KidUpdate);

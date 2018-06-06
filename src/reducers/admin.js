@@ -1,8 +1,8 @@
 import * as types from '../types';
 
 const initialState = {
-  message: "No messages",
-  messages:{}
+  messages:{},
+  updates: []
 };
 
 const admin = (state=initialState, action) =>{
@@ -10,6 +10,7 @@ const admin = (state=initialState, action) =>{
   switch (type){
     case types.FETCHED_MESSAGE:
       return {
+        ...state,
         messages: [...payload.body],
         total: payload.total
       };
@@ -22,14 +23,24 @@ const admin = (state=initialState, action) =>{
         ]
       };
     case types.FILES_UPLOADED:
-      console.log(payload);
       return {
         ...state,
         fileUpload: payload.status
       };
+    case types.FETCHED_UPDATES:
+      return {
+        ...state,
+        updates: [...payload.updates]
+      };
+    case types.ADDED_UPDATE:
+      return {
+        ...state,
+        updates: [...state.updates, ...payload]
+      };
     case types.FETCHED_SPONSORS:
       return {
-        sponsors: action.sponsors
+        ...state,
+        sponsors: [...payload]
       };
     case types.ADDED_SPONSOR:
       return {

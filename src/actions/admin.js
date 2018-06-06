@@ -11,16 +11,23 @@ export const fetchMessages = (search) => dispatch => axios.get(`/api/messages${s
 
 });
 
-export const fetchSponsors = (search) => dispatch =>{
-  axios.get(`/api/sponsors${search?search:''}`).then( response=>{
-    dispatch({
-      type: types.FETCHED_SPONSORS,
-      sponsors: response.data
-    });
-  }).catch( error =>{
-
+export const fetchUpdates = (search) => dispatch => axios.get(`/api/updates${search?search:''}`).then( response =>{
+  dispatch({
+    type: types.FETCHED_UPDATES,
+    payload: response.data
   });
-};
+}).catch(error =>{
+
+});
+
+export const fetchSponsors = (search) => dispatch => axios.get(`/api/sponsors${search?search:''}`).then( response=>{
+  dispatch({
+    type: types.FETCHED_SPONSORS,
+    payload: response.data.sponsors
+  });
+}).catch( error =>{
+
+});
 
 export const addSponsor = (sponsor, files) => dispatch =>{
   uploadFiles(files);

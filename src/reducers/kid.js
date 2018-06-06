@@ -40,10 +40,6 @@ const Kids = (state=initialState, action={}) => {
           ...state,
           kids: [...kids]
         };
-      case types.ADDED_UPDATE:
-        return {
-          status: action.response
-        };
       default:
         return state;
     }
