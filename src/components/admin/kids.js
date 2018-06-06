@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {Icon, Modal, Button} from 'semantic-ui-react';
-import {fetchKids} from "../../actions/kids";
+import {fetchKids, deleteKid, archiveKid } from "../../actions/kids";
 import moment from "moment/moment";
+import DeleteModal from "../kids/delete";
+import ArchiveModal from "../kids/archive";
 
 class Kids extends Component {
   constructor(props) {
@@ -23,6 +25,10 @@ class Kids extends Component {
     })
   };
 
+  deleteKid = kid => this.props.deleteKid(kid);
+
+  archiveKid = kid => this.props.archiveKid(kid);
+
   render() {
     const { kids } = this.props;
     return (
@@ -38,7 +44,7 @@ class Kids extends Component {
           <tr>
             <th className='ui sortable'>Name</th>
             <th>Email</th>
-            <th>Message</th>
+            <th>Story</th>
             <th>Status</th>
             <th>Date of Birth</th>
             <th>Edit</th>
@@ -52,38 +58,21 @@ class Kids extends Component {
               <tr id={index}>
                 <td>{`${kid.firstName} ${kid.middleName} ${kid.sirName}`}</td>
                 <td>{kid.email}</td>
-                <td>{kid.story.length>50? kid.story.substring(0, 50)+' ...': kid.sotry}</td>
+                <td>{kid.story.length>50? kid.story.substring(0, 50)+' ...': kid.story}</td>
                 <td><div class="ui ribbon label green">Showing</div></td>
                 <td>{moment(kid.dob).format('DD/MMMM/YYYY')}</td>
                 <td>
-                  <Link to='/admin'><Icon name='large pencil blue'/></Link>
+                  <Link to={`/admin/kids/${kid._id}/edit`}><Icon name='large pencil blue'/></Link>
                 </td>
                 <td>
-                  <Modal size='tiny' trigger={<Icon name='large lock green'/>}>
-                    <Modal.Header>
-                      Delete {`${kid.firstName} ${kid.middleName} ${kid.sirName}`}
-                    </Modal.Header>
-                    <Modal.Content>
-                      <p>Are you sure you want to delete this kid ?</p>
-                    </Modal.Content>
-                    <Modal.Actions>
-                      <Button negative>
-                        No
-                      </Button>
-                      <Button positive icon='checkmark' labelPosition='right' content='Yes' />
-                    </Modal.Actions>
-                  </Modal>
+                  <ArchiveModal
+                    kid={kid}
+                    archiveKid={this.archiveKid.bind(this)}/>
                 </td>
                 <td>
-                  <Modal
-                    trigger={<Icon name='large trash red'/>}
-                    header={`Delete${kid.firstName} !`}
-                    content='You will lose all the information about the kid.'
-                    actions={[
-                      { key: 'cancel', content: 'Cancel'},
-                      { key: 'done', content: 'Delete', danger: true },
-                    ]}
-                  />
+                  <DeleteModal
+                    kid={kid}
+                    deleteKid={this.deleteKid.bind(this)}/>
                 </td>
               </tr>
             );
@@ -112,7 +101,8 @@ class Kids extends Component {
 const mapStateToProps = (state) => ({
   kids: state.kids.kids,
   page: state.kids.page,
-  isEnd: state.kids.isEnd
+  isEnd: state.kids.isEnd,
+  isDelete: state.admin.isDelete
 });
 
-export default connect(mapStateToProps, { fetchKids })(Kids);
+export default connect(mapStateToProps, { fetchKids, deleteKid, archiveKid })(Kids);

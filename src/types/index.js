@@ -19,3 +19,7 @@ export const FETCHED_SPONSORS = 'FETCHED_SPONSORS';
 export const ADDED_SPONSOR = 'ADDED_SPONSOR';
 
 export const FILES_UPLOADED = 'FILES_UPLOADED';
+
+export const KID_DELETED = 'KID_DELETED';
+
+export const KID_ARCHIVED = 'KID_ARCHIVED';
