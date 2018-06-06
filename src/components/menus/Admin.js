@@ -12,9 +12,9 @@ function Admin() {
         <Link to='/admin/sponsors' className='item'>Sponsors</Link>
         <Link to='/admin/donations' className='item'>Donations</Link>
         <span className="item right floated">
-              <Link to='/admin/login' className='item'>Login</Link>
-              <Link to='/admin/signup' className='item'>Sign Up</Link>
-            </span>
+            <Link to='/admin/login' className='item'>Login</Link>
+            <Link to='/admin/signup' className='item'>Sign Up</Link>
+        </span>
       </div>
     </Menu>
   );

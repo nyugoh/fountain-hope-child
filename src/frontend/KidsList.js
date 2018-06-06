@@ -10,8 +10,9 @@ class ListKids extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            page: 1,
-            isFetching: false
+          page: 1,
+          isFetching: false,
+          disabled: false
         }
     };
 
@@ -20,7 +21,8 @@ class ListKids extends Component {
     loadMore = () => {
         this.setState({ isFetching: true});
         this.props.fetchKids(`?page=${this.props.page+1}`).then( ()=>{
-            this.setState({ isFetching: false});
+          this.setState({ isFetching: false});
+          this.setState({ disabled: this.props.isEnd});
         })
     };
 
@@ -35,6 +37,7 @@ class ListKids extends Component {
           <Button
               onClick={this.loadMore}
               loading={this.state.isFetching}
+              disabled={this.state.disabled}
               positive>More ...</Button>
         </Grid.Column>
         <Grid.Column width='6'>
@@ -50,7 +53,8 @@ class ListKids extends Component {
 
 const mapStateToProps = (state) => ({
   kids: state.kids.kids,
-  page: state.kids.page
+  page: state.kids.page,
+  isEnd: state.kids.isEnd
 });
 
 export default connect(mapStateToProps, { fetchKids, sendMessage })(ListKids);
