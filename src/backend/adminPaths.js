@@ -37,6 +37,6 @@ class Admin extends Component {
       </Grid>
     );
   }
-};
+}
 
 export default Admin;

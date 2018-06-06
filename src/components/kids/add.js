@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Form, TextArea, Checkbox, Button} from 'semantic-ui-react';
-import {addKid, fetchKids} from "../../actions/kids";
+import {addKid, fetchKids, uploadFiles } from "../../actions/kids";
 import MessageDialog from "../panels/Message";
 import moment from 'moment';
 
@@ -47,13 +47,21 @@ class AddKid extends Component {
   };
 
   submit = () =>{
+    let form = new FormData();
+    let files = this.state.files;
+    for(let i in files) form.append(files[i].name, files[i]);
     if (this.isAccepted) {
+      this.setState({ loading: true });
       let kid = this.state.data;
       kid.fullName = `${kid.sirName} ${kid.firstName} ${kid.middleName}`;
       this.props.addKid(kid, this.state.files).then( () => {
-        this.props.fetchKids().then( ()=>{
-          this.props.history.push('/kids')
-        })
+         this.props.uploadFiles(form).then( ()=> {
+           this.props.history.push('/admin/kids')
+         });
+      }).catch(error => {
+        console.log(error);
+        this.setState({ loading: false });
+        this.setState({ errors: error.message });
       });
     } else {
       this.setState({ errors: { confirmationError: 'You need to confirm the validity of this information.'}})
@@ -61,11 +69,11 @@ class AddKid extends Component {
   };
 
   render() {
-    const {errors} = this.state;
+    const {errors, loading} = this.state;
     return (
       <div>
         <h2>Add a child</h2>
-        <Form size='large' onSubmit={this.submit}>
+        <Form size='large' onSubmit={this.submit} loading={loading}>
           <hr/>
           <h3>Personal Details</h3>
           <Form.Group widths='2'>
@@ -106,4 +114,4 @@ class AddKid extends Component {
   }
 }
 
-export default connect(null, {addKid, fetchKids})(AddKid);
+export default connect(null, {addKid, fetchKids, uploadFiles })(AddKid);

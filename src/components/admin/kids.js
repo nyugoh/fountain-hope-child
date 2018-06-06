@@ -95,6 +95,15 @@ class Kids extends Component {
           loading={this.state.isFetching}
           disabled={this.state.disabled}
           positive>More ...</Button>
+        <Button
+          onClick={() => {this.props.history.push('/admin/kids/add')}}
+          positive
+          floated={'right'}
+          icon
+          labelPosition={'right'}>
+          <Icon name={'plus'}/>
+          ADD
+        </Button>
       </div>
     );
   };

@@ -21,6 +21,12 @@ const admin = (state=initialState, action) =>{
         payload.message
         ]
       };
+    case types.FILES_UPLOADED:
+      console.log(payload);
+      return {
+        ...state,
+        fileUpload: payload.status
+      };
     case types.FETCHED_SPONSORS:
       return {
         sponsors: action.sponsors

@@ -1,5 +1,4 @@
 import * as types from "../types";
-import api from '../store/api';
 import axios from 'axios';
 
 const apiErrorOccured = (errors) => ({
@@ -7,17 +6,12 @@ const apiErrorOccured = (errors) => ({
   payload: errors
 });
 
-const kidAdded = (kid) => ({
-  type: types.KID_ADDED,
-  payload: kid
-});
-
-export const addKid = (kid, files) => (dispatch) =>
-  api.kids.add(kid).then( (kid) => {
-    (kid === undefined) ? kid={}: '';
-    uploadFiles(files);
-    dispatch(kidAdded(kid));
+export const addKid = (kid) => (dispatch) => axios.post('/api/kids', {kid}).then(res=> {
+  dispatch({
+    type: types.KID_ADDED,
+    payload: res.data.data.kid
   });
+});
 
 export const endFetchingKid = (kid) => ({
   type: types.KIDS_FETCHED,
@@ -65,13 +59,9 @@ export const sendMessage = (message) => (dispatch) => axios.post('/api/messages'
   })
 });
 
-export const uploadFiles = (files) =>{
-  if(!files) return;
-  let form = new FormData();
-  for(let i in files) form.append(files[i].name, files[i]);
-  return axios.post('/api/v1/images/upload', form).then((response) => {
-    // console.log(response);
-  }).catch((error) => {
-    console.log(error.message);
-  });
-};
+export const uploadFiles = (form) => dispatch => axios.post('/api/v1/images/upload', form).then(response => {
+  dispatch({
+    type: types.FILES_UPLOADED,
+    payload: response.data
+  })
+});
