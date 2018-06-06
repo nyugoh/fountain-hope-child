@@ -47,14 +47,14 @@ export const getKid = (id) => (dispatch) => {
   });
 };
 
-export const updateKid = (kid, id, files) => (dispatch) => {
-  return axios.put('/api/kid/'+id, {kid}).then( res => {
-    dispatch(endFetchingKid(res.data.kid));
-    uploadFiles(files);
-  }).catch( err => {
-    dispatch(apiErrorOccured(err));
+export const updateKid = (kid) => (dispatch) => axios.put(`/api/kid/${kid._id}`, {kid}).then( res => {
+  dispatch({
+    type: types.KID_UPDATED,
+    payload: res.data.kid
   });
-};
+}).catch( err => {
+  dispatch(apiErrorOccured(err));
+});
 
 export const addUpdate = (update, files) => (dispatch) => {
   uploadFiles(files);

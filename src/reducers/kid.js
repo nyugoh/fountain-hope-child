@@ -28,6 +28,7 @@ const Kids = (state=initialState, action={}) => {
           ...state,
           kids: [...kids]
         };
+      case types.KID_UPDATED:
       case types.KID_ARCHIVED:
         kids = state.kids.map( kid => {
           if (kid._id === payload._id)
@@ -38,10 +39,6 @@ const Kids = (state=initialState, action={}) => {
         return {
           ...state,
           kids: [...kids]
-        };
-      case types.KID_UPDATED:
-        return {
-          kid: action.payload
         };
       case types.ADDED_UPDATE:
         return {

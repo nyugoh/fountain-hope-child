@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getKid, updateKid, fetchKids} from '../../actions/kids';
+import { updateKid, uploadFiles } from '../../actions/kids';
 import ErrorMessage from '../panels/Errors';
 import EditProfile from '../forms/Edit-profile';
 class EditKid extends Component {
@@ -8,38 +8,36 @@ class EditKid extends Component {
     data: {},
     errors: []
   };
-  componentWillMount() {
-    this.props.getKid(this.props.match.params.kidId);
-  };
 
   submit = (data, files) =>{
-    this.props.updateKid(data, this.props.match.params.kidId, files).then( () => {
-      this.props.fetchKids().then( ()=>{
-        let url = '/kids/profile/'+this.props.match.params.kidId;
-        this.props.history.push(url)
-      })
+    let form = new FormData();
+    for(let i in files) form.append(files[i].name, files[i]);
+    let kid = data;
+    kid.fullName = `${kid.sirName} ${kid.firstName} ${kid.middleName}`;
+    this.props.updateKid(kid).then( () => {
+      if (Object.keys(form).length > 0)
+        this.props.uploadFiles(form).then( ()=> {
+          this.props.history.push('/admin/kids')
+        });
+      else
+        this.props.history.push('/admin/kids')
+
+    }).catch(error => {
+      console.log(error);
+      this.setState({ loading: false });
+      this.setState({ errors: error.message });
     });
   };
 
   render() {
-    const {errors} = this.state.errors;
-    let isFetching = this.props.state.kid.isFetching;
-    let kid = this.props.state.kid.kids;
-    if (isFetching) {
-      return (
-        <div className='text centered'>
-          <h2>Loading ...</h2>
-          <img src="/assets/images/loading.gif" alt="Loading content"/>
-        </div>
-      )
-    } else if (!isFetching) {
-      return (<EditProfile kid ={kid} submit={this.submit}/>);
-    } else {
-      return (
-        <ErrorMessage message={errors.global}/>
-      )
-    }
+    let { kids } = this.props;
+    let id = this.props.match.params.kidId;
+    let child = kids.filter( kid => kid._id===id);
+    let kid = {};
+    if (child.length >0)
+      kid = child[0];
+    return (<EditProfile kid ={kid} submit={this.submit}/>);
   }
 }
 
-export default connect( (state) => ({state}), {getKid, updateKid, fetchKids})(EditKid);
+export default connect( (state) => ({ kids: state.kids.kids }), { updateKid, uploadFiles })(EditKid);

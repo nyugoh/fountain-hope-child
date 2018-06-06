@@ -9,9 +9,9 @@ const options = [
 
 class Editprofile extends Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {
-      data: props.kid,
+      data: { ...props.kid },
       files: {},
       loading: false,
       errors: []
@@ -40,14 +40,13 @@ class Editprofile extends Component {
   };
 
   submit = () =>{
-    let data = this.state.data;
-    let fullN = `${data.sirName} ${data.firstName} ${data.middleName}`;
-    this.setState({data: {...this.state.data, fullName:fullN}});
+    this.setState({ loading: true });
     this.props.submit(this.state.data, this.state.files);
   };
 
   render() {
-    let kid = this.state.data;
+    let { data } = this.state;
+    let kid = data;
     return (
       <div>
         <h2>Editing {kid.fullName}</h2>
