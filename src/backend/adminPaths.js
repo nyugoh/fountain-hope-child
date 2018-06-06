@@ -30,7 +30,7 @@ class Admin extends Component {
               <Route path='/admin/kids/add' exact component={AddKid} />
               <Route path='/admin/kids/profile/:kidId' exact component={Profile} />
               <Route path='/admin/kids/:kidId/edit' exact component={Edit} />
-              <Route path='/admin/kids/:kidId/update' exact component={KidUpdate} />
+              <Route path='/admin/kids/:kidId/updates' exact component={KidUpdate} />
             </div>
           </Grid.Column>
         </Grid.Row>

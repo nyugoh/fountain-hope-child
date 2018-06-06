@@ -55,8 +55,11 @@ class Kids extends Component {
           <tbody>
           {kids.map((kid, index) =>{
             return (
-              <tr id={index}>
-                <td>{`${kid.firstName} ${kid.middleName} ${kid.sirName}`}</td>
+              <tr key={index}>
+                <td
+                  style={{cursor: 'pointer'}}
+                  onClick={() => { this.props.history.push(`/admin/kids/${kid._id}/updates`)}}
+                >{`${kid.firstName} ${kid.middleName} ${kid.sirName}`}</td>
                 <td>{kid.email}</td>
                 <td>{kid.story.length>50? kid.story.substring(0, 50)+' ...': kid.story}</td>
                 <td>{kid.isShowing?<div className="ui ribbon label green">Showing</div>:
