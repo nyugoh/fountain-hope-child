@@ -1,77 +1,68 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {fetchMessages} from "../../actions/admin";
 import MessagesTable from './components/MessagesTable';
-import Loading from '../../components/panels/Loading';
-import {getPages} from "../../global/Pagination";
+import { Header, Menu, Label, Icon, Grid } from 'semantic-ui-react'
+import { markAsRead, deleteMessage } from "../../actions/admin";
 
 class Messages extends Component {
   constructor(props) {
     super(props);
   }
 
-  componentWillMount() {
-    this.props.fetchMessages(this.props.history.location.search);
-  }
+  markAsRead = message =>{
+    this.props.markAsRead(message)
+  };
+
+  deleteMessage = message => this.props.deleteMessage(message);
 
   render() {
-    const {messages, total} = this.props;
-    if (messages){
-      let pages = getPages(total, '/admin/messages');
-      // let unread; {messages.map(message=>{ !message.isRead? unread += 1:'';})}
+    let { messages } = this.props;
+      let unread = messages.filter(message=> !message.isRead);
       return (
         <div>
-          {/*<span class="ui teal label">{unread}</span>*/}
-          <h2>Messages </h2>
+          {messages.length === 0? <div className="ui info message">
+            <div className="header">Ooopps... !!</div>
+            <p>There are no messages yet.</p>
+          </div>:<Header color={'grey'} as={'h3'}>Messages</Header>
+          }
+          <Grid className="ui right aligned">
+            <Grid.Column width={4}>
+              <Menu size={'tiny'} compact>
+                <Menu.Item as='a'>
+                  <Icon name='mail' /> Inbox
+                  <Label color='red' floating>{unread.length}</Label>
+                </Menu.Item>
+                <Menu.Item as='a'>
+                  <Icon name='users' /> Total
+                  <Label color='teal' floating>{messages.length}</Label>
+                </Menu.Item>
+              </Menu>
+            </Grid.Column>
+          </Grid>
           <table className="ui table bordered celled stackable blue selectable">
             <thead>
             <tr>
-              <th className="ui sortable">Status</th>
               <th className="ui sortable">To</th>
               <th className="ui sortable">From</th>
               <th className="ui sortable">Date</th>
               <th>Message</th>
-              <th>Actions</th>
             </tr>
             </thead>
-            <MessagesTable messages={messages}/>
-            <tfoot>
-            <tr><th colspan="6">
-              <div className="ui right floated pagination menu tiny">
-                <a className="icon item">
-                  <i className="left chevron icon"></i>
-                </a>
-                {pages.map((url, index)=>{
-                  return (<a className="item" href={url}>{index+1}</a>)
-                })}
-                <a className="icon item">
-                  <i className="right chevron icon"></i>
-                </a>
-              </div>
-            </th>
-            </tr></tfoot>
+            {messages.map( (message, index) => {
+              return <MessagesTable
+                markAsRead={this.markAsRead.bind(this)}
+                deleteMessage={this.deleteMessage.bind(this)}
+                message={message}
+                key={index}/>
+            })}
           </table>
         </div>
       );
-    } else{
-      return (
-        <Loading/>
-      );
-    }
   }
 }
 
-const mapStateToProps = (state) =>{
-  return {
-    messages: state.admin.messages.body,
-    total: state.admin.messages.total
-  }
-};
+const mapStateToProps = state =>({
+  messages: state.admin.messages
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchMessages: (search) => dispatch(fetchMessages(search))
-  }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Messages);
+export default connect(mapStateToProps, { markAsRead, deleteMessage })(Messages);

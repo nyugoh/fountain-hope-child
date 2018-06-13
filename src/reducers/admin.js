@@ -1,7 +1,8 @@
 import * as types from '../types';
+import messages from "../components/admin/messages";
 
 const initialState = {
-  messages:{},
+  messages:[],
   updates: []
 };
 
@@ -12,7 +13,7 @@ const admin = (state=initialState, action) =>{
       return {
         ...state,
         messages: [...payload.body],
-        total: payload.total
+        messagesTotal: payload.total
       };
     case types.MESSAGE_SENT:
       return {
@@ -45,8 +46,8 @@ const admin = (state=initialState, action) =>{
       };
     case types.UPDATE_EDITED:
       updates = state.updates.map( update =>{
-       if (update._id === payload._id)
-         return payload;
+       if (update._id === payload.update._id)
+         return payload.update;
         else
           return update;
       });
@@ -62,6 +63,23 @@ const admin = (state=initialState, action) =>{
     case types.ADDED_SPONSOR:
       return {
         status: action.status
+      };
+    case types.MESSAGE_READ:
+      let messages = state.messages.map( message => {
+        if (message._id === payload._id)
+          return payload;
+        else
+          return message;
+      });
+      return {
+        ...state,
+        messages: [...messages]
+      };
+    case types.MESSAGE_DELETED:
+      messages = state.messages.filter( message => message._id !== payload);
+      return {
+        ...state,
+        messages: [...messages]
       };
     default:
       return state;

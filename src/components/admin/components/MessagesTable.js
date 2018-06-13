@@ -1,40 +1,79 @@
 import React from 'react';
 import moment from 'moment';
-import {Icon } from 'semantic-ui-react';
+import {Icon, Modal, Header, Button } from 'semantic-ui-react';
 
-function MessagesTable(props) {//TODO:: Show message in a modal
-  return (
-    <tbody>
-      {props.messages.map((message, index)=>{
-        return(
+class MessagesTable extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isOpen: false,
+      message: props.message
+    }
+  };
 
-          <tr id={index} onClick={() => showMessage(message)}>
-            <td>
-              {message.isRead?
-                <div class="ui ribbon label">Read</div>:
-                <div class="ui ribbon label blue">Unread</div>
-              }
-            </td>
-            <td>{message.to}</td>
-            <td>{message.fromEmail}</td>
-            <td>{moment(message.createdAt).format('DD/MMMM/YYYY')}</td>
-            <td>{message.body.length >30?message.body.substring(0, 30)+ ' ...': message.body}</td>
-            <td>
-              {/* TODO:: Show warning message*/}
-              <Icon name='star green'/>
-              <Icon name='archive blue'/>
-              <Icon name='trash red'/>
-            </td>
-          </tr>
-        )
-      })}
-    </tbody>
-  );
+  showMessage() {
+    this.setState({isOpen: true});
+  };
+
+  closeModal() {
+    this.setState({isOpen: false});
+    this.props.markAsRead(this.state.message._id);
+  };
+
+  deleteMessage = () => {
+    this.props.deleteMessage(this.state.message._id).then( ()=>{
+      this.setState({ isOpen: false });
+    });
+  };
+
+  render() {
+    // TODO ADD subject for messages
+    const { message } = this.props;
+    return (
+      <tr onClick={this.showMessage.bind(this)} className={message.isRead? '': 'active'}>
+        <td>{message.to.toUpperCase()}</td>
+        <td>{message.fromEmail}</td>
+        <td>{moment(message.createdAt).format('DD MMMM YYYY')}</td>
+        <td>{message.body.length > 30 ? message.body.substring(0, 30) + ' ...' : message.body}</td>
+        <Modal open={this.state.isOpen}>
+          <Modal.Header>
+            <span className={'ui text lead'}>
+              <Icon name={'user'} circular={true}/>
+              {message.fromEmail}
+            </span>
+          </Modal.Header>
+          <Modal.Content>
+            <Modal.Description>
+              <Header color={'grey'} as={'h4'}>Subject</Header>
+              <p>{message.to.toUpperCase()}</p>
+              <p>To:: Jane Doe Miller</p>
+              <p>{moment(message.createdAt).format("DD MMMM YYYY H:m:s")}</p>
+              <div className="ui divider"/>
+              <Header color={'grey'} as={'h4'}>Body</Header>
+              <div className="ui divider"/>
+              <p>{message.body}</p>
+            </Modal.Description>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button
+              icon
+              labelPosition={'right'}
+              color={'teal'}
+              onClick={this.deleteMessage.bind(this)}>
+              Delete
+              <Icon
+              name='trash'
+              color={'red'}/>
+            </Button>
+            <Button
+              onClick={this.closeModal.bind(this)}
+              positive={true}>Close</Button>
+          </Modal.Actions>
+        </Modal>
+      </tr>
+    )
+  }
+
 }
 
-function showMessage(message) {
-  {/*<div class="ui standard demo button">Standard Modal</div>*/}
-  {/*$('.standard.demo.modal')*/}
-    {/*.modal('attach events', '.standard.demo.button')*/}
-}
 export default MessagesTable;

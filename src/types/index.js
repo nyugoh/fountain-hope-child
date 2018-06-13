@@ -29,3 +29,7 @@ export const KID_DELETED = 'KID_DELETED';
 export const KID_ARCHIVED = 'KID_ARCHIVED';
 
 export const UPDATE_EDITED = 'UPDATE_EDITED';
+
+export const MESSAGE_READ = 'MESSAGE_READ';
+
+export const MESSAGE_DELETED = 'MESSAGE_DELETED';

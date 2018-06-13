@@ -54,3 +54,17 @@ export const editUpdate = update => dispatch => axios.put(`/api/updates/${update
     payload: response.data
   });
 });
+
+export const markAsRead = message => dispatch => axios.post(`/api/messages/${message}/read`).then(res => {
+  dispatch({
+    type: types.MESSAGE_READ,
+    payload: res.data.message
+  });
+});
+
+export const deleteMessage = message => dispatch => axios.delete(`/api/messages/${message}`).then(res => {
+  dispatch({
+    type: types.MESSAGE_DELETED,
+    payload: message
+  });
+});
