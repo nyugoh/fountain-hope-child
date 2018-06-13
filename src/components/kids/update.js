@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import moment from 'moment';
-import {Form, Grid, TextArea, Button} from 'semantic-ui-react';
+import {Form, Grid, TextArea, Button, Header} from 'semantic-ui-react';
 import { addUpdate, uploadFiles } from '../../actions/kids';
 import MessageDialog from '../panels/Message';
+import KidsUpdates from "../admin/updates";
 
 class KidUpdate extends Component {
   constructor(props) {
@@ -37,20 +38,19 @@ class KidUpdate extends Component {
     for(let i in files) form.append(files[i].name, files[i]);
     this.props.addUpdate(this.state.data).then( () => {
       this.props.uploadFiles(form).then( ()=> {
-
+        //TODO:: Clear/ reset the form
       });
     });
   };
 
   render() {
-    let { kids } = this.props;
+    let { kids, updates } = this.props;
     const { errors } = this.state;
     let id = this.props.match.params.kidId;
     let child = kids.filter( kid => kid._id===id);
     let kid = {}, updateDiff;
     if (child.length >0){
       kid = child[0];
-      updateDiff = moment(kid.updatedAt).diff(moment(kid.createdAt), 'days');
     }
     return (
       <Grid divided='vertically'>
@@ -58,10 +58,12 @@ class KidUpdate extends Component {
           <Grid.Column>
             <div>
               <h2>{kid.firstName} {kid.middleName}'s Updates</h2>
-              <h5>Last Update: <small>{updateDiff===0?'Never':updateDiff+' days ago'}</small></h5>
+              <div className="ui divider"/>
             </div>
+            <KidsUpdates updates={updates} id={id}/>
             <Form onSubmit={this.submit}>
-              <h3>Add an update</h3>
+              <Header color={'grey'} as={'h3'}>Add an update</Header>
+              <div className="ui divider"/>
               <Form.Field>
                 <Form.Field control={TextArea} required label='Update' className='kidUpdateStory' name='body' onChange={this.handleChange} placeholder='Describe the incidents/events that have happened to the child...' />
               </Form.Field>
@@ -83,7 +85,8 @@ class KidUpdate extends Component {
 }
 
 const mapStateToProps = state => ({
-  kids: state.kids.kids
+  kids: state.kids.kids,
+  updates: state.admin.updates
 });
 
 export default connect(mapStateToProps, { addUpdate, uploadFiles })(KidUpdate);

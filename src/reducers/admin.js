@@ -35,7 +35,7 @@ const admin = (state=initialState, action) =>{
     case types.ADDED_UPDATE:
       return {
         ...state,
-        updates: [...state.updates, ...payload]
+        updates: [...state.updates, payload]
       };
     case types.FETCHED_SPONSORS:
       return {
