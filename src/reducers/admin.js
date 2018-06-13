@@ -37,6 +37,12 @@ const admin = (state=initialState, action) =>{
         ...state,
         updates: [...state.updates, payload]
       };
+    case types.UPDATE_DELETED:
+      let updates = state.updates.filter( update => update._id !== payload);
+      return {
+        ...state,
+        updates: [...updates]
+      };
     case types.FETCHED_SPONSORS:
       return {
         ...state,

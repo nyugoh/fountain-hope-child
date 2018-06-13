@@ -10,6 +10,8 @@ export const KID_UPDATED = 'KID_UPDATED';
 
 export const ADDED_UPDATE = 'ADDED_UPDATE';
 
+export const UPDATE_DELETED = 'UPDATE_DELETED';
+
 export const MESSAGE_SENT = 'MESSAGE_SENT';
 
 export const FETCHED_MESSAGE = 'FETCHED_MESSAGE';

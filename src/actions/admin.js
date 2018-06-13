@@ -40,3 +40,10 @@ export const addSponsor = (sponsor, files) => dispatch =>{
 
   });
 };
+
+export const deleteUpdate = (update) => (dispatch) => axios.delete(`/api/updates/${update}`).then(res=> {
+  dispatch({
+    type: types.UPDATE_DELETED,
+    payload: update
+  });
+});

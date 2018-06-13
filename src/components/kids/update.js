@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import moment from 'moment';
-import {Form, Grid, TextArea, Button, Header} from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import { addUpdate, uploadFiles } from '../../actions/kids';
-import MessageDialog from '../panels/Message';
 import KidsUpdates from "../admin/updates";
+import AddUpdate from "../forms/AddUpdate";
+import { deleteUpdate } from "../../actions/admin";
+
 
 class KidUpdate extends Component {
   constructor(props) {
@@ -19,24 +20,12 @@ class KidUpdate extends Component {
     };
   };
 
-  handleChange = (e) => {
-    this.setState({ data: { ...this.state.data, [e.target.name]: e.target.value}});
-  };
+  deleteUpdate = update => this.props.deleteUpdate(update);
 
-  upload = (e) =>{
-    const files = e.target.files;
-    let imageNames = [];
-    let images = [];
-    for(let f in files) if (files[f].size > 0) {images.push(files[f]);imageNames.push(files[f].name);};
-    this.setState({data:{...this.state.data, files:imageNames}});
-    this.setState({files:images});
-  };
-
-  submit = () => {
+  submit = (files, data) => {
     let form = new FormData();
-    let files = this.state.files;
     for(let i in files) form.append(files[i].name, files[i]);
-    this.props.addUpdate(this.state.data).then( () => {
+    this.props.addUpdate(data).then( () => {
       this.props.uploadFiles(form).then( ()=> {
         //TODO:: Clear/ reset the form
       });
@@ -45,10 +34,9 @@ class KidUpdate extends Component {
 
   render() {
     let { kids, updates } = this.props;
-    const { errors } = this.state;
     let id = this.props.match.params.kidId;
     let child = kids.filter( kid => kid._id===id);
-    let kid = {}, updateDiff;
+    let kid = {};
     if (child.length >0){
       kid = child[0];
     }
@@ -57,26 +45,16 @@ class KidUpdate extends Component {
         <Grid.Row columns={1}>
           <Grid.Column>
             <div>
-              <h2>{kid.firstName} {kid.middleName}'s Updates</h2>
+              <h2>{kid.firstName} {kid.middleName}'s updates</h2>
               <div className="ui divider"/>
             </div>
-            <KidsUpdates updates={updates} id={id}/>
-            <Form onSubmit={this.submit}>
-              <Header color={'grey'} as={'h3'}>Add an update</Header>
-              <div className="ui divider"/>
-              <Form.Field>
-                <Form.Field control={TextArea} required label='Update' className='kidUpdateStory' name='body' onChange={this.handleChange} placeholder='Describe the incidents/events that have happened to the child...' />
-              </Form.Field>
-              <hr/>
-              <h3>Documents/Images <small>(You can upload more than one)</small></h3>
-              <Form.Field>
-                <input type="file" multiple='true' name='documents' onChange={this.upload} placeholder='Child documents ...'/>
-              </Form.Field>
-              <hr/>
-              <br/>
-              <Button className='ui right floated' positive size='large'>ADD</Button><br/><br/>
-              {!!errors.confirmationError && <MessageDialog message={errors.confirmationError}/>}
-            </Form>
+            <KidsUpdates
+              updates={updates}
+              deleteUpdate={this.deleteUpdate.bind(this)}
+              id={id}/>
+            <AddUpdate
+              submit={this.submit.bind(this)}
+              id={id}/>
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -89,4 +67,4 @@ const mapStateToProps = state => ({
   updates: state.admin.updates
 });
 
-export default connect(mapStateToProps, { addUpdate, uploadFiles })(KidUpdate);
+export default connect(mapStateToProps, { addUpdate, uploadFiles, deleteUpdate })(KidUpdate);

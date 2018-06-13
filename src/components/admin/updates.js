@@ -14,7 +14,9 @@ class KidsUpdates extends Component {
         {update && update.length == 0 && <p>No updates</p> }
         {update && update.map((ud, index) => {
           return <Item.Group divided key={index}>
-            <Update update={ud}/>
+            <Update
+              update={ud}
+              deleteUpdate={this.props.deleteUpdate.bind(this)}/>
             <div className="ui horizontal divider"/>
           </Item.Group>
         })}
