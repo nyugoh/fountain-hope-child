@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Image } from 'semantic-ui-react';
 // import PropTypes from 'prop-types';
 import Message from '../forms/message';
 import SponsorMessage from '../panels/sponsors';
@@ -24,22 +24,26 @@ class Profile extends Component {
     let kid = {};
     if (child.length >0)
       kid = child[0];
+    const { updates } = this.props;
+    let update;
+    if (updates.length > 0)
+      update = updates.filter( update => (update.kidId === id ? update: '' ));
       return (
         <Grid columns='1'>
           <Grid.Row columns='2'>
             <Grid.Column width='10'>
               <div>
                 <div className='storyHeader'>
-                  <img style={{width:200}} src={kid.profileImages && "/api/v1/images/"+kid.profileImages[0]} alt={kid.fullName}/>
+                  <Image size={'medium'} style={{width:200}} src={kid.profileImages && "/api/v1/images/"+kid.profileImages[0]} alt={kid.fullName}/>
                 </div>
                 <div>
-                  <h2>{kid.firstName} {kid.middleName}'s Story</h2>
+                  <h2>{kid.firstName}'s Story</h2>
                   <p>{kid.story}</p>
+                  <div className="ui divider"/>
                 </div>
-                <hr/>
                 <div>
-                  <h2>Latest updates for {kid.firstName} {kid.middleName}</h2>
-                  {(kid.updates) ? <KidUpdates updates={kid.updates}/>:
+                  <h2>Latest updates</h2>
+                  {(kid.updates) ? <KidUpdates updates={update}/>:
                   <p>{kid.firstName} has no updates.</p>}
                 </div>
               </div>
@@ -57,7 +61,8 @@ class Profile extends Component {
 }
 
 const mapStateToProps = state => ({
-  kids: state.kids.kids
+  kids: state.kids.kids,
+  updates: state.admin.updates
 });
 
 export default connect(mapStateToProps, { sendMessage })(Profile);

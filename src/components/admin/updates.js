@@ -11,6 +11,7 @@ class KidsUpdates extends Component {
     return <div>
       <Header color={'grey'} as={'h5'}>Updates</Header>
       <div>
+        {update && update.length == 0 && <p>No updates</p> }
         {update && update.map((ud, index) => {
           return <Item.Group divided key={index}>
             <Update update={ud}/>
