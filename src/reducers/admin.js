@@ -43,6 +43,17 @@ const admin = (state=initialState, action) =>{
         ...state,
         updates: [...updates]
       };
+    case types.UPDATE_EDITED:
+      updates = state.updates.map( update =>{
+       if (update._id === payload._id)
+         return payload;
+        else
+          return update;
+      });
+      return {
+        ...state,
+        updates: [...updates]
+      };
     case types.FETCHED_SPONSORS:
       return {
         ...state,

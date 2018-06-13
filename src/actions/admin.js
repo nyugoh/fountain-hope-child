@@ -47,3 +47,10 @@ export const deleteUpdate = (update) => (dispatch) => axios.delete(`/api/updates
     payload: update
   });
 });
+
+export const editUpdate = update => dispatch => axios.put(`/api/updates/${update._id}`, {update}).then( response=> {
+  dispatch({
+    type: types.UPDATE_EDITED,
+    payload: response.data
+  });
+});

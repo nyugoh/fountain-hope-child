@@ -2,6 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import { Item, Icon, Button } from 'semantic-ui-react'
 import DeleteUpdate from "../../forms/DeleteUpdate";
+import EditUpdate from "../../forms/EditUpdate";
 
 class Update extends React.Component {
 
@@ -19,14 +20,9 @@ class Update extends React.Component {
             <DeleteUpdate
               update={update}
               deleteUpdate={this.props.deleteUpdate.bind(this)}/>
-            <Button
-              color={'blue'}
-              floated='right'
-              labelPosition={'right'}
-              icon>
-              Edit
-              <Icon name='pencil' />
-            </Button>
+            <EditUpdate
+              update={update}
+              editUpdate={this.props.editUpdate.bind(this)}/>
           </Item.Extra>
         </Item.Content>
       </Item>

@@ -27,3 +27,5 @@ export const FILES_UPLOADED = 'FILES_UPLOADED';
 export const KID_DELETED = 'KID_DELETED';
 
 export const KID_ARCHIVED = 'KID_ARCHIVED';
+
+export const UPDATE_EDITED = 'UPDATE_EDITED';

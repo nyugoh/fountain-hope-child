@@ -26,7 +26,6 @@ class DeleteUpdate extends Component {
   };
 
   render() {
-    const { update } = this.props;
     return (
       <Modal
         size='tiny'

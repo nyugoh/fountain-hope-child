@@ -4,7 +4,7 @@ import { Grid } from 'semantic-ui-react';
 import { addUpdate, uploadFiles } from '../../actions/kids';
 import KidsUpdates from "../admin/updates";
 import AddUpdate from "../forms/AddUpdate";
-import { deleteUpdate } from "../../actions/admin";
+import { deleteUpdate, editUpdate } from "../../actions/admin";
 
 
 class KidUpdate extends Component {
@@ -21,6 +21,8 @@ class KidUpdate extends Component {
   };
 
   deleteUpdate = update => this.props.deleteUpdate(update);
+
+  editUpdate = update => this.props.editUpdate(update);
 
   submit = (files, data) => {
     let form = new FormData();
@@ -51,6 +53,7 @@ class KidUpdate extends Component {
             <KidsUpdates
               updates={updates}
               deleteUpdate={this.deleteUpdate.bind(this)}
+              editUpdate={this.editUpdate.bind(this)}
               id={id}/>
             <AddUpdate
               submit={this.submit.bind(this)}
@@ -67,4 +70,4 @@ const mapStateToProps = state => ({
   updates: state.admin.updates
 });
 
-export default connect(mapStateToProps, { addUpdate, uploadFiles, deleteUpdate })(KidUpdate);
+export default connect(mapStateToProps, { addUpdate, uploadFiles, deleteUpdate, editUpdate })(KidUpdate);
