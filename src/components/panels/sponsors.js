@@ -1,5 +1,5 @@
 import React from 'react';
-import { Item, Icon } from 'semantic-ui-react'
+import { Item, Icon, Header } from 'semantic-ui-react'
 
 function SponsorMessage({ sponsors }) {
   return (
@@ -10,7 +10,7 @@ function SponsorMessage({ sponsors }) {
             <Item>
               <Item.Image size='tiny' src={`/api/v1/images/${sponsor.profileImages[0]}`} />
               <Item.Content>
-                <Item.Header>{sponsor.fullName}</Item.Header>
+                <Item.Header><Header as={'h3'}>{sponsor.fullName}</Header></Item.Header>
                 <Item.Meta>
                   <span className='price'>$1200</span>
                   <span className='stay'>1 Month</span>
