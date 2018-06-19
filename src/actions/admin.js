@@ -23,7 +23,7 @@ export const fetchUpdates = (search) => dispatch => axios.get(`/api/updates${sea
 export const fetchSponsors = (search) => dispatch => axios.get(`/api/sponsors${search?search:''}`).then( response=>{
   dispatch({
     type: types.FETCHED_SPONSORS,
-    payload: response.data.sponsors
+    payload: response.data
   });
 }).catch( error =>{
 

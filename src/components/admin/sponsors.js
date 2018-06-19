@@ -11,40 +11,30 @@ class Sponsors extends Component {
     super(props);
   }
 
-  componentWillMount() {
-    this.props.fetchSponsors(this.props.history.location.search);
-  }
-
   submit = (data, files) =>{
     this.props.addSponsor(data, files);
   };
 
   render() {
     const {sponsors, sponsorAdded} = this.props;
-    if (sponsors){
-      return (
-        <div>
-          <h2>FHCK Sponsors and donors</h2>
-          <Grid>
-            <Grid.Row columns='2' vertical>
-              <Grid.Column width='10'>
-                {sponsorAdded==='ok'?<div className="ui primary message">
-                  <p>Sponsor added successfully ...</p>
-                </div>: ''}
-                <ListSponsors sponsors={sponsors}/>
-              </Grid.Column>
-              <Grid.Column width='6'>
-                <AddSponsor submit={this.submit}/>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </div>
-      );
-    } else {
-      return (
-        <Loading/>
-      );
-    }
+    return (
+      <div>
+        <h2>FHCK Sponsors and donors</h2>
+        <Grid>
+          <Grid.Row columns='2' vertical>
+            <Grid.Column width='10'>
+              {sponsorAdded==='ok'?<div className="ui primary message">
+                <p>Sponsor added successfully ...</p>
+              </div>: ''}
+              <ListSponsors sponsors={sponsors}/>
+            </Grid.Column>
+            <Grid.Column width='6'>
+              <AddSponsor submit={this.submit}/>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </div>
+    );
   }
 }
 
@@ -53,9 +43,4 @@ const mapStateToProps = (state) => ({
   sponsorAdded: state.admin.status
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchSponsors: (search) => dispatch(fetchSponsors(search)),
-  addSponsor: (sponsor) => dispatch(addSponsor(sponsor))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Sponsors);
+export default connect(mapStateToProps, { addSponsor })(Sponsors);

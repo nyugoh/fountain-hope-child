@@ -13,10 +13,11 @@ import Edit from "../components/kids/edit";
 import AddKid from "../components/kids/add";
 import KidUpdate from "../components/kids/update";
 import store from "../store/store";
-import { fetchMessages, fetchUpdates } from "../actions/admin";
+import { fetchMessages, fetchUpdates, fetchSponsors } from "../actions/admin";
 
 store.dispatch(fetchUpdates());
 store.dispatch(fetchMessages());
+store.dispatch(fetchSponsors());
 
 class Admin extends Component {
   render() {
