@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Grid} from 'semantic-ui-react';
+import { Grid, Button, Modal, Icon } from 'semantic-ui-react';
 import { addSponsor } from '../../actions/admin';
 import { uploadFiles } from '../../actions/kids';
 import ListSponsors from "./components/ListSponsors";
@@ -11,9 +11,14 @@ class Sponsors extends Component {
     super(props);
     this.state = {
       isLoading: false,
+      isOpen: false,
       error: []
     };
-  }
+  };
+
+  openModal() {
+    this.setState({ isOpen: true });
+  };
 
   submit = (sponsor, files) =>{
     this.setState({ isLoading: true });
@@ -23,9 +28,12 @@ class Sponsors extends Component {
       if (Object.keys(form).length > 0)
         this.props.uploadFiles(form).then( ()=> {
           this.setState({ isLoading: false});
+          this.setState({ isOpen: false });
         });
-      else
+      else{
+        this.setState({ isOpen: false });
         this.setState({ isLoading: false});
+      }
     }).catch(error => {
       this.setState({ error: error.message });
     });
@@ -36,6 +44,20 @@ class Sponsors extends Component {
     return (
       <div>
         <h2>FHCK Sponsors and donors</h2>
+        <Modal size='tiny' trigger={<Icon  circular color={'green'} size={'large'} name={'plus'} style={{position: 'relative', left: '300px'}} onClick={this.openModal.bind(this)}/>} open={this.state.isOpen}>
+          <Modal.Header>
+            Add sponsor
+            <Icon name={'window close outline'} size={'small'} style={{position: 'relative', left: '300px'}} onClick={()=> { this.setState({isOpen:false})}}/>
+          </Modal.Header>
+          <Modal.Content>
+            <AddSponsor
+              isLoading={this.state.isLoading}
+              error={this.state.error}
+              submit={this.submit}/>
+            <div className="ui hidden divider"/>
+            <br/><br/>
+          </Modal.Content>
+        </Modal>
         <Grid>
           <Grid.Row columns='2' vertical>
             <Grid.Column width='10'>
@@ -43,12 +65,6 @@ class Sponsors extends Component {
                 <p>Sponsor added successfully ...</p>
               </div>: ''}
               <ListSponsors sponsors={sponsors}/>
-            </Grid.Column>
-            <Grid.Column width='6'>
-              <AddSponsor
-                isLoading={this.state.isLoading}
-                error={this.state.error}
-                submit={this.submit}/>
             </Grid.Column>
           </Grid.Row>
         </Grid>

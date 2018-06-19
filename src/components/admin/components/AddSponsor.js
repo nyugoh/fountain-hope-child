@@ -34,8 +34,6 @@ class AddSponsor extends Component {
     const { isLoading, error } = this.props;
     return (
       <div>
-        <h4>Add a sponsor/Donor</h4>
-        <hr/>
         <Form size='large' onSubmit={this.submit} loading={ isLoading }>
           <label>Full name</label>
           <Form.Group>
