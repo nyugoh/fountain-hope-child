@@ -1,5 +1,4 @@
 import * as types from '../types';
-import messages from "../components/admin/messages";
 
 const initialState = {
   messages:[],
@@ -67,6 +66,17 @@ const admin = (state=initialState, action) =>{
           ...state.sponsors,
           payload.sponsor
         ]
+      };
+    case types.SPONSOR_ARCHIVED:
+      let sponsors = state.sponsors.map( sponsor => {
+        if (sponsor._id === payload._id)
+          return payload;
+        else
+          return sponsor;
+      });
+      return {
+        ...state,
+        sponsors: [...sponsors]
       };
     case types.MESSAGE_READ:
       let messages = state.messages.map( message => {

@@ -1,6 +1,5 @@
 import * as types from '../types';
 import axios from 'axios';
-import {uploadFiles} from "./kids";
 
 export const fetchMessages = (search) => dispatch => axios.get(`/api/messages${search?search:''}`).then( response =>{
   dispatch({
@@ -33,6 +32,13 @@ export const addSponsor = sponsor => dispatch => axios.post('/api/sponsors', { s
   dispatch({
     type: types.ADDED_SPONSOR,
     payload: response.data
+  });
+});
+
+export const archiveSponsor = sponsor => dispatch => axios.post(`/api/sponsors/${sponsor}/archive`).then(res => {
+  dispatch({
+    type: types.SPONSOR_ARCHIVED,
+    payload: res.data.sponsor
   });
 });
 

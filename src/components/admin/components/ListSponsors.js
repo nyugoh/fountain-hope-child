@@ -1,6 +1,7 @@
 import React from 'react';
 import { Icon } from 'semantic-ui-react';
 import moment from "moment/moment";
+import ArchiveSponsor from "../micros/ArchiveSponsor";
 
 class ListSponsors extends React.Component {
   render() {
@@ -33,16 +34,17 @@ class ListSponsors extends React.Component {
                 <td>{sponsor.fullName}</td>
                 <td>{sponsor.email}</td>
                 <td>{sponsor.message.length>50? sponsor.message.substring(0, 50)+' ...': sponsor.message}</td>
-                <td><div class="ui ribbon label green">Showing</div></td>
+                <td>{sponsor.isShowing ? <div className="ui ribbon label green">Showing</div>:
+                  <div className="ui ribbon label teal">Archived</div>}</td>
                 <td>{moment(sponsor.createdAt).format('DD/MMMM/YYYY')}</td>
                 <td>
                   <Icon name='large pencil blue'/>
                   {/*<Link to={`/admin/kids/${kid._id}/edit`}><Icon name='large pencil blue'/></Link>*/}
                 </td>
                 <td>
-                  {/*<ArchiveModal
-                    kid={sponsort}
-                    archiveKid={this.archiveKid.bind(this)}/>*/}
+                  <ArchiveSponsor
+                    sponsor={sponsor}
+                    archiveSponsor={this.props.archiveSponsor.bind(this)}/>
                 </td>
                 <td>
                   {/*<DeleteModal
