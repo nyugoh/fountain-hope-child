@@ -62,7 +62,11 @@ const admin = (state=initialState, action) =>{
       };
     case types.ADDED_SPONSOR:
       return {
-        status: action.status
+        ...state,
+        sponsors: [
+          ...state.sponsors,
+          payload.sponsor
+        ]
       };
     case types.MESSAGE_READ:
       let messages = state.messages.map( message => {

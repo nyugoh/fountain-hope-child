@@ -29,17 +29,12 @@ export const fetchSponsors = (search) => dispatch => axios.get(`/api/sponsors${s
 
 });
 
-export const addSponsor = (sponsor, files) => dispatch =>{
-  uploadFiles(files);
-  axios.post('/api/sponsors', {sponsor}).then(response =>{
-    dispatch({
-      type: types.ADDED_SPONSOR,
-      status: response.data.status
-    });
-  }).catch(error =>{
-
+export const addSponsor = sponsor => dispatch => axios.post('/api/sponsors', { sponsor }).then(response =>{
+  dispatch({
+    type: types.ADDED_SPONSOR,
+    payload: response.data
   });
-};
+});
 
 export const deleteUpdate = (update) => (dispatch) => axios.delete(`/api/updates/${update}`).then(res=> {
   dispatch({

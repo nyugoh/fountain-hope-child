@@ -1,18 +1,34 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Grid} from 'semantic-ui-react';
-import {fetchSponsors, addSponsor} from '../../actions/admin';
-import Loading from '../../components/panels/Loading';
+import { addSponsor } from '../../actions/admin';
+import { uploadFiles } from '../../actions/kids';
 import ListSponsors from "./components/ListSponsors";
 import AddSponsor from "./components/AddSponsor";
 
 class Sponsors extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isLoading: false
+    };
   }
 
-  submit = (data, files) =>{
-    this.props.addSponsor(data, files);
+  submit = (sponsor, files) =>{
+    this.setState({ isLoading: true });
+    let form = new FormData();
+    for(let i in files) form.append(files[i].name, files[i]);
+    this.props.addSponsor(sponsor).then( () => {
+      if (Object.keys(form).length > 0)
+        this.props.uploadFiles(form).then( ()=> {
+          this.setState({ isLoading: false});
+        });
+      else
+        this.setState({ isLoading: false});
+
+    }).catch(error => {
+      console.log(error);
+    });
   };
 
   render() {
@@ -29,7 +45,9 @@ class Sponsors extends Component {
               <ListSponsors sponsors={sponsors}/>
             </Grid.Column>
             <Grid.Column width='6'>
-              <AddSponsor submit={this.submit}/>
+              <AddSponsor
+                isLoading={this.state.isLoading}
+                submit={this.submit}/>
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -39,8 +57,7 @@ class Sponsors extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  sponsors: state.admin.sponsors,
-  sponsorAdded: state.admin.status
+  sponsors: state.admin.sponsors
 });
 
-export default connect(mapStateToProps, { addSponsor })(Sponsors);
+export default connect(mapStateToProps, { addSponsor, uploadFiles })(Sponsors);
