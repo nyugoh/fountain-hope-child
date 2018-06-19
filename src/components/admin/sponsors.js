@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { Grid, Button, Modal, Icon } from 'semantic-ui-react';
-import { addSponsor, archiveSponsor, deleteSponsor } from '../../actions/admin';
+import { addSponsor, archiveSponsor, deleteSponsor, editSponsor } from '../../actions/admin';
 import { uploadFiles } from '../../actions/kids';
 import ListSponsors from "./components/ListSponsors";
 import AddSponsor from "./components/AddSponsor";
@@ -12,6 +12,7 @@ class Sponsors extends Component {
     this.state = {
       isLoading: false,
       isOpen: false,
+      isDone: false,
       error: []
     };
   };
@@ -37,6 +38,25 @@ class Sponsors extends Component {
       else{
         this.setState({ isOpen: false });
         this.setState({ isLoading: false});
+      }
+    }).catch(error => {
+      this.setState({ error: error.message });
+    });
+  };
+
+  editSponsor = (sponsor, files) =>{
+    this.setState({ isLoading: true });
+    let form = new FormData();
+    for(let i in files) form.append(files[i].name, files[i]);
+    this.props.editSponsor(sponsor).then( () => {
+      if (Object.keys(form).length > 0)
+        this.props.uploadFiles(form).then( ()=> {
+          this.setState({ isLoading: false});
+          this.setState({ isDone: true });
+        });
+      else{
+        this.setState({ isLoading: false});
+        this.setState({ isDone: true });
       }
     }).catch(error => {
       this.setState({ error: error.message });
@@ -69,8 +89,12 @@ class Sponsors extends Component {
                 <p>Sponsor added successfully ...</p>
               </div>: ''}
               <ListSponsors
+                isLoading={this.state.isLoading}
+                isDone={this.state.isDone}
+                error={this.state.error}
                 archiveSponsor={ this.archiveSponsor.bind(this)}
                 deleteSponsor={ this.deleteSponsor.bind(this)}
+                editSponsor={ this.editSponsor.bind(this)}
                 sponsors={sponsors}/>
             </Grid.Column>
           </Grid.Row>
@@ -84,4 +108,4 @@ const mapStateToProps = (state) => ({
   sponsors: state.admin.sponsors
 });
 
-export default connect(mapStateToProps, { addSponsor, uploadFiles, archiveSponsor, deleteSponsor })(Sponsors);
+export default connect(mapStateToProps, { addSponsor, uploadFiles, archiveSponsor, deleteSponsor, editSponsor })(Sponsors);

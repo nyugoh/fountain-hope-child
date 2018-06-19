@@ -49,6 +49,13 @@ export const deleteSponsor = sponsor => dispatch => axios.delete(`/api/sponsors/
   });
 });
 
+export const editSponsor = sponsor => dispatch => axios.put(`/api/sponsors/${sponsor._id}`, {sponsor}).then( response=> {
+  dispatch({
+    type: types.SPONSOR_EDITED,
+    payload: response.data
+  });
+});
+
 export const deleteUpdate = (update) => (dispatch) => axios.delete(`/api/updates/${update}`).then(res=> {
   dispatch({
     type: types.UPDATE_DELETED,

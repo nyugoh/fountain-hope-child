@@ -1,8 +1,8 @@
 import React from 'react';
-import { Icon } from 'semantic-ui-react';
 import moment from "moment/moment";
 import ArchiveSponsor from "../micros/ArchiveSponsor";
 import DeleteSponsor from "../micros/DeleteSponsor";
+import EditSponsor from "./EditSponsor";
 
 class ListSponsors extends React.Component {
   render() {
@@ -24,7 +24,7 @@ class ListSponsors extends React.Component {
             <th>Status</th>
             <th>Date</th>
             <th>Edit</th>
-            <th>Hide/Show</th>
+            <th>Archive</th>
             <th>Delete</th>
           </tr>
           </thead>
@@ -39,8 +39,12 @@ class ListSponsors extends React.Component {
                   <div className="ui ribbon label teal">Archived</div>}</td>
                 <td>{moment(sponsor.createdAt).format('DD/MMMM/YYYY')}</td>
                 <td>
-                  <Icon name='large pencil blue'/>
-                  {/*<Link to={`/admin/kids/${kid._id}/edit`}><Icon name='large pencil blue'/></Link>*/}
+                  <EditSponsor
+                    isDone={this.props.isDone}
+                    isLoading={this.props.isLoading}
+                    error={this.props.error}
+                    sponsor={sponsor}
+                    submit={this.props.editSponsor.bind(this)}/>
                 </td>
                 <td>
                   <ArchiveSponsor

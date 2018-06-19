@@ -84,6 +84,17 @@ const admin = (state=initialState, action) =>{
         ...state,
         sponsors: [...sponsors]
       };
+    case types.SPONSOR_EDITED:
+      sponsors = state.sponsors.map( sponsor =>{
+        if (sponsor._id === payload.sponsor._id)
+          return payload.sponsor;
+        else
+          return sponsor;
+      });
+      return {
+        ...state,
+        sponsors: [...sponsors]
+      };
     case types.MESSAGE_READ:
       let messages = state.messages.map( message => {
         if (message._id === payload._id)
