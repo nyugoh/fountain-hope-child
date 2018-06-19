@@ -22,6 +22,9 @@ class MessageBox extends Component {
     this.props.sendMessage(this.state.data).then( () => {
       this.setState({loading: false});
       this.setState({ sent: true });
+      this.setState({ data: { fromName: ""} });
+      this.setState({ data: { fromEmail: ""} });
+      this.setState({ data: { body: ""} });
     }).catch(error =>{
       this.setState({loading: false});
       this.setState({ errors: error.message });
@@ -29,18 +32,18 @@ class MessageBox extends Component {
   };
 
   render() {
-    const { loading, errors, sent } =  this.state;
+    const { loading, errors, sent, data } =  this.state;
     return (
       <div>
         <hr/>
         <h3>Leave us a message</h3>
         <Form size='large' onSubmit={this.submit} loading={loading}>
           <Form.Group>
-            <Form.Input placeholder='Name' width={8} required name='fromName' onChange={this.handleChange} />
-            <Form.Input placeholder='email' width={8} required name='fromEmail' onChange={this.handleChange} />
+            <Form.Input placeholder='Name' width={8} required name='fromName' value={data.fromName} onChange={this.handleChange} />
+            <Form.Input placeholder='email' width={8} required name='fromEmail' value={data.fromEmail} onChange={this.handleChange} />
           </Form.Group>
           <Form.Group>
-            <Form.Field width={16} control={TextArea} name='body' onChange={this.handleChange} placeholder='Enter your message here...' />
+            <Form.Field width={16} control={TextArea} name='body' value={data.body} onChange={this.handleChange} placeholder='Enter your message here...' />
           </Form.Group>
           <br/>
           <Button positive fluid success>SEND  <i style={{'marginLeft':'8px'}} className='icon send'/></Button>
