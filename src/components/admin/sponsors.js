@@ -83,8 +83,8 @@ class Sponsors extends Component {
           </Modal.Content>
         </Modal>
         <Grid>
-          <Grid.Row columns='2' vertical>
-            <Grid.Column width='10'>
+          <Grid.Row>
+            <Grid.Column width='16'>
               {sponsorAdded==='ok'?<div className="ui primary message">
                 <p>Sponsor added successfully ...</p>
               </div>: ''}

@@ -43,7 +43,7 @@ class ListKids extends Component {
         <Grid.Column width='6'>
           <Message sendMessage={this.sendMessage}/>
           <div className="ui horizontal divider"><Icon name={'crosshairs'}/></div>
-          <SponsorMessage/>
+          <SponsorMessage sponsors={this.props.sponsors}/>
         </Grid.Column>
       </Grid.Row>
     </Grid>
@@ -54,7 +54,8 @@ class ListKids extends Component {
 const mapStateToProps = (state) => ({
   kids: state.kids.kids,
   page: state.kids.page,
-  isEnd: state.kids.isEnd
+  isEnd: state.kids.isEnd,
+  sponsors: state.admin.sponsors
 });
 
 export default connect(mapStateToProps, { fetchKids, sendMessage })(ListKids);

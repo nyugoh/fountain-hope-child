@@ -26,11 +26,13 @@ class EditSponsor extends Component {
     let imageNames = [];
     let images = [];
     for(let f in files) if (files[f].size > 0) {images.push(files[f]);imageNames.push(files[f].name);};
-    this.setState({sponsor:{...this.state.data, profileImages:imageNames}});
+    this.setState({sponsor:{...this.state.sponsor, profileImages:imageNames}});
     this.setState({files:images});
   };
 
   submit = () =>{
+    if (this.state.sponsor.profileImages === [])
+      this.setState({sponsor:{...this.state.sponsor, profileImages:this.props.sponsor.profileImages}});
     this.props.submit(this.state.sponsor, this.state.files);
   };
 
