@@ -2,6 +2,7 @@ import React from 'react';
 import { Icon } from 'semantic-ui-react';
 import moment from "moment/moment";
 import ArchiveSponsor from "../micros/ArchiveSponsor";
+import DeleteSponsor from "../micros/DeleteSponsor";
 
 class ListSponsors extends React.Component {
   render() {
@@ -47,9 +48,9 @@ class ListSponsors extends React.Component {
                     archiveSponsor={this.props.archiveSponsor.bind(this)}/>
                 </td>
                 <td>
-                  {/*<DeleteModal
-                    kid={kid}
-                    deleteKid={this.deleteKid.bind(this)}/>*/}
+                  <DeleteSponsor
+                    sponsor={sponsor}
+                    deleteSponsor={this.props.deleteSponsor.bind(this)}/>
                 </td>
               </tr>
             );

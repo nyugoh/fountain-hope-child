@@ -78,6 +78,12 @@ const admin = (state=initialState, action) =>{
         ...state,
         sponsors: [...sponsors]
       };
+    case types.SPONSOR_DELETED:
+      sponsors = state.sponsors.filter( message => message._id !== payload);
+      return {
+        ...state,
+        sponsors: [...sponsors]
+      };
     case types.MESSAGE_READ:
       let messages = state.messages.map( message => {
         if (message._id === payload._id)

@@ -42,6 +42,13 @@ export const archiveSponsor = sponsor => dispatch => axios.post(`/api/sponsors/$
   });
 });
 
+export const deleteSponsor = sponsor => dispatch => axios.delete(`/api/sponsors/${sponsor}`).then(res => {
+  dispatch({
+    type: types.SPONSOR_DELETED,
+    payload: sponsor
+  });
+});
+
 export const deleteUpdate = (update) => (dispatch) => axios.delete(`/api/updates/${update}`).then(res=> {
   dispatch({
     type: types.UPDATE_DELETED,

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { Grid, Button, Modal, Icon } from 'semantic-ui-react';
-import { addSponsor, archiveSponsor } from '../../actions/admin';
+import { addSponsor, archiveSponsor, deleteSponsor } from '../../actions/admin';
 import { uploadFiles } from '../../actions/kids';
 import ListSponsors from "./components/ListSponsors";
 import AddSponsor from "./components/AddSponsor";
@@ -21,6 +21,8 @@ class Sponsors extends Component {
   };
 
   archiveSponsor = sponsor => this.props.archiveSponsor(sponsor);
+
+  deleteSponsor = sponsor => this.props.deleteSponsor(sponsor);
 
   submit = (sponsor, files) =>{
     this.setState({ isLoading: true });
@@ -68,6 +70,7 @@ class Sponsors extends Component {
               </div>: ''}
               <ListSponsors
                 archiveSponsor={ this.archiveSponsor.bind(this)}
+                deleteSponsor={ this.deleteSponsor.bind(this)}
                 sponsors={sponsors}/>
             </Grid.Column>
           </Grid.Row>
@@ -81,4 +84,4 @@ const mapStateToProps = (state) => ({
   sponsors: state.admin.sponsors
 });
 
-export default connect(mapStateToProps, { addSponsor, uploadFiles, archiveSponsor })(Sponsors);
+export default connect(mapStateToProps, { addSponsor, uploadFiles, archiveSponsor, deleteSponsor })(Sponsors);
