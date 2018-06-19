@@ -10,7 +10,8 @@ class Sponsors extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: false
+      isLoading: false,
+      error: []
     };
   }
 
@@ -25,9 +26,8 @@ class Sponsors extends Component {
         });
       else
         this.setState({ isLoading: false});
-
     }).catch(error => {
-      console.log(error);
+      this.setState({ error: error.message });
     });
   };
 
@@ -47,6 +47,7 @@ class Sponsors extends Component {
             <Grid.Column width='6'>
               <AddSponsor
                 isLoading={this.state.isLoading}
+                error={this.state.error}
                 submit={this.submit}/>
             </Grid.Column>
           </Grid.Row>

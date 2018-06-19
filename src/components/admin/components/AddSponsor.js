@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Form, Button, TextArea, Label} from 'semantic-ui-react';
+import {Form, Button, TextArea, Message } from 'semantic-ui-react';
 
 class AddSponsor extends Component {
   constructor(props) {
@@ -31,11 +31,12 @@ class AddSponsor extends Component {
 
 
   render() {
+    const { isLoading, error } = this.props;
     return (
       <div>
         <h4>Add a sponsor/Donor</h4>
         <hr/>
-        <Form size='large' onSubmit={this.submit} loading={this.props.isLoading}>
+        <Form size='large' onSubmit={this.submit} loading={ isLoading }>
           <label>Full name</label>
           <Form.Group>
             <Form.Input
@@ -78,6 +79,9 @@ class AddSponsor extends Component {
                    placeholder='Profile image ...'/>
           </Form.Field>
           <Button positive fluid className='ui right floated' success>ADD  <i style={{'marginLeft':'8px'}} className='icon add'/></Button>
+          {error && <Message warning>
+            <Message.Content>{error}</Message.Content>
+          </Message> }
         </Form>
       </div>
     );
