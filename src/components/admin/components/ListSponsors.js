@@ -44,7 +44,8 @@ class ListSponsors extends React.Component {
                     isLoading={this.props.isLoading}
                     error={this.props.error}
                     sponsor={sponsor}
-                    submit={this.props.editSponsor.bind(this)}/>
+                    submit={this.props.editSponsor.bind(this)}
+                    uploadFiles={this.props.uploadFiles.bind(this)}/>
                 </td>
                 <td>
                   <ArchiveSponsor

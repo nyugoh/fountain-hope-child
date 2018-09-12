@@ -26,7 +26,12 @@ class AddSponsor extends Component {
   };
 
   submit = () =>{
-    this.props.submit(this.state.data, this.state.files);
+    let { data, files } = this.state;
+    let form = new FormData();
+    for(let i in files) form.append(files[i].name, files[i]);
+    this.props.uploadFiles(form).then( ()=> {
+      this.props.submit(data, files);
+    });
   };
 
 
@@ -34,7 +39,7 @@ class AddSponsor extends Component {
     const { isLoading, error } = this.props;
     return (
       <div>
-        <Form size='large' onSubmit={this.submit} loading={ isLoading }>
+        <Form size='large' onSubmit={this.submit} loading={ isLoading } enctype={'multipart/form-data'}>
           <label>Full name</label>
           <Form.Group>
             <Form.Input

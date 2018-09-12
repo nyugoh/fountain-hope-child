@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { updateKid, uploadFiles } from '../../actions/kids';
-import ErrorMessage from '../panels/Errors';
 import EditProfile from '../forms/Edit-profile';
 class EditKid extends Component {
   state = {
@@ -9,19 +8,11 @@ class EditKid extends Component {
     errors: []
   };
 
-  submit = (data, files) =>{
-    let form = new FormData();
-    for(let i in files) form.append(files[i].name, files[i]);
+  submit = (data) =>{
     let kid = data;
     kid.fullName = `${kid.sirName} ${kid.firstName} ${kid.middleName}`;
     this.props.updateKid(kid).then( () => {
-      if (Object.keys(form).length > 0)
-        this.props.uploadFiles(form).then( ()=> {
-          this.props.history.push('/admin/kids')
-        });
-      else
         this.props.history.push('/admin/kids')
-
     }).catch(error => {
       console.log(error);
       this.setState({ loading: false });
@@ -36,7 +27,10 @@ class EditKid extends Component {
     let kid = {};
     if (child.length >0)
       kid = child[0];
-    return (<EditProfile kid ={kid} submit={this.submit}/>);
+    return (<EditProfile
+              kid ={kid}
+              submit={this.submit}
+              uploadFiles={this.props.uploadFiles}/>);
   }
 }
 

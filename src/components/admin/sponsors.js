@@ -27,18 +27,9 @@ class Sponsors extends Component {
 
   submit = (sponsor, files) =>{
     this.setState({ isLoading: true });
-    let form = new FormData();
-    for(let i in files) form.append(files[i].name, files[i]);
     this.props.addSponsor(sponsor).then( () => {
-      if (Object.keys(form).length > 0)
-        this.props.uploadFiles(form).then( ()=> {
-          this.setState({ isLoading: false});
-          this.setState({ isOpen: false });
-        });
-      else{
-        this.setState({ isOpen: false });
-        this.setState({ isLoading: false});
-      }
+      this.setState({ isOpen: false });
+      this.setState({ isLoading: false});
     }).catch(error => {
       this.setState({ error: error.message });
     });
@@ -46,18 +37,9 @@ class Sponsors extends Component {
 
   editSponsor = (sponsor, files) =>{
     this.setState({ isLoading: true });
-    let form = new FormData();
-    for(let i in files) form.append(files[i].name, files[i]);
     this.props.editSponsor(sponsor).then( () => {
-      if (Object.keys(form).length > 0)
-        this.props.uploadFiles(form).then( ()=> {
-          this.setState({ isLoading: false});
-          this.setState({ isDone: true });
-        });
-      else{
-        this.setState({ isLoading: false});
-        this.setState({ isDone: true });
-      }
+      this.setState({ isLoading: false});
+      this.setState({ isDone: true });
     }).catch(error => {
       this.setState({ error: error.message });
     });
@@ -77,7 +59,8 @@ class Sponsors extends Component {
             <AddSponsor
               isLoading={this.state.isLoading}
               error={this.state.error}
-              submit={this.submit}/>
+              submit={this.submit}
+              uploadFiles={this.props.uploadFiles}/>
             <div className="ui hidden divider"/>
             <br/><br/>
           </Modal.Content>
@@ -95,6 +78,7 @@ class Sponsors extends Component {
                 archiveSponsor={ this.archiveSponsor.bind(this)}
                 deleteSponsor={ this.deleteSponsor.bind(this)}
                 editSponsor={ this.editSponsor.bind(this)}
+                uploadFiles={ this.props.uploadFiles.bind(this)}
                 sponsors={sponsors}/>
             </Grid.Column>
           </Grid.Row>

@@ -41,7 +41,12 @@ class Editprofile extends Component {
 
   submit = () =>{
     this.setState({ loading: true });
-    this.props.submit(this.state.data, this.state.files);
+    let form = new FormData();
+    let { data, files } = this.state;
+    for(let i in files) form.append(files[i].name, files[i]);
+    this.props.uploadFiles(form).then(() => {
+      this.props.submit(data, files);
+    });
   };
 
   render() {

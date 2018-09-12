@@ -1,5 +1,4 @@
 ### Fountain of Hope Centre Kenya (FHCK) Child Management System
-
 ***
 
 You are welcome to contribute to this project either as a sponsor or a developer.
@@ -7,7 +6,7 @@ You are welcome to contribute to this project either as a sponsor or a developer
 ***
 Remaining sections
 
-- [ ] Message listing to show kids name
+- [x] Message listing to show kids name
 - [ ] Admin login and signup
 - [ ] Sponsors add and edit, upload profile not working
 - [ ] Style make over & add fonts

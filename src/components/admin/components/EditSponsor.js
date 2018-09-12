@@ -31,9 +31,14 @@ class EditSponsor extends Component {
   };
 
   submit = () =>{
+    let { sponsor, files } = this.state;
+    let form = new FormData();
     if (this.state.sponsor.profileImages === [])
       this.setState({sponsor:{...this.state.sponsor, profileImages:this.props.sponsor.profileImages}});
-    this.props.submit(this.state.sponsor, this.state.files);
+    for(let i in files) form.append(files[i].name, files[i]);
+    this.props.uploadFiles(form).then( ()=> {
+      this.props.submit(sponsor, files);
+    });
   };
 
   componentWillReceiveProps() {
