@@ -28,12 +28,23 @@ class ArchiveSponsor extends Component {
   render() {
     const { sponsor } = this.props;
     return (
-      <Modal size='tiny' trigger={<Icon name='lock' color={sponsor.isShowing?'green': 'teal'} size={'large'} onClick={this.openModal.bind(this)}/>} open={this.state.isOpen}>
+      <Modal size='tiny' trigger={
+        <Button
+          color={'blue'}
+          floated='right'
+          icon
+          onClick={this.openModal.bind(this)}
+          labelPosition={'right'}>
+          {sponsor.isShowing? 'Archive': 'Display' }
+          <Icon name='lock' />
+        </Button>
+      } open={this.state.isOpen}>
         <Modal.Header>
           Archive {sponsor.fullName}
         </Modal.Header>
         <Modal.Content>
-          <p>Remove sponsor from frontend diplay ?</p>
+          {sponsor.isShowing? <p>Remove sponsor from frontend diplay ?</p>:
+            <p>Add sponsor to the frontend diplay ?</p>}
         </Modal.Content>
         <Modal.Actions>
           <Button

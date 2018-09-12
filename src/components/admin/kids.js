@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {Icon, Modal, Button} from 'semantic-ui-react';
+import {Icon, Image, Button} from 'semantic-ui-react';
 import {fetchKids, deleteKid, archiveKid } from "../../actions/kids";
 import moment from "moment/moment";
 import DeleteModal from "../kids/delete";
@@ -58,8 +58,10 @@ class Kids extends Component {
               <tr key={index}>
                 <td
                   style={{cursor: 'pointer'}}
-                  onClick={() => { this.props.history.push(`/admin/kids/${kid._id}/updates`)}}
-                >{`${kid.firstName} ${kid.middleName} ${kid.sirName}`}</td>
+                  onClick={() => { this.props.history.push(`/admin/kids/${kid._id}/updates`)}}>
+                  <Image src={`/api/v1/images/${kid.profileImages[0]}`} size='small'/>
+                  <br/><span>{`${kid.firstName} ${kid.middleName} ${kid.sirName}`}</span>
+                </td>
                 <td>{kid.email}</td>
                 <td>{kid.story.length>50? kid.story.substring(0, 50)+' ...': kid.story}</td>
                 <td>{kid.isShowing?<div className="ui ribbon label green">Showing</div>:

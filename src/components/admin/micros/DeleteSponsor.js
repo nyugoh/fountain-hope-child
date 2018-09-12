@@ -28,7 +28,17 @@ class DeleteSponsor extends Component {
   render() {
     const { sponsor } = this.props;
     return (
-      <Modal size='tiny' trigger={<Icon name='trash' color={'red'} size={'large'} onClick={this.openModal.bind(this)}/>} open={this.state.isOpen}>
+      <Modal size='tiny' trigger={
+        <Button
+          color={'red'}
+          floated='right'
+          icon
+          onClick={this.openModal.bind(this)}
+          labelPosition={'right'}>
+          Delete
+          <Icon name='trash' />
+        </Button>
+      } open={this.state.isOpen}>
         <Modal.Header>
           Delete {sponsor.fullName}
         </Modal.Header>

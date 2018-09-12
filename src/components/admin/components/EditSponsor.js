@@ -36,9 +36,13 @@ class EditSponsor extends Component {
     if (this.state.sponsor.profileImages === [])
       this.setState({sponsor:{...this.state.sponsor, profileImages:this.props.sponsor.profileImages}});
     for(let i in files) form.append(files[i].name, files[i]);
-    this.props.uploadFiles(form).then( ()=> {
+    if( Object.keys(form).length >0 ){
+      this.props.uploadFiles(form).then( ()=> {
+        this.props.submit(sponsor, files);
+      });
+    } else {
       this.props.submit(sponsor, files);
-    });
+    }
   };
 
   componentWillReceiveProps() {
@@ -53,7 +57,17 @@ class EditSponsor extends Component {
     if (sponsor === undefined)
       sponsor = {};
     return (
-      <Modal size='tiny' trigger={<Icon color={'blue'} size={'large'} name={'pencil'} onClick={this.openModal.bind(this)}/>} open={this.state.isOpen}>
+      <Modal size='tiny' trigger={
+        <Button
+          color={'green'}
+          floated='right'
+          icon
+          onClick={this.openModal.bind(this)}
+          labelPosition={'right'}>
+          Edit
+          <Icon name='pencil' />
+        </Button>
+      } open={this.state.isOpen}>
         <Modal.Header>
           Edit sponsor
           <Icon name={'window close outline'} size={'small'} style={{position: 'relative', left: '300px'}} onClick={()=> { this.setState({isOpen:false})}}/>

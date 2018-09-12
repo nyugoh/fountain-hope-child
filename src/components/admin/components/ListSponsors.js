@@ -3,6 +3,7 @@ import moment from "moment/moment";
 import ArchiveSponsor from "../micros/ArchiveSponsor";
 import DeleteSponsor from "../micros/DeleteSponsor";
 import EditSponsor from "./EditSponsor";
+import { Item, Divider, Label } from 'semantic-ui-react';
 
 class ListSponsors extends React.Component {
   render() {
@@ -15,53 +16,42 @@ class ListSponsors extends React.Component {
           <p>Use the add sponsors form on your right to add them.</p>
         </div>:<h4>List of sponsors and donors</h4>
         }
-        <table className='ui table celled stackable blue bordered'>
-          <thead>
-          <tr>
-            <th className='ui sortable'>Name</th>
-            <th>Email</th>
-            <th>Message</th>
-            <th>Status</th>
-            <th>Date</th>
-            <th>Edit</th>
-            <th>Archive</th>
-            <th>Delete</th>
-          </tr>
-          </thead>
-          <tbody>
           {sponsors && sponsors.map((sponsor, index) =>{
             return (
-              <tr id={index}>
-                <td>{sponsor.fullName}</td>
-                <td>{sponsor.email}</td>
-                <td>{sponsor.message.length>50? sponsor.message.substring(0, 50)+' ...': sponsor.message}</td>
-                <td>{sponsor.isShowing ? <div className="ui ribbon label green">Showing</div>:
-                  <div className="ui ribbon label teal">Archived</div>}</td>
-                <td>{moment(sponsor.createdAt).format('DD/MMMM/YYYY')}</td>
-                <td>
-                  <EditSponsor
-                    isDone={this.props.isDone}
-                    isLoading={this.props.isLoading}
-                    error={this.props.error}
-                    sponsor={sponsor}
-                    submit={this.props.editSponsor.bind(this)}
-                    uploadFiles={this.props.uploadFiles.bind(this)}/>
-                </td>
-                <td>
-                  <ArchiveSponsor
-                    sponsor={sponsor}
-                    archiveSponsor={this.props.archiveSponsor.bind(this)}/>
-                </td>
-                <td>
-                  <DeleteSponsor
-                    sponsor={sponsor}
-                    deleteSponsor={this.props.deleteSponsor.bind(this)}/>
-                </td>
-              </tr>
+              <Item.Group divided key={index}>
+                <Item>
+                  <Item.Image size='small' style={{width:'150px !important', height:'150px !important'}} src={`/api/v1/images/${sponsor.profileImages[0]}`}/>
+                  <Item.Content>
+                    <Item.Header as='h3'>
+                      <span style={{marginRight:20}}>{sponsor.fullName}</span>
+                      {sponsor.isShowing? <Label as='a' color='green' tag>
+                        Showing
+                      </Label> : <Label as='span' color='teal' tag>
+                        Not-showing
+                      </Label>}
+                    </Item.Header>
+                    <Item.Description>{sponsor.message}</Item.Description>
+                    <Item.Extra>
+                      <DeleteSponsor
+                        sponsor={sponsor}
+                        deleteSponsor={this.props.deleteSponsor.bind(this)}/>
+                      <ArchiveSponsor
+                        sponsor={sponsor}
+                        archiveSponsor={this.props.archiveSponsor.bind(this)}/>
+                      <EditSponsor
+                        isDone={this.props.isDone}
+                        isLoading={this.props.isLoading}
+                        error={this.props.error}
+                        sponsor={sponsor}
+                        submit={this.props.editSponsor.bind(this)}
+                        uploadFiles={this.props.uploadFiles.bind(this)}/>
+                    </Item.Extra>
+                  </Item.Content>
+                </Item>
+                <Divider/>
+              </Item.Group>
             );
           })}
-          </tbody>
-        </table>
       </div>
     );
   }
