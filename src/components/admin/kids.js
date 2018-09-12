@@ -57,8 +57,10 @@ class Kids extends Component {
                       </h3>
                     </Item.Header>
                     <Item.Meta>
-                      <span>Updated on <i><b>{moment(kid.updatedAt).format('DD MMMM YYYY')}</b></i></span>
-                      <br/><span><i><b>{totalUpdate.length}</b></i> updates</span>
+                      <div style={{marginTop: 10}}>
+                        <span>Updated on <i><b>{moment(kid.updatedAt).format('DD MMMM YYYY')}</b></i></span>
+                        <br/><span><i><b>{totalUpdate.length}</b></i> updates</span>
+                      </div>
                     </Item.Meta>
                     <Item.Description style={{marginTop: 20, marginBottom: 20}}>{kid.story}</Item.Description>
                     <Item.Extra>

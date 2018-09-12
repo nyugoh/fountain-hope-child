@@ -31,7 +31,7 @@ class MessagesTable extends React.Component {
     const { message } = this.props;
     return (
       <tr onClick={this.showMessage.bind(this)} className={message.isRead? '': 'active'}>
-        <td>
+        <td style={{cursor:'pointer'}}>
           {message.isRead?  <Label as='span' color='grey' ribbon>
             Read
           </Label>:  <Label as='span' color='teal' ribbon>

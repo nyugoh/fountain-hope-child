@@ -1,8 +1,10 @@
 import React from 'react';
-import { Grid, Menu } from 'semantic-ui-react';
+import { Menu } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { logout } from '../../actions/auth';
 
-function Admin() {
+function Admin({ isAuthenticated, logout }) {
   return (
     <Menu secondary size='small' borderless={true} color='blue' style={{boxShadow: '0 1px 2px 0 rgba(34,36,38,.15)', margin:'1em 0', padding: '0 15px', borderRadius: 'none'}}>
       <div className="ui container">
@@ -12,7 +14,8 @@ function Admin() {
         <Link to='/admin/sponsors' className='item'>Sponsors</Link>
         <Link to='/admin/donations' className='item'>Donations</Link>
         <span className="item right floated">
-            <Link to='/admin/login' className='item'>Login</Link>
+          {isAuthenticated? <a onClick={()=> logout()} className='item'>Logout</a>:
+            <Link to='/admin/login' className='item'>Login</Link>}
             <Link to='/admin/signup' className='item'>Sign Up</Link>
         </span>
       </div>
@@ -20,4 +23,8 @@ function Admin() {
   );
 }
 
-export default Admin;
+const mapStateToProps = state => ({
+  isAuthenticated: !!state.user.user.token
+});
+
+export default connect(mapStateToProps, { logout })(Admin);

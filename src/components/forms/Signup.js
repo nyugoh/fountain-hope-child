@@ -29,6 +29,15 @@ class Signup extends Component {
     }
   };
 
+  comparePasswords = (e) => {
+
+    if(this.state.data.password !== e.target.value) {
+      this.setState({errors:{ ...this.state.errors, passwordagain: 'Passwords don\'t match'}})
+    } else {
+      this.setState({errors:{ }})
+    }
+  };
+
   validate = (data) => {
     const errors = [];
     if (!validator.isEmail(data.email)) errors.email= 'Invalid email';
@@ -38,19 +47,43 @@ class Signup extends Component {
 
 
   render() {
-    const {email, password, errors, loading} = this.state;
+    const {fullName, username, email, password, errors, loading} = this.state;
     return (
       <Grid columns={1}>
         <Grid.Row>
           <Grid.Column width={4} textAlign='center'/>
           <Grid.Column width={8} padded='true'>
-            <h3>Login Form</h3>
+            <h3>Sign-up Form</h3>
             <hr/>
             <Form onSubmit={this.submit} loading={loading}>
               {errors.global && <Message negative>
-                <Message.Header>Login failed</Message.Header>
+                <Message.Header>Sign-up failed</Message.Header>
                 <p>{errors.global}</p>
               </Message>}
+              <Form.Field error={!!errors.fullName}>
+                <Input
+                  type="text"
+                  icon='user'
+                  iconPosition='left'
+                  name='fullName'
+                  placeholder='Enter your full name here...'
+                  value={fullName}
+                  onChange={this.onChange}
+                />
+                <InlineError message={errors.fullName}/>
+              </Form.Field>
+              <Form.Field error={!!errors.username}>
+                <Input
+                  type="text"
+                  icon='mail'
+                  iconPosition='left'
+                  name='userName'
+                  placeholder='Username ...'
+                  value={username}
+                  onChange={this.onChange}
+                />
+                <InlineError message={errors.username}/>
+              </Form.Field>
               <Form.Field error={!!errors.email}>
                 <Input
                   type="text"
@@ -70,13 +103,25 @@ class Signup extends Component {
                   icon='lock'
                   iconPosition='left'
                   name='password'
-                  placeholder='Make it secure...'
+                  placeholder='Enter password...'
                   value={password}
                   onChange={this.onChange}
                 />
                 <InlineError message={errors.password}/>
               </Form.Field>
-              <Button positive fluid>Login <i className='icon sign in' style={{'marginLeft': '10px'}}/></Button>
+              <Form.Field error={!!errors.passwordagain}>
+                <Input
+                  type="password"
+                  icon='lock'
+                  iconPosition='left'
+                  name='password-again'
+                  placeholder='Repeat password...'
+                  value={password}
+                  onChange={this.comparePasswords}
+                />
+                <InlineError message={errors.passwordagain}/>
+              </Form.Field>
+              <Button positive fluid>Sign-up <i className='icon sign in' style={{'marginLeft': '10px'}}/></Button>
             </Form>
           </Grid.Column>
           <Grid.Column width={4} textAlign='center'/>

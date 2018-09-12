@@ -1,7 +1,7 @@
 import * as types from '../types';
 import api from '../store/api';
 
-const userLoggedIn = (user) => ({
+export const userLoggedIn = (user) => ({
   type: types.USER_LOGGED_IN,
   payload: user
 });
@@ -13,7 +13,15 @@ export const login = (credentials) => (dispatch) =>
   });
 
 export const signup = (credentials) => (dispatch) =>
-  api.user.login(credentials).then( (user) => {
+  api.user.register(credentials).then( (user) => {
     localStorage.jwtToken = user.token;
     dispatch(userLoggedIn(user))
   });
+
+export const logout = () => (dispatch) => {
+  console.log('loging out')
+  localStorage.removeItem('jwtToken');
+  dispatch({
+    type: types.USER_LOGGED_OUT,
+  });
+}
