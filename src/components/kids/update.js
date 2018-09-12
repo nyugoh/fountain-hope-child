@@ -54,6 +54,7 @@ class KidUpdate extends Component {
               updates={updates}
               deleteUpdate={this.deleteUpdate.bind(this)}
               editUpdate={this.editUpdate.bind(this)}
+              uploadFiles={this.props.uploadFiles.bind(this)}
               id={id}/>
             <AddUpdate
               submit={this.submit.bind(this)}

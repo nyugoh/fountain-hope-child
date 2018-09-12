@@ -22,7 +22,8 @@ class Update extends React.Component {
               deleteUpdate={this.props.deleteUpdate.bind(this)}/>
             <EditUpdate
               update={update}
-              editUpdate={this.props.editUpdate.bind(this)}/>
+              editUpdate={this.props.editUpdate.bind(this)}
+              uploadFiles={this.props.uploadFiles.bind(this)}/>
           </Item.Extra>
         </Item.Content>
       </Item>

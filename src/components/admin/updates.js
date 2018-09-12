@@ -17,7 +17,8 @@ class KidsUpdates extends Component {
             <Update
               update={ud}
               deleteUpdate={this.props.deleteUpdate.bind(this)}
-              editUpdate={this.props.editUpdate.bind(this)}/>
+              editUpdate={this.props.editUpdate.bind(this)}
+              uploadFiles={this.props.uploadFiles.bind(this)}/>
             <div className="ui horizontal divider"/>
           </Item.Group>
         })}
