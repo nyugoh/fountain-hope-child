@@ -88,3 +88,8 @@ p, span, a {
     /*border-bottom: 1px solid cornflowerblue;*/
     margin-bottom: 10px;
 }
+.description, p {
+  font-size: 17px;
+  font-family: 'Nunito';
+  line-height: 25px;
+}

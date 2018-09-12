@@ -38,7 +38,8 @@ class Profile extends Component {
                 </div>
                 <div>
                   <h2>{kid.firstName}'s Story</h2>
-                  <p>{kid.story}</p>
+                  <p><b>Home: </b>{kid.pob} <b>Gender: </b>{kid.gender}</p>
+                  <p className={'description'}>{kid.story}</p>
                   <div className="ui divider"/>
                 </div>
                 <div>
