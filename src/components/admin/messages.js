@@ -51,8 +51,6 @@ class Messages extends Component {
             {messages.map( (message, index) => {
               if(message.to !== 'admin'){
                 let kid = kids.filter( kid => kid._id === message.to)
-                console.log(kids)
-                console.log(kid)
                 message.toName = kid[0]['fullName'];
               } else {
                 message.toName = 'admin';
