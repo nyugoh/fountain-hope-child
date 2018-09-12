@@ -9,6 +9,9 @@ import './styles/app.css';
 import {fetchKids} from "./actions/kids";
 import {fetchSponsors} from "./actions/admin";
 import store from "./store/store";
+import AuthRoute  from './components/admin/components/AuthRoute';
+import Login from "./containers/Login";
+import Signup from "./containers/Signup";
 
 store.dispatch(fetchKids());
 store.dispatch(fetchSponsors());
@@ -18,7 +21,7 @@ class App extends Component {
     return (
       <div>
         <Switch>
-          <Route path='/admin' component={Admin}/>
+          <AuthRoute path='/admin' component={Admin}/>
           <Route path='/' component={Home}/>
         </Switch>
       </div>
@@ -34,6 +37,7 @@ const Home = () => {
         <Route path='/' exact component={HomePage}/>
         <Route path='/kids' component={Kids}/>
         <Route path='/donate' component={Kids}/>
+        <Route path='/login' component={Login}/>
       </Switch>
     </div>
     <Footer/>

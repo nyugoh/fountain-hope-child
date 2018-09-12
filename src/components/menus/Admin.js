@@ -15,7 +15,7 @@ function Admin({ isAuthenticated, logout }) {
         <Link to='/admin/donations' className='item'>Donations</Link>
         <span className="item right floated">
           {isAuthenticated? <a onClick={()=> logout()} className='item'>Logout</a>:
-            <Link to='/admin/login' className='item'>Login</Link>}
+            <Link to='/login' className='item'>Login</Link>}
             <Link to='/admin/signup' className='item'>Sign Up</Link>
         </span>
       </div>
