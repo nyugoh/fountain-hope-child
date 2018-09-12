@@ -16,7 +16,7 @@ class Messages extends Component {
   deleteMessage = message => this.props.deleteMessage(message);
 
   render() {
-    let { messages } = this.props;
+    let { messages, kids } = this.props;
       let unread = messages.filter(message=> !message.isRead);
       return (
         <div>
@@ -49,6 +49,14 @@ class Messages extends Component {
             </tr>
             </thead>
             {messages.map( (message, index) => {
+              if(message.to !== 'admin'){
+                let kid = kids.filter( kid => kid._id === message.to)
+                console.log(kids)
+                console.log(kid)
+                message.toName = kid[0]['fullName'];
+              } else {
+                message.toName = 'admin';
+              }
               return <MessagesTable
                 markAsRead={this.markAsRead.bind(this)}
                 deleteMessage={this.deleteMessage.bind(this)}
@@ -62,7 +70,8 @@ class Messages extends Component {
 }
 
 const mapStateToProps = state =>({
-  messages: state.admin.messages
+  messages: state.admin.messages,
+  kids: state.kids.kids
 });
 
 export default connect(mapStateToProps, { markAsRead, deleteMessage })(Messages);

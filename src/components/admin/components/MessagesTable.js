@@ -31,7 +31,7 @@ class MessagesTable extends React.Component {
     const { message } = this.props;
     return (
       <tr onClick={this.showMessage.bind(this)} className={message.isRead? '': 'active'}>
-        <td>{message.to.toUpperCase()}</td>
+        <td>{message.toName.toUpperCase()}</td>
         <td>{message.fromEmail}</td>
         <td>{moment(message.createdAt).format('DD MMMM YYYY')}</td>
         <td>{message.body.length > 30 ? message.body.substring(0, 30) + ' ...' : message.body}</td>
@@ -45,8 +45,7 @@ class MessagesTable extends React.Component {
           <Modal.Content>
             <Modal.Description>
               <Header color={'grey'} as={'h4'}>Subject</Header>
-              <p>{message.to.toUpperCase()}</p>
-              <p>To:: Jane Doe Miller</p>
+              <p>To:: {message.toName.toUpperCase()}</p>
               <p>{moment(message.createdAt).format("DD MMMM YYYY H:m:s")}</p>
               <div className="ui divider"/>
               <Header color={'grey'} as={'h4'}>Body</Header>
