@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import {Icon, Modal, Header, Button } from 'semantic-ui-react';
+import {Icon, Modal, Header, Button, Label } from 'semantic-ui-react';
 
 class MessagesTable extends React.Component {
   constructor(props) {
@@ -31,25 +31,45 @@ class MessagesTable extends React.Component {
     const { message } = this.props;
     return (
       <tr onClick={this.showMessage.bind(this)} className={message.isRead? '': 'active'}>
-        <td>{message.toName.toUpperCase()}</td>
+        <td>
+          {message.isRead?  <Label as='span' color='grey' ribbon>
+            Read
+          </Label>:  <Label as='span' color='teal' ribbon>
+            Unread
+          </Label>}
+          {message.toName.toUpperCase()}</td>
         <td>{message.fromEmail}</td>
         <td>{moment(message.createdAt).format('DD MMMM YYYY')}</td>
         <td>{message.body.length > 30 ? message.body.substring(0, 30) + ' ...' : message.body}</td>
+        <td>
+          <Button
+            icon
+            labelPosition={'right'}
+            color={'teal'}
+            onClick={this.deleteMessage.bind(this)}>
+            Delete
+            <Icon
+              name='trash'
+              color={'red'}/>
+          </Button>
+          <Button
+            onClick={this.closeModal.bind(this)}
+            positive={true}>Mark as Read</Button>
+        </td>
         <Modal open={this.state.isOpen}>
           <Modal.Header>
             <span className={'ui text lead'}>
-              <Icon name={'user'} circular={true}/>
-              {message.fromEmail}
+              From: {message.fromEmail}
             </span>
           </Modal.Header>
           <Modal.Content>
             <Modal.Description>
-              <Header color={'grey'} as={'h4'}>Subject</Header>
-              <p>To:: {message.toName.toUpperCase()}</p>
-              <p>{moment(message.createdAt).format("DD MMMM YYYY H:m:s")}</p>
+              <p>
+                <b>To:</b> {message.toName}
+                &nbsp;&nbsp;&nbsp; <b>Date:</b> {moment(message.createdAt).format("DD MMMM YYYY H:m:s")}
+              </p>
               <div className="ui divider"/>
-              <Header color={'grey'} as={'h4'}>Body</Header>
-              <div className="ui divider"/>
+              <Header as={'h4'}>Body</Header>
               <p>{message.body}</p>
             </Modal.Description>
           </Modal.Content>

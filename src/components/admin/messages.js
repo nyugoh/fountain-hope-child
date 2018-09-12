@@ -46,6 +46,7 @@ class Messages extends Component {
               <th className="ui sortable">From</th>
               <th className="ui sortable">Date</th>
               <th>Message</th>
+              <th>Action</th>
             </tr>
             </thead>
             {messages.map( (message, index) => {

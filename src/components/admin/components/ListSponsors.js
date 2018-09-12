@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from "moment/moment";
 import ArchiveSponsor from "../micros/ArchiveSponsor";
 import DeleteSponsor from "../micros/DeleteSponsor";
 import EditSponsor from "./EditSponsor";

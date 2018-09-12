@@ -12,4 +12,5 @@ Remaining sections
 - [ ] Style make over & add fonts
 - [x] Sort updates according to the latest and display when it was added
 - [x] Updates edit to include images upload
- 
+- [ ] Show number of updates per kid
+- [ ] 
