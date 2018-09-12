@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import { Grid, Button, Modal, Icon } from 'semantic-ui-react';
+import { Grid, Divider, Modal, Icon } from 'semantic-ui-react';
 import { addSponsor, archiveSponsor, deleteSponsor, editSponsor } from '../../actions/admin';
 import { uploadFiles } from '../../actions/kids';
 import ListSponsors from "./components/ListSponsors";
@@ -49,7 +49,7 @@ class Sponsors extends Component {
     const {sponsors, sponsorAdded} = this.props;
     return (
       <div>
-        <h2>FHCK Sponsors and donors</h2>
+        <h3>FHCK Sponsors and donors</h3>
         <Modal size='tiny' trigger={<Icon  circular color={'green'} size={'large'} name={'plus'} style={{position: 'relative', left: '300px'}} onClick={this.openModal.bind(this)}/>} open={this.state.isOpen}>
           <Modal.Header>
             Add sponsor
@@ -71,6 +71,7 @@ class Sponsors extends Component {
               {sponsorAdded==='ok'?<div className="ui primary message">
                 <p>Sponsor added successfully ...</p>
               </div>: ''}
+              <Divider/>
               <ListSponsors
                 isLoading={this.state.isLoading}
                 isDone={this.state.isDone}

@@ -28,12 +28,22 @@ class ArchiveModal extends Component {
   render() {
     const { kid } = this.props;
     return (
-      <Modal size='tiny' trigger={<Icon name='lock' color={'green'} size={'large'} onClick={this.openModal.bind(this)}/>} open={this.state.isOpen}>
+      <Modal size='tiny' trigger={
+        <Button
+          color={kid.isShowing? 'teal': 'blue'}
+          floated='right'
+          icon
+          onClick={this.openModal.bind(this)}
+          labelPosition={'right'}>
+          {kid.isShowing? 'Archive': 'Display' }
+          <Icon name='lock' />
+        </Button>
+      } open={this.state.isOpen}>
         <Modal.Header>
-          Delete {`${kid.firstName} ${kid.middleName} ${kid.sirName}`}
+          {kid.isShowing? 'Archive': 'Display' } {`${kid.firstName} ${kid.middleName} ${kid.sirName}`}
         </Modal.Header>
         <Modal.Content>
-          <p>Remove kid from frontend diplay ?</p>
+          {kid.isShowing? <p>Remove kid from frontend diplay ?</p>: <p>Add kid to frontend diplay ?</p>}
         </Modal.Content>
         <Modal.Actions>
           <Button

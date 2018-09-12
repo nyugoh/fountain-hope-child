@@ -30,7 +30,7 @@ class ArchiveSponsor extends Component {
     return (
       <Modal size='tiny' trigger={
         <Button
-          color={'blue'}
+          color={sponsor.isShowing? 'teal': 'blue'}
           floated='right'
           icon
           onClick={this.openModal.bind(this)}
@@ -40,7 +40,7 @@ class ArchiveSponsor extends Component {
         </Button>
       } open={this.state.isOpen}>
         <Modal.Header>
-          Archive {sponsor.fullName}
+          {sponsor.isShowing? 'Archive': 'Display' } {sponsor.fullName}
         </Modal.Header>
         <Modal.Content>
           {sponsor.isShowing? <p>Remove sponsor from frontend diplay ?</p>:

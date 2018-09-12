@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {Icon, Image, Button} from 'semantic-ui-react';
+import {Icon, Item, Label, Divider, Button} from 'semantic-ui-react';
 import {fetchKids, deleteKid, archiveKid } from "../../actions/kids";
 import moment from "moment/moment";
 import DeleteModal from "../kids/delete";
@@ -37,55 +37,49 @@ class Kids extends Component {
           <div className="header">Ooopps... !!</div>
           <p>There are no kids yet.</p>
           <p>Use the add kids to add them.</p>
-        </div>:<h4>List of kids</h4>
+        </div>:<h2>List of kids</h2>
         }
-        <table className='ui table celled stackable blue bordered centered'>
-          <thead>
-          <tr>
-            <th className='ui sortable'>Name</th>
-            <th>Email</th>
-            <th>Story</th>
-            <th>Status</th>
-            <th>Date of Birth</th>
-            <th>Edit</th>
-            <th>Hide/Show</th>
-            <th>Delete</th>
-          </tr>
-          </thead>
-          <tbody>
+        <Divider/>
           {kids.map((kid, index) =>{
             return (
-              <tr key={index}>
-                <td
-                  style={{cursor: 'pointer'}}
-                  onClick={() => { this.props.history.push(`/admin/kids/${kid._id}/updates`)}}>
-                  <Image src={`/api/v1/images/${kid.profileImages[0]}`} size='small'/>
-                  <br/><span>{`${kid.firstName} ${kid.middleName} ${kid.sirName}`}</span>
-                </td>
-                <td>{kid.email}</td>
-                <td>{kid.story.length>50? kid.story.substring(0, 50)+' ...': kid.story}</td>
-                <td>{kid.isShowing?<div className="ui ribbon label green">Showing</div>:
-                  <div className="ui ribbon label teal">Archive</div>
-              }</td>
-                <td>{moment(kid.dob).format('DD/MMMM/YYYY')}</td>
-                <td>
-                  <Link to={`/admin/kids/${kid._id}/edit`}><Icon name='large pencil blue'/></Link>
-                </td>
-                <td>
-                  <ArchiveModal
-                    kid={kid}
-                    archiveKid={this.archiveKid.bind(this)}/>
-                </td>
-                <td>
-                  <DeleteModal
-                    kid={kid}
-                    deleteKid={this.deleteKid.bind(this)}/>
-                </td>
-              </tr>
+              <Item.Group divided key={index}>
+                <Item>
+                  <Item.Image size='small' style={{width:'150px !important', height:'150px !important'}} src={`/api/v1/images/${kid.profileImages[0]}`}/>
+                  <Item.Content>
+                    <Item.Header as='span' style={{cursor: 'pointer'}} onClick={() => { this.props.history.push(`/admin/kids/${kid._id}/updates`)}}>
+                      <h3><span style={{marginRight:20}}>{`${kid.firstName} ${kid.middleName} ${kid.sirName}`}</span>
+                        {kid.isShowing? <Label as='a' color='green' tag>
+                          Showing
+                        </Label> : <Label as='span' color='teal' tag>
+                          Not-showing
+                        </Label>}
+                      </h3>
+                    </Item.Header>
+                    <Item.Description style={{marginTop: 20, marginBottom: 20}}>{kid.story}</Item.Description>
+                    <Item.Extra>
+                      <DeleteModal
+                        kid={kid}
+                        deleteKid={this.deleteKid.bind(this)}/>
+                      <ArchiveModal
+                        kid={kid}
+                        archiveKid={this.archiveKid.bind(this)}/>
+                      <Link to={`/admin/kids/${kid._id}/edit`}>
+                        <Button
+                          color={'green'}
+                          floated='right'
+                          icon
+                          labelPosition={'right'}>
+                          Edit
+                          <Icon name='pencil' />
+                        </Button>
+                      </Link>
+                    </Item.Extra>
+                  </Item.Content>
+                </Item>
+                <Divider/>
+              </Item.Group>
             );
           })}
-          </tbody>
-        </table>
         <Button
           onClick={this.loadMore}
           loading={this.state.isFetching}
