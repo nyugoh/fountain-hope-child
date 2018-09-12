@@ -41,6 +41,7 @@ class Kids extends Component {
         }
         <Divider/>
           {kids.map((kid, index) =>{
+            let totalUpdate = this.props.updates.filter(update => update.kidId === kid._id);
             return (
               <Item.Group divided key={index}>
                 <Item>
@@ -55,6 +56,10 @@ class Kids extends Component {
                         </Label>}
                       </h3>
                     </Item.Header>
+                    <Item.Meta>
+                      <span>Updated on <i><b>{moment(kid.updatedAt).format('DD MMMM YYYY')}</b></i></span>
+                      <br/><span><i><b>{totalUpdate.length}</b></i> updates</span>
+                    </Item.Meta>
                     <Item.Description style={{marginTop: 20, marginBottom: 20}}>{kid.story}</Item.Description>
                     <Item.Extra>
                       <DeleteModal
@@ -103,7 +108,8 @@ const mapStateToProps = (state) => ({
   kids: state.kids.kids,
   page: state.kids.page,
   isEnd: state.kids.isEnd,
-  isDelete: state.admin.isDelete
+  isDelete: state.admin.isDelete,
+  updates: state.admin.updates
 });
 
 export default connect(mapStateToProps, { fetchKids, deleteKid, archiveKid })(Kids);
