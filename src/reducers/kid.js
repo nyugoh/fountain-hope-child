@@ -40,6 +40,10 @@ const Kids = (state=initialState, action={}) => {
           ...state,
           kids: [...kids]
         };
+      case types.DONATED:
+        return {
+          ...state
+        };
       default:
         return state;
     }

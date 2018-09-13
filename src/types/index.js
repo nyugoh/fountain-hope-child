@@ -41,3 +41,5 @@ export const SPONSOR_ARCHIVED = 'SPONSOR_ARCHIVED';
 export const SPONSOR_DELETED = 'SPONSOR_DELETED';
 
 export const SPONSOR_EDITED = 'SPONSOR_EDITED';
+
+export const DONATED = 'DONATED';

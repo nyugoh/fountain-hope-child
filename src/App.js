@@ -12,6 +12,8 @@ import store from "./store/store";
 import AuthRoute  from './components/admin/components/AuthRoute';
 import Login from "./containers/Login";
 import Signup from "./containers/Signup";
+import DonateError from "./frontend/DonateError";
+import DonateSuccess from "./frontend/DonateSuccess";
 
 store.dispatch(fetchKids());
 store.dispatch(fetchSponsors());
@@ -37,6 +39,8 @@ const Home = () => {
         <Route path='/' exact component={HomePage}/>
         <Route path='/kids' component={Kids}/>
         <Route path='/donate' component={Kids}/>
+        <Route path='/error' component={DonateError}/>
+        <Route path='/success' component={DonateSuccess}/>
         <Route path='/login' component={Login}/>
       </Switch>
     </div>

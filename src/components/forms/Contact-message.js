@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Form, TextArea, Button } from 'semantic-ui-react';
+import { Form, TextArea, Button, Divider } from 'semantic-ui-react';
 import Notification from "../panels/Notifcation";
 
 class MessageBox extends Component {
@@ -35,8 +35,8 @@ class MessageBox extends Component {
     const { loading, errors, sent, data } =  this.state;
     return (
       <div>
-        <hr/>
         <h3>Leave us a message</h3>
+        <Divider/>
         <Form size='large' onSubmit={this.submit} loading={loading}>
           <Form.Group>
             <Form.Input placeholder='Name' width={8} required name='fromName' value={data.fromName} onChange={this.handleChange} />

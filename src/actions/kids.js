@@ -76,3 +76,9 @@ export const uploadFiles = (form) => dispatch => axios.post('/api/v1/images/uplo
     payload: response.data
   })
 });
+
+export const donate = donation => dispatch => axios.post('/api/donate', { donation }).then( response => {
+  dispatch({
+    type: types.DONATED
+  });
+});

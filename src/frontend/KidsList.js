@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Grid, Button, Icon } from 'semantic-ui-react';
+import {Grid, Button, Icon, Modal } from 'semantic-ui-react';
 import Message from '../components/forms/Contact-message';
 import Story from '../components/panels/story';
 import SponsorMessage from '../components/panels/sponsors';
-import {fetchKids, sendMessage} from "../actions/kids";
+import {fetchKids, sendMessage } from "../actions/kids";
+import Donate from '../containers/Donate';
 
 class ListKids extends Component {
     constructor(props) {
@@ -44,6 +45,14 @@ class ListKids extends Component {
           <Message sendMessage={this.sendMessage}/>
           <div className="ui horizontal divider"><Icon name={'crosshairs'}/></div>
           <SponsorMessage sponsors={this.props.sponsors}/>
+          <Modal trigger={<Button>Donate</Button>} size={'tiny'}>
+            <Modal.Header>Make a donation</Modal.Header>
+            <Modal.Content>
+              <Modal.Description>
+                <Donate/>
+              </Modal.Description>
+            </Modal.Content>
+          </Modal>
         </Grid.Column>
       </Grid.Row>
     </Grid>

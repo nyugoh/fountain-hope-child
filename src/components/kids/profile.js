@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Image } from 'semantic-ui-react';
-// import PropTypes from 'prop-types';
+import { Grid, Image, Modal, Button, Divider } from 'semantic-ui-react';
 import Message from '../forms/message';
 import SponsorMessage from '../panels/sponsors';
 import KidUpdates from "../panels/KidUpdates";
 import { sendMessage } from "../../actions/kids";
+import Donate from '../../containers/Donate';
 
 class Profile extends Component {
   constructor(props) {
@@ -51,9 +51,18 @@ class Profile extends Component {
             </Grid.Column>
             <Grid.Column width='6'>
               <Message name={kid.firstName}  kidId={kid._id} sendMessage={this.sendMessage}/>
-              <br/><br/>
-              <hr/>
+              <Divider hidden/>
+              <Divider/>
               <SponsorMessage/>
+              <Modal trigger={<Button size={'medium'} fluid positive>Donate <i style={{'marginLeft':'8px'}} className='icon credit card outline'/></Button>} size={'tiny'}>
+                <Modal.Header>Make a donation to {kid.fullName}</Modal.Header>
+                <Modal.Content>
+                  <Modal.Description>
+                    <Donate/>
+                  </Modal.Description>
+                </Modal.Content>
+              </Modal>
+              <Divider/>
             </Grid.Column>
           </Grid.Row>
         </Grid>
