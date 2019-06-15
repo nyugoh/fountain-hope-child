@@ -1,6 +1,6 @@
 import * as types from "../types";
 
-const user = (state={ user: {token: ''}}, action) =>{
+const user = (state = { user: { token: "" } }, action) => {
   switch (action.type) {
     case types.USER_LOGGED_IN:
       return {
@@ -10,9 +10,10 @@ const user = (state={ user: {token: ''}}, action) =>{
     case types.USER_LOGGED_OUT:
       return {
         ...state,
-        user: {}
+        user: { token: "" }
       };
-    default: return state;
+    default:
+      return state;
   }
 };
 

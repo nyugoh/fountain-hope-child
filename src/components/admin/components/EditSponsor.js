@@ -1,5 +1,12 @@
-import React, {Component} from 'react';
-import {Form, Button, TextArea, Message, Icon, Modal } from 'semantic-ui-react';
+import React, { Component } from "react";
+import {
+  Form,
+  Button,
+  TextArea,
+  Message,
+  Icon,
+  Modal
+} from "semantic-ui-react";
 
 class EditSponsor extends Component {
   constructor(props) {
@@ -9,35 +16,47 @@ class EditSponsor extends Component {
       files: {},
       isOpen: false,
       errors: []
-    }
-  };
+    };
+  }
 
   openModal = () => {
     this.setState({ isOpen: true });
   };
 
-  handleChange = (e) =>{
-    this.setState({sponsor: { ...this.state.sponsor, [e.target.name]:e.target.value }});
+  handleChange = e => {
+    this.setState({
+      sponsor: { ...this.state.sponsor, [e.target.name]: e.target.value }
+    });
   };
 
-
-  upload = (e) =>{
+  upload = e => {
     const files = e.target.files;
     let imageNames = [];
     let images = [];
-    for(let f in files) if (files[f].size > 0) {images.push(files[f]);imageNames.push(files[f].name);};
-    this.setState({sponsor:{...this.state.sponsor, profileImages:imageNames}});
-    this.setState({files:images});
+    for (let f in files)
+      if (files[f].size > 0) {
+        images.push(files[f]);
+        imageNames.push(files[f].name);
+      }
+    this.setState({
+      sponsor: { ...this.state.sponsor, profileImages: imageNames }
+    });
+    this.setState({ files: images });
   };
 
-  submit = () =>{
+  submit = () => {
     let { sponsor, files } = this.state;
     let form = new FormData();
     if (this.state.sponsor.profileImages === [])
-      this.setState({sponsor:{...this.state.sponsor, profileImages:this.props.sponsor.profileImages}});
-    for(let i in files) form.append(files[i].name, files[i]);
-    if( Object.keys(form).length >0 ){
-      this.props.uploadFiles(form).then( ()=> {
+      this.setState({
+        sponsor: {
+          ...this.state.sponsor,
+          profileImages: this.props.sponsor.profileImages
+        }
+      });
+    for (let i in files) form.append(files[i].name, files[i]);
+    if (Object.keys(form).length > 0) {
+      this.props.uploadFiles(form).then(() => {
         this.props.submit(sponsor, files);
       });
     } else {
@@ -46,91 +65,110 @@ class EditSponsor extends Component {
   };
 
   componentWillReceiveProps() {
-    if (this.props.isDone)
-      this.setState({ isOpen: false });
-  };
-
+    if (this.props.isDone) this.setState({ isOpen: false });
+  }
 
   render() {
     let { sponsor } = this.state;
     const { isLoading, error } = this.props;
-    if (sponsor === undefined)
-      sponsor = {};
+    if (sponsor === undefined) sponsor = {};
     return (
-      <Modal size='tiny' trigger={
-        <Button
-          color={'green'}
-          floated='right'
-          icon
-          onClick={this.openModal.bind(this)}
-          labelPosition={'right'}>
-          Edit
-          <Icon name='pencil' />
-        </Button>
-      } open={this.state.isOpen}>
+      <Modal
+        size="tiny"
+        trigger={
+          <Button
+            color={"green"}
+            floated="right"
+            icon
+            onClick={this.openModal.bind(this)}
+            labelPosition={"right"}
+          >
+            Edit
+            <Icon name="pencil" />
+          </Button>
+        }
+        open={this.state.isOpen}
+      >
         <Modal.Header>
           Edit sponsor
-          <Icon name={'window close outline'} size={'small'} style={{position: 'relative', left: '300px'}} onClick={()=> { this.setState({isOpen:false})}}/>
+          <Icon
+            name={"window close outline"}
+            size={"small"}
+            style={{ position: "relative", left: "300px" }}
+            onClick={() => {
+              this.setState({ isOpen: false });
+            }}
+          />
         </Modal.Header>
         <Modal.Content>
-          <Form size='large' onSubmit={this.submit} loading={ isLoading }>
+          <Form size="large" onSubmit={this.submit} loading={isLoading}>
             <label>Full name</label>
             <Form.Group>
               <Form.Input
-                placeholder='Full Name ...'
+                placeholder="Full Name ..."
                 width={16}
                 required
-                name='fullName'
+                name="fullName"
                 value={sponsor.fullName}
-                onChange={this.handleChange} />
+                onChange={this.handleChange}
+              />
             </Form.Group>
             <label>Email</label>
             <Form.Group>
               <Form.Input
-                placeholder='Email ...'
+                placeholder="Email ..."
                 width={16}
-                name='email'
+                name="email"
                 value={sponsor.email}
-                onChange={this.handleChange} />
+                onChange={this.handleChange}
+              />
             </Form.Group>
             <label>Phone #</label>
             <Form.Group>
               <Form.Input
-                placeholder='Phone # ...'
+                placeholder="Phone # ..."
                 width={16}
-                name='phone'
+                name="phone"
                 value={sponsor.phone}
-                onChange={this.handleChange} />
+                onChange={this.handleChange}
+              />
             </Form.Group>
             <label>Message</label>
             <Form.Group>
               <Form.Field
                 width={16}
                 control={TextArea}
-                name='message'
+                name="message"
                 value={sponsor.message}
                 onChange={this.handleChange}
-                placeholder='Enter a message to be displayed along with their profile...' />
+                placeholder="Enter a message to be displayed along with their profile..."
+              />
             </Form.Group>
             <label>Profile Image</label>
             <Form.Field>
-              <input type="file"
-                     name='profile'
-                     onChange={this.upload}
-                     placeholder='Profile image ...'/>
+              <input
+                type="file"
+                name="profile"
+                onChange={this.upload}
+                placeholder="Profile image ..."
+              />
             </Form.Field>
-            <Button positive fluid className='ui right floated' success>Edit  <i style={{'marginLeft':'8px'}} className='icon add'/></Button>
-            {error && <Message warning>
-              <Message.Content>{error}</Message.Content>
-            </Message> }
+            <Button positive fluid className="ui right floated" success>
+              Edit <i style={{ marginLeft: "8px" }} className="icon add" />
+            </Button>
+            {error && (
+              <Message warning>
+                <Message.Content>{error}</Message.Content>
+              </Message>
+            )}
           </Form>
-          <div className="ui hidden divider"/>
-          <br/><br/>
+          <div className="ui hidden divider" />
+          <br />
+          <br />
         </Modal.Content>
       </Modal>
     );
   }
 }
-
 
 export default EditSponsor;

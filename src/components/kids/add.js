@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {Form, TextArea, Checkbox, Button} from 'semantic-ui-react';
-import {addKid, fetchKids, uploadFiles } from "../../actions/kids";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Form, TextArea, Checkbox, Button } from "semantic-ui-react";
+import { addKid, fetchKids, uploadFiles } from "../../actions/kids";
 import MessageDialog from "../panels/Message";
-import moment from 'moment';
+import moment from "moment";
 
 const options = [
-  { key: 'm', text: 'Male', value: 'male' },
-  { key: 'f', text: 'Female', value: 'female' },
+  { key: "m", text: "Male", value: "male" },
+  { key: "f", text: "Female", value: "female" }
 ];
 
 class AddKid extends Component {
@@ -20,97 +20,209 @@ class AddKid extends Component {
 
   isAccepted = false;
 
-  handleChange = (e) => {
-    this.setState({data: {...this.state.data, [e.target.name]:e.target.value} });
+  handleChange = e => {
+    this.setState({
+      data: { ...this.state.data, [e.target.name]: e.target.value }
+    });
   };
 
   handleSelectChange = (e, data) => {
-    this.setState({data: {...this.state.data, gender:data.value} });
+    this.setState({ data: { ...this.state.data, gender: data.value } });
   };
 
-  upload = (e) =>{
+  upload = e => {
     const files = e.target.files;
     let imageNames = [];
     let images = [];
-    for(let f in files) if (files[f].size > 0) {images.push(files[f]);imageNames.push(files[f].name);};
-    this.setState({data:{...this.state.data, profileImages:imageNames}});
-    this.setState({files:images});
+    for (let f in files)
+      if (files[f].size > 0) {
+        images.push(files[f]);
+        imageNames.push(files[f].name);
+      }
+    this.setState({ data: { ...this.state.data, profileImages: imageNames } });
+    this.setState({ files: images });
   };
 
-  checkValidity = (e, data) =>{
+  checkValidity = (e, data) => {
     this.isAccepted = data.checked;
   };
 
-  setDOB = (e) =>{
+  setDOB = e => {
     let dob = moment(e.target.value).toISOString();
-    this.setState({data: {...this.state.data, dob:dob} });
+    this.setState({ data: { ...this.state.data, dob: dob } });
   };
 
-  submit = () =>{
+  submit = () => {
     let form = new FormData();
     let files = this.state.files;
-    for(let i in files) form.append(files[i].name, files[i]);
+    for (let i in files) form.append(files[i].name, files[i]);
     if (this.isAccepted) {
       this.setState({ loading: true });
       let kid = this.state.data;
       kid.fullName = `${kid.sirName} ${kid.firstName} ${kid.middleName}`;
-      this.props.addKid(kid, this.state.files).then( () => {
-         this.props.uploadFiles(form).then( ()=> {
-           this.props.history.push('/admin/kids')
-         });
-      }).catch(error => {
-        this.setState({ loading: false });
-        this.setState({ errors: error.message });
-      });
+      this.props
+        .addKid(kid, this.state.files)
+        .then(() => {
+          this.props.uploadFiles(form).then(() => {
+            this.props.history.push("/admin/kids");
+          });
+        })
+        .catch(error => {
+          this.setState({ loading: false });
+          this.setState({ errors: error.message });
+        });
     } else {
-      this.setState({ errors: { confirmationError: 'You need to confirm the validity of this information.'}})
+      this.setState({
+        errors: {
+          confirmationError:
+            "You need to confirm the validity of this information."
+        }
+      });
     }
   };
 
   render() {
-    const {errors, loading} = this.state;
+    const { errors, loading } = this.state;
     return (
       <div>
         <h2>Add a child</h2>
-        <Form size='large' onSubmit={this.submit} loading={loading}>
-          <hr/>
+        <Form size="large" onSubmit={this.submit} loading={loading}>
+          <hr />
           <h3>Personal Details</h3>
-          <Form.Group widths='2'>
-            <Form.Input fluid required label='Sir name' name='sirName' placeholder='Sir name' onChange={this.handleChange} />
-            <Form.Input fluid required label='First name' name='firstName' placeholder='First name' onChange={this.handleChange} />
-            <Form.Input fluid required label='Middle name' name='middleName' placeholder='Middle name' onChange={this.handleChange} />
-            <Form.Select fluid required label='Gender' name='gender' options={options} placeholder='Gender' onChange={this.handleSelectChange} />
+          <Form.Group widths="2">
+            <Form.Input
+              fluid
+              required
+              label="Sir name"
+              name="sirName"
+              placeholder="Sir name"
+              onChange={this.handleChange}
+            />
+            <Form.Input
+              fluid
+              required
+              label="First name"
+              name="firstName"
+              placeholder="First name"
+              onChange={this.handleChange}
+            />
+            <Form.Input
+              fluid
+              required
+              label="Middle name"
+              name="middleName"
+              placeholder="Middle name"
+              onChange={this.handleChange}
+            />
+            <Form.Select
+              fluid
+              required
+              label="Gender"
+              name="gender"
+              options={options}
+              placeholder="Gender"
+              onChange={this.handleSelectChange}
+            />
           </Form.Group>
-          <Form.Group widths='2'>
-            <Form.Input fluid required type='date' label='Date of Birth' name='dob' placeholder='DoB' onChange={this.setDOB} />
-            <Form.Input fluid required label='Place of Birth' name='pob' placeholder='Place of Birth' onChange={this.handleChange} />
-            <Form.Input fluid required label='Religion' name='religion' placeholder='Religion' onChange={this.handleChange} />
+          <Form.Group widths="2">
+            <Form.Input
+              fluid
+              required
+              type="date"
+              label="Date of Birth"
+              name="dob"
+              placeholder="DoB"
+              onChange={this.setDOB}
+            />
+            <Form.Input
+              fluid
+              required
+              label="Place of Birth"
+              name="pob"
+              placeholder="Place of Birth"
+              onChange={this.handleChange}
+            />
+            <Form.Input
+              fluid
+              required
+              label="Religion"
+              name="religion"
+              placeholder="Religion"
+              onChange={this.handleChange}
+            />
           </Form.Group>
-          <Form.Group widths='2'>
-            <Form.Input fluid required label='Phone' name='phoneNumber' placeholder='Phone #' onChange={this.handleChange} />
-            <Form.Input fluid required label='Address' name='address' placeholder='Address' onChange={this.handleChange} />
-            <Form.Input fluid required label='Email' name='email' placeholder='Email' onChange={this.handleChange} />
+          <Form.Group widths="2">
+            <Form.Input
+              fluid
+              required
+              label="Phone"
+              name="phoneNumber"
+              placeholder="Phone #"
+              onChange={this.handleChange}
+            />
+            <Form.Input
+              fluid
+              required
+              label="Address"
+              name="address"
+              placeholder="Address"
+              onChange={this.handleChange}
+            />
+            <Form.Input
+              fluid
+              required
+              label="Email"
+              name="email"
+              placeholder="Email"
+              onChange={this.handleChange}
+            />
           </Form.Group>
 
-          <hr/>
+          <hr />
           <h3>Child Story</h3>
           <Form.Field>
-            <Form.Field control={TextArea} required label='Story' name='story' onChange={this.handleChange} placeholder='Describe the incidents/events that have happened to the child...' />
+            <Form.Field
+              control={TextArea}
+              required
+              label="Story"
+              name="story"
+              onChange={this.handleChange}
+              placeholder="Describe the incidents/events that have happened to the child..."
+            />
           </Form.Field>
-          <hr/>
+          <hr />
           <h3>Documents</h3>
           <Form.Field>
-            <input type="file" multiple='false' name='documents' onChange={this.upload} placeholder='Child documents ...'/>
+            <input
+              type="file"
+              multiple="false"
+              name="documents"
+              onChange={this.upload}
+              placeholder="Child documents ..."
+            />
           </Form.Field>
-          <hr/>
-          <br/>
-          <Checkbox  name='accept' label='The information I have provided here is correct and verifiable.' onChange={this.checkValidity} />
-          <Button className='ui right floated' positive size='large'>ADD</Button><br/><br/>
-          {!!errors.confirmationError && <MessageDialog message={errors.confirmationError}/>}
+          <hr />
+          <br />
+          <Checkbox
+            name="accept"
+            label="The information I have provided here is correct and verifiable."
+            onChange={this.checkValidity}
+          />
+          <Button className="ui right floated" positive size="large">
+            ADD
+          </Button>
+          <br />
+          <br />
+          {!!errors.confirmationError && (
+            <MessageDialog message={errors.confirmationError} />
+          )}
         </Form>
       </div>
     );
   }
 }
 
-export default connect(null, {addKid, fetchKids, uploadFiles })(AddKid);
+export default connect(
+  null,
+  { addKid, fetchKids, uploadFiles }
+)(AddKid);

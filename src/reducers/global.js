@@ -1,11 +1,8 @@
-import * as types from '../types';
+import * as types from "../types";
 
-const {
-  API_ERROR
-} = types;
+const { API_ERROR } = types;
 
-
-const rootReducer = (state={}, action) =>{
+const rootReducer = (state = {}, action) => {
   switch (action.type) {
     case API_ERROR:
       return {

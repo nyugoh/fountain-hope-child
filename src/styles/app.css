@@ -1,95 +1,110 @@
-@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
+@import url("https://fonts.googleapis.com/css?family=Nunito:400,700");
 .ui .menu {
-    width:100%;
-    padding:20px;
-    background-color:rgba(52, 73, 94,1.0);
-    text-align:center;
-    color:white;
+  width: 100%;
+  padding: 20px;
+  background-color: rgba(52, 73, 94, 1);
+  text-align: center;
+  color: white;
 }
 .app-container {
-    margin-top:10px;
+  margin-top: 10px;
 }
 footer {
-    background-color: rgba(44, 62, 80, 1.0);
-    width: 100%;
-    bottom: 0;
-    font-weight: lighter;
-    color: white;
-    margin-top:50px;
+  background-color: rgba(44, 62, 80, 1);
+  width: 100%;
+  bottom: 0;
+  font-weight: lighter;
+  color: white;
+  margin-top: 50px;
 }
-.footerHeader{
-    width:100%;
-    padding:20px;
-    background-color:rgba(52, 73, 94,1.0);
-    text-align:center;
-    color:white;
+.footerHeader {
+  width: 100%;
+  padding: 20px;
+  background-color: rgba(52, 73, 94, 1);
+  text-align: center;
+  color: white;
 }
 .footerFooter {
-    width:100%;
-    padding:20px;
-    background-color: rgb(43, 72, 94);
-    text-align:center;
-    color:white;
+  width: 100%;
+  padding: 20px;
+  background-color: rgb(43, 72, 94);
+  text-align: center;
+  color: white;
 }
-footer h3{
-    font-weight:lighter;
+footer h3 {
+  font-weight: lighter;
 }
-footer ul{
-    padding-left:5px;
-    list-style:none;
+footer ul {
+  padding-left: 5px;
+  list-style: none;
 }
-footer p{
-    text-align : justify;
-    font-size : 12px;
+footer p {
+  text-align: justify;
+  font-size: 12px;
 }
 footer iframe {
-    width:100%;
-    position:relative;
-    height:170px;
+  width: 100%;
+  position: relative;
+  height: 170px;
 }
-.sm{
-    list-style:none;
-    overflow:auto;
+.sm {
+  list-style: none;
+  overflow: auto;
 }
 .sm li {
-    display: inline;
-    padding:5px;
-    float:left;
+  display: inline;
+  padding: 5px;
+  float: left;
 }
 .sm li a img {
-    width:32px;
+  width: 32px;
 }
-.storyHeader img{
-    width: 100%;
+.storyHeader img {
+  width: 100%;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Nunito', sans-serif !important;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Nunito", sans-serif !important;
 }
-p, span, a {
-    font-family: 'Nunito', sans-serif !important;
+p,
+span,
+a {
+  font-family: "Nunito", sans-serif !important;
 }
-.updateAction a, .updateAction a:hover, .updateAction a:active {
-    color: white;
+.updateAction a,
+.updateAction a:hover,
+.updateAction a:active {
+  color: white;
 }
 .updateAction {
-    padding: 5px;
-    margin: 5px;
-    border-bottom: 1px solid cornflowerblue;
+  padding: 5px;
+  margin: 5px;
+  border-bottom: 1px solid cornflowerblue;
 }
 .kidUpdateStory textarea {
-    resize: none;
-    height: 300px;
+  resize: none;
+  height: 300px;
 }
-.ui .form input, .ui .form textarea, .ui .form select, .ui .form input:focus, .ui .form textarea:focus, .ui .form select:focus {
-    background: #d6fffe54;
+.ui .form input,
+.ui .form textarea,
+.ui .form select,
+.ui .form input:focus,
+.ui .form textarea:focus,
+.ui .form select:focus {
+  background: #d6fffe54;
 }
 .update {
-    /*border-bottom: 1px solid cornflowerblue;*/
-    margin-bottom: 10px;
+  /*border-bottom: 1px solid cornflowerblue;*/
+  margin-bottom: 10px;
 }
-.description, p {
+.description,
+p {
   font-size: 17px;
-  font-family: 'Nunito';
+  font-family: "Nunito";
   line-height: 25px;
 }
